@@ -36,11 +36,11 @@ public class DatabaseConfig {
     @Value("classpath:db/sql/create-db.sql")
     private Resource schemaScript;
 
-    @Value("classpath:db/sql/clear-data.sql")
-    private Resource cleanScript;
+    @Value("classpath:db/sql/data-clear.sql")
+    private Resource dataCleanScript;
 
-    @Value("classpath:db/sql/insert-data.sql")
-    private Resource dataScript;
+    @Value("classpath:db/sql/data-populate.sql")
+    private Resource dataPopulateScript;
 
     @Autowired
     private Environment env;
@@ -96,11 +96,11 @@ public class DatabaseConfig {
     private DatabasePopulator databasePopulator() {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(schemaScript);
-        if (isProfileActive(AppProfile.cleardb)) {
-            populator.addScript(cleanScript);
+        if (isProfileActive(AppProfile.cleardb) || isProfileActive(AppProfile.populatedb)) {
+            populator.addScript(dataCleanScript);
         }
         if (isProfileActive(AppProfile.populatedb)) {
-            populator.addScript(dataScript);
+            populator.addScript(dataPopulateScript);
         }
         return populator;
     }
