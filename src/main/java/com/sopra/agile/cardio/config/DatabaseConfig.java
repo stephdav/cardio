@@ -2,65 +2,124 @@ package com.sopra.agile.cardio.config;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
+import com.sopra.agile.cardio.utils.AppProfile;
+
 @Configuration
+@PropertySource("classpath:cardio.properties")
 public class DatabaseConfig {
 
-	@Value("classpath:db/sql/create-db.sql")
-	private Resource schemaScript;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DatabaseConfig.class);
 
-	@Value("classpath:db/sql/insert-data.sql")
-	private Resource dataScript;
+    private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
+    private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
+    private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
+    private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
 
-	// @Bean
-	// public DataSource dataSource() {
-	// // no need shutdown, EmbeddedDatabaseFactoryBean will take care of this
-	// EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-	// EmbeddedDatabase db =
-	// builder.setType(EmbeddedDatabaseType.H2).addScript("db/sql/create-db.sql")
-	// .addScript("db/sql/insert-data.sql").build();
-	// return db;
-	// }
+    @Value("classpath:db/sql/create-db.sql")
+    private Resource schemaScript;
 
-	@Bean
-	public DataSource dataSource() {
-		DriverManagerDataSource dmds = new DriverManagerDataSource();
-		dmds.setDriverClassName("org.h2.Driver");
-		dmds.setUrl("jdbc:h2:./testDb");
-		dmds.setUsername("sa");
-		dmds.setPassword("sa");
-		return dmds;
-	}
+    @Value("classpath:db/sql/clear-data.sql")
+    private Resource cleanScript;
 
-	@Bean
-	public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+    @Value("classpath:db/sql/insert-data.sql")
+    private Resource dataScript;
 
-		final DataSourceInitializer initializer = new DataSourceInitializer();
-		initializer.setDataSource(dataSource);
-		initializer.setDatabasePopulator(databasePopulator());
-		// initializer.setDatabaseCleaner(databaseCleaner());
-		return initializer;
-	}
+    @Autowired
+    private Environment env;
 
-	private DatabasePopulator databasePopulator() {
-		final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-		populator.addScript(schemaScript);
-		// populator.addScript(dataScript);
-		return populator;
-	}
+    @Bean
+    public DataSource dataSource() {
+        DataSource ds = null;
+        try {
+            // Check params
+            getEnv(PROPERTY_NAME_DATABASE_DRIVER);
+            String url = getEnv(PROPERTY_NAME_DATABASE_URL);
+            getEnv(PROPERTY_NAME_DATABASE_USERNAME);
+            getEnv(PROPERTY_NAME_DATABASE_PASSWORD);
+            LOGGER.info("Start using database URL {}", url);
+            ds = realDataSource();
+        } catch (IllegalStateException ex) {
+            // Missing params
+            LOGGER.warn("Missing database properties");
+            LOGGER.warn("Start using inMemory database");
+            ds = embeddedDataSource();
+        }
+        return ds;
+    }
 
-	@Bean
-	public JdbcTemplate jdbcTemplate(final DataSource dataSource) {
-		return new JdbcTemplate(dataSource);
-	}
+    @Bean
+    public DataSourceInitializer dataSourceInitializer(final DataSource dataSource) {
+        final DataSourceInitializer initializer = new DataSourceInitializer();
+        initializer.setDataSource(dataSource);
+        initializer.setDatabasePopulator(databasePopulator());
+        return initializer;
+    }
+
+    @Bean
+    public JdbcTemplate jdbcTemplate(final DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
+    private DataSource realDataSource() {
+        DriverManagerDataSource dmds = new DriverManagerDataSource();
+        dmds.setDriverClassName(getEnv(PROPERTY_NAME_DATABASE_DRIVER));
+        dmds.setUrl(getEnv(PROPERTY_NAME_DATABASE_URL));
+        dmds.setUsername(getEnv(PROPERTY_NAME_DATABASE_USERNAME));
+        dmds.setPassword(getEnv(PROPERTY_NAME_DATABASE_PASSWORD));
+        return dmds;
+    }
+
+    private DataSource embeddedDataSource() {
+        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
+        EmbeddedDatabase db = builder.setType(EmbeddedDatabaseType.H2).build();
+        return db;
+    }
+
+    private DatabasePopulator databasePopulator() {
+        final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+        populator.addScript(schemaScript);
+        if (isProfileActive(AppProfile.cleardb)) {
+            populator.addScript(cleanScript);
+        }
+        if (isProfileActive(AppProfile.populatedb)) {
+            populator.addScript(dataScript);
+        }
+        return populator;
+    }
+
+    private String getEnv(String param) {
+        return env.getRequiredProperty(param);
+    }
+
+    private boolean isProfileActive(AppProfile profile) {
+        boolean isActive = false;
+        if (profile != null && env.getActiveProfiles() != null) {
+            for (String p : env.getActiveProfiles()) {
+                if (profile.name().equals(p)) {
+                    isActive = true;
+                    break;
+                }
+            }
+        }
+        return isActive;
+    }
 
 }
