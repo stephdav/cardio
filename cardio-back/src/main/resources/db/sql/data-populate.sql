@@ -1,0 +1,14 @@
+INSERT INTO USERS VALUES ('01', 'SDD', 'Stephane', 'David');
+INSERT INTO USERS VALUES ('02', 'BBB', 'Babane', '');
+INSERT INTO USERS VALUES ('03', 'TBO', 'Tristan', 'Bouju');
+
+INSERT INTO USERS VALUES ('10', 'U10', 'User10', 'Group10');
+INSERT INTO USERS VALUES ('11', 'U11', 'User11', 'Group11');
+INSERT INTO USERS VALUES ('12', 'U12', 'User12', 'Group12');
+INSERT INTO USERS VALUES ('13', 'U13', 'User13', 'Group13');
+INSERT INTO USERS VALUES ('14', 'U14', 'User14', 'Group14');
+INSERT INTO USERS VALUES ('15', 'U15', 'User15', 'Group15');
+INSERT INTO USERS VALUES ('16', 'U16', 'User16', 'Group16');
+INSERT INTO USERS VALUES ('17', 'U17', 'User17', 'Group17');
+INSERT INTO USERS VALUES ('18', 'U18', 'User18', 'Group18');
+INSERT INTO USERS VALUES ('19', 'U19', 'User19', 'Group19');

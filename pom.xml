@@ -5,10 +5,15 @@
 
 	<groupId>com.sopra</groupId>
 	<artifactId>agile.cardio</artifactId>
+	<packaging>pom</packaging>
 	<version>0.0.1</version>
 
-	<name>Spark Root Back</name>
-	<description>Base project for Spark application</description>
+	<name>Cardio</name>
+	<description>Cardio application</description>
+
+    <modules>
+        <module>cardio-back</module>
+    </modules>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
@@ -27,60 +32,10 @@
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
 
 		<junit.version>4.12</junit.version>
-		<mockito.version>1.10.19</mockito.version>
+		<mockito.version>2.1.0</mockito.version>
 	</properties>
 
 	<dependencies>
-		<!-- Spark Java -->
-		<dependency>
-			<groupId>com.sparkjava</groupId>
-			<artifactId>spark-core</artifactId>
-			<version>${spark.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sparkjava</groupId>
-			<artifactId>spark-template-pebble</artifactId>
-			<version>${spark.peeble.version}</version>
-		</dependency>
-
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
-		<!-- database -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<version>${h2.version}</version>
-		</dependency>
-
-		<!--logging -->
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>${logback.version}</version>
-		</dependency>
-
-		<!-- utils -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.7</version>
-		</dependency>
-
 		<!-- tests -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -88,33 +43,10 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
 	</dependencies>
 
 	<build>
-
-		<resources>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<filtering>false</filtering>
-				<directory>src/main/java</directory>
-				<includes>
-					<include>**</include>
-				</includes>
-				<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes>
-			</resource>
-		</resources>
-
+	<pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -125,29 +57,7 @@
 					<target>${jdk.version}</target>
 				</configuration>
 			</plugin>
-
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>appassembler-maven-plugin</artifactId>
-				<version>1.10</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<goals>
-							<goal>assemble</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<programs>
-						<program>
-							<mainClass>com.sopra.agile.cardio.App</mainClass>
-							<id>srb</id>
-						</program>
-					</programs>
-				</configuration>
-			</plugin>
-
 		</plugins>
+	</pluginManagement>
 	</build>
 </project>

@@ -1,0 +1,4 @@
+INSERT INTO USERS VALUES ('01', 'SDD', 'Stephane', 'David');
+INSERT INTO USERS VALUES ('02', 'BBB', 'Babane', '');
+INSERT INTO USERS VALUES ('03', 'TBO', 'Tristan', 'Bouju');
+INSERT INTO USERS VALUES ('TO_BE_DELETED', 'TO', 'BE', 'DELETED');
