@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.sopra.agile.cardio.dao.utils.UIDGenerator;
+import com.sopra.agile.cardio.back.dao.utils.UIDGenerator;
 
 public class UIDGeneratorTest {
 

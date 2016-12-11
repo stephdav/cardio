@@ -6,7 +6,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.sopra.spark.root" level="DEBUG" />
+	<logger name="com.sopra.agile.cardio.app" level="DEBUG" />
 
 	<logger name="org.eclipse.jetty" level="INFO" />
 	<logger name="spark" level="DEBUG" />

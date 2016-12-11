@@ -16,6 +16,12 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.sopra</groupId>
+			<artifactId>agile.cardio-common</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+
 		<!-- Spark Java -->
 		<dependency>
 			<groupId>com.sparkjava</groupId>

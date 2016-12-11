@@ -15,10 +15,10 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sopra.agile.cardio.dao.UserDao;
-import com.sopra.agile.cardio.model.User;
-import com.sopra.agile.cardio.service.UserService;
-import com.sopra.agile.cardio.service.UserServiceImpl;
+import com.sopra.agile.cardio.back.dao.UserDao;
+import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.back.service.UserService;
+import com.sopra.agile.cardio.back.service.UserServiceImpl;
 
 public class UserServiceTest {
 

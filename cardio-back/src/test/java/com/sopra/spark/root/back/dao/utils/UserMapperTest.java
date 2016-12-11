@@ -11,8 +11,8 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sopra.agile.cardio.dao.utils.UserMapper;
-import com.sopra.agile.cardio.model.User;
+import com.sopra.agile.cardio.back.dao.utils.UserMapper;
+import com.sopra.agile.cardio.back.model.User;
 
 public class UserMapperTest {
 

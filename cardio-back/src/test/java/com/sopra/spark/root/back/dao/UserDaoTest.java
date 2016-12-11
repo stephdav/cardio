@@ -13,9 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.sopra.agile.cardio.dao.UserDao;
-import com.sopra.agile.cardio.dao.UserDaoImpl;
-import com.sopra.agile.cardio.model.User;
+import com.sopra.agile.cardio.back.dao.UserDao;
+import com.sopra.agile.cardio.back.dao.UserDaoImpl;
+import com.sopra.agile.cardio.back.model.User;
 
 public class UserDaoTest {
 

@@ -6,12 +6,8 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.sopra.spark.root" level="DEBUG" />
+	<logger name="com.sopra.agile.cardio.common" level="DEBUG" />
 
-	<logger name="org.eclipse.jetty" level="INFO" />
-	<logger name="spark" level="DEBUG" />
-	<logger name="spark.Request" level="INFO" />
-	
 	<root level="debug">
 		<appender-ref ref="STDOUT" />
 	</root>
