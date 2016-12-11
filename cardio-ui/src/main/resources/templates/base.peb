@@ -34,12 +34,11 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">{{ title }}</a>
+        <a class="navbar-brand" href="/ui">{{ title }}</a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="/users">users</a></li>
-          <li><a href="/tasks">tasks</a></li>
+          <li><a href="/ui/users">users</a></li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

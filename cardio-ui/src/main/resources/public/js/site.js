@@ -5,7 +5,7 @@ $(document).ready(function() {
 function initSite() {
 }
 
-var BACK_URL = "http://localhost:5678";
+var BACK_URL = "http://localhost:4567";
 
 function handleAjaxError(jqXHR, status, errorThrown) {
 	log("Ajax error (jqXHR.status=" + jqXHR.status + " - status=" + status + " - errorThrown=" + errorThrown+")");

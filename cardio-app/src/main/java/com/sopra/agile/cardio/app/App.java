@@ -22,8 +22,9 @@ public class App {
         @SuppressWarnings("resource")
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(CardioBack.class);
 
-        // Setup REST
+        // Setup UI
         new UIConfig();
+        // Setup REST
         new RestConfig(ctx.getBean(RestController.class));
 
         // Enable Route overview for debugging purpose

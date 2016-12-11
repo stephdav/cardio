@@ -5,7 +5,7 @@ $(document).ready(function() {
 function initTasks() {
 	$('#addUser').on('click', function(e) {
 		e.stopPropagation();
-		createUser($('#taskDescription').val());
+		createUser($('#userLogin').val(),$('#userFirstname').val(),$('#userLastname').val());
 	});
 	$('#userlist').on('click', '.deleteUser', function(e) {
 		e.stopPropagation();
@@ -46,8 +46,8 @@ function getUsersSorted(key) {
 	});
 }
 
-function createUser(taskDesc) {
-	var payload = {description: taskDesc};
+function createUser(login, firstname, lasstname) {
+	var payload = {login: login, firstname: firstname, lastname: lasstname};
 	ajaxPost("/api/users", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("User " + hv.location + " created");
