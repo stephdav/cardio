@@ -13,6 +13,8 @@
 
     <modules>
         <module>cardio-back</module>
+        <module>cardio-common</module>
+        <module>cardio-ui</module>
     </modules>
 
 	<properties>
