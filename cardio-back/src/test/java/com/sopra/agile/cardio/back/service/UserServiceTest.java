@@ -1,4 +1,4 @@
-package com.sopra.spark.root.back.service;
+package com.sopra.agile.cardio.back.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

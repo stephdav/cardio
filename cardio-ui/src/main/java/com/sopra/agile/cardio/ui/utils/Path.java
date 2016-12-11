@@ -2,9 +2,10 @@ package com.sopra.agile.cardio.ui.utils;
 
 public class Path {
     public static class Web {
-        public static final String BASE = "/ui";
-        public static final String INDEX = BASE + "/";
-        public static final String USERS = BASE + "/users/";
+        public static final String BASE = "/ui/";
+        public static final String ALL = BASE + "*";
+        public static final String INDEX = BASE;
+        public static final String USERS = BASE + "users/";
     }
 
     public static class Template {

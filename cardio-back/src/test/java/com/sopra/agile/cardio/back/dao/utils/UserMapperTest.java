@@ -1,4 +1,4 @@
-package com.sopra.spark.root.back.dao.utils;
+package com.sopra.agile.cardio.back.dao.utils;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;

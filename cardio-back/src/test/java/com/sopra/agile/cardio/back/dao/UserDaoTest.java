@@ -1,7 +1,7 @@
-package com.sopra.spark.root.back.dao;
+package com.sopra.agile.cardio.back.dao;
 
-import static com.sopra.spark.root.back.dao.DatabaseUtils.count;
-import static com.sopra.spark.root.back.dao.DatabaseUtils.initDbConnexion;
+import static com.sopra.agile.cardio.back.dao.DatabaseUtils.count;
+import static com.sopra.agile.cardio.back.dao.DatabaseUtils.initDbConnexion;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;

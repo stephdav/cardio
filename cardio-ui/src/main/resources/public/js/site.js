@@ -3,9 +3,29 @@ $(document).ready(function() {
 });
 
 function initSite() {
+	getProjectName();
 }
 
 var BACK_URL = "http://localhost:4567";
+
+
+function getProjectName() {
+	ajaxGet("/api/config/parameters/project.name", function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 206) {
+			updateUsers(data, hv);
+		} else {
+			log("Error getting parameter 'project.name': " + errorThrown);
+		}
+	});
+}
+
+function updateUsers(data, hv) {
+	if (hv.status == 200 || hv.status == 206) {
+		$('#project-name').text(data.value);
+	}
+}
+
+// ===========================================================================
 
 function handleAjaxError(jqXHR, status, errorThrown) {
 	log("Ajax error (jqXHR.status=" + jqXHR.status + " - status=" + status + " - errorThrown=" + errorThrown+")");

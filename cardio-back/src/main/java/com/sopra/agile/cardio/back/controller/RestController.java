@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import com.sopra.agile.cardio.back.model.ObjectMapper;
+import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.back.service.ConfigService;
 import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
@@ -23,8 +25,23 @@ public class RestController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
+    private ConfigService svcConfig;
+
+    @Autowired
     private UserService svcUser;
 
+    // === CONFIG ============================================================
+
+    public Parameter getParameter(Request req, Response res, String key) {
+        res.type("application/json");
+        String value = svcConfig.getProperty(key);
+        if (value != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return new Parameter(key, value);
+    }
     // === USERS =============================================================
 
     public List<User> getAllUsers(Request req, Response res) {

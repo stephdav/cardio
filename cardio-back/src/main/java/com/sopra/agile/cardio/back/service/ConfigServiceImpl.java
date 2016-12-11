@@ -1,0 +1,32 @@
+package com.sopra.agile.cardio.back.service;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
+
+@Service
+@PropertySource("classpath:cardio.properties")
+public class ConfigServiceImpl implements ConfigService {
+
+    private static final String DEFAULT_VALUE = "";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfigServiceImpl.class);
+
+    @Autowired
+    private Environment env;
+
+    @Override
+    public String getProperty(String key) {
+        String value = DEFAULT_VALUE;
+        try {
+            value = env.getRequiredProperty(key);
+        } catch (IllegalStateException ex) {
+            LOGGER.warn("Unknown parameter '{}'", key);
+        }
+        return value;
+    }
+
+}

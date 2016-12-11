@@ -15,6 +15,7 @@ import com.sopra.agile.cardio.back.utils.JsonTransformer;
 public class RestConfig {
 
     private static final String PARAM_ID = ":id";
+    private static final String PARAM_KEY = ":key";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestConfig.class);
 
@@ -45,6 +46,10 @@ public class RestConfig {
     }
 
     private void setupRoutes() {
+
+        // USERS
+        get("/api/config/parameters/" + PARAM_KEY, (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)),
+                new JsonTransformer());
 
         // USERS
         get("/api/users", (req, res) -> controller.getAllUsers(req, res), new JsonTransformer());

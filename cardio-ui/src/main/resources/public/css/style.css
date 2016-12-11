@@ -8,6 +8,23 @@ body {
 	margin-bottom: 25px;
 }
 
+/** ======= NAVBAR ======= */
+.navbar-header img {
+	position: relative;
+	top: -10px;
+	height: 40px;
+}
+
+#navbar img {
+	margin: 5px;
+	height: 40px;
+}
+
+#project-name {
+	font-weight: bold;
+}
+
+/** ======= FOOTER ======= */
 .footer {
 	position: absolute;
 	bottom: 0;
@@ -31,28 +48,18 @@ body {
 	color: #777;
 }
 
+.footer>.container {
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+/** =======  ======= */
 body>.container, body>.container-fluid {
 	padding: 60px 15px 0;
 }
 
 .container .text-muted {
 	margin: 20px 0;
-}
-
-.footer>.container {
-	padding-right: 15px;
-	padding-left: 15px;
-}
-
-.navbar-header img {
-	position: relative;
-	top: -10px;
-	height: 40px;
-}
-
-#navbar img {
-	margin: 5px;
-	height: 40px;
 }
 
 .starter-template {
@@ -63,3 +70,5 @@ body>.container, body>.container-fluid {
 .block {
 	margin: 10px;
 }
+
+/** =======  ======= */

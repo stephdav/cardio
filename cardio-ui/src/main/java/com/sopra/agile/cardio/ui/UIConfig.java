@@ -3,6 +3,7 @@ package com.sopra.agile.cardio.ui;
 import static spark.Spark.after;
 import static spark.Spark.before;
 import static spark.Spark.get;
+import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
 import com.sopra.agile.cardio.ui.controller.IndexController;
@@ -18,15 +19,19 @@ public class UIConfig {
         staticFiles.location("/public");
         staticFiles.expireTime(600L);
 
-        // Set up before-filters (called before each get/post)
-        before(Path.Web.BASE + "/*", Filters.addTrailingSlashes);
+        // Redirect on index
+        redirect.get("/", Path.Web.INDEX);
 
+        // Set up before-filters (called before each get/post)
+        before(Path.Web.ALL, Filters.addTrailingSlashes);
+
+        //
         get(Path.Web.INDEX, IndexController.home);
         get(Path.Web.USERS, UserController.users);
-        get(Path.Web.BASE + "/*", ViewUtil.notFound);
+        get(Path.Web.ALL, ViewUtil.notFound);
 
         // Set up after-filters (called after each get/post)
-        after(Path.Web.BASE + "/*", Filters.addGzipHeader);
+        after(Path.Web.ALL, Filters.addGzipHeader);
 
     }
 

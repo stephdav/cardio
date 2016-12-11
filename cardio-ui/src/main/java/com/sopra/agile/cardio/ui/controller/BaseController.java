@@ -11,6 +11,7 @@ public class BaseController {
         Map<String, Object> attributes = initMap();
         attributes.put("title", "cardio");
         attributes.put("description", "cardio application");
+        attributes.put("projectName", "projectName");
         return attributes;
     }
 
