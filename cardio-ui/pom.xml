@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-    <parent>
+	<parent>
 		<groupId>com.sopra</groupId>
 		<artifactId>agile.cardio</artifactId>
 		<version>0.0.1</version>
-    </parent>
+	</parent>
 
 	<artifactId>agile.cardio-ui</artifactId>
 
@@ -16,6 +16,17 @@
 	</properties>
 
 	<dependencies>
+		<!-- Spark Java -->
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-core</artifactId>
+			<version>${spark.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sparkjava</groupId>
+			<artifactId>spark-template-pebble</artifactId>
+			<version>${spark.peeble.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -36,18 +47,18 @@
 				</excludes>
 			</resource>
 		</resources>
-		
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <testFailureIgnore>true</testFailureIgnore>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<testFailureIgnore>true</testFailureIgnore>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 
 		<plugins>
 			<plugin>

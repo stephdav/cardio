@@ -28,11 +28,6 @@
 			<artifactId>spark-core</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.sparkjava</groupId>
-			<artifactId>spark-template-pebble</artifactId>
-			<version>${spark.peeble.version}</version>
-		</dependency>
 
 		<!-- Spring -->
 		<dependency>

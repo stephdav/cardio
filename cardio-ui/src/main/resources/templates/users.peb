@@ -1,0 +1,35 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+  <p class="lead"><span id="nbUsers"></span> users</p>
+  <div class="block form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="userLogin" placeholder="JDO">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="userFirstname" placeholder="John">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="userLastname" placeholder="Doe">
+    </div>
+    <button id="addUser" type="button" class="btn btn-default">add user</button>
+  </div>
+  <div class="block">
+    <button id="sortByLogin" type="button" class="btn btn-default">
+      login <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+    </button>
+    <button id="sortByFirstname" type="button" class="btn btn-default">
+      firstname <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+    </button>
+    <button id="sortByLastname" type="button" class="btn btn-default">
+      lastname <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+    </button>
+  </div>
+  <div class="block">
+    <ul id="userlist" class="list-group"></ul>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/users.js"></script>
+{% endblock %}

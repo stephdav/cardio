@@ -9,6 +9,7 @@ import com.sopra.agile.cardio.back.config.CardioBack;
 import com.sopra.agile.cardio.back.config.RestConfig;
 import com.sopra.agile.cardio.back.controller.RestController;
 import com.sopra.agile.cardio.common.utils.AppProfile;
+import com.sopra.agile.cardio.ui.UIConfig;
 
 public class App {
 
@@ -22,6 +23,7 @@ public class App {
         AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(CardioBack.class);
 
         // Setup REST
+        new UIConfig();
         new RestConfig(ctx.getBean(RestController.class));
 
         // Enable Route overview for debugging purpose

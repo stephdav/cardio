@@ -35,6 +35,11 @@
 		</dependency>
 		<dependency>
 			<groupId>com.sopra</groupId>
+			<artifactId>agile.cardio-ui</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-back</artifactId>
 			<version>0.0.1</version>
 		</dependency>

@@ -1,0 +1,7 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+  <div class="starter-template">
+    <p class="lead">Page not found</p>
+  </div>
+{% endblock %}

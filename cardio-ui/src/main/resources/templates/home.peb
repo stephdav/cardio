@@ -1,0 +1,8 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+  <div class="starter-template">
+    <p class="lead">Template for projects using Spark</p>
+    <p><img src="images/logo.png"></p>
+  </div>
+{% endblock %}
