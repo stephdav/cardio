@@ -11,11 +11,12 @@
 	<name>Cardio</name>
 	<description>Cardio application</description>
 
-    <modules>
-        <module>cardio-back</module>
-        <module>cardio-common</module>
-        <module>cardio-ui</module>
-    </modules>
+	<modules>
+		<module>cardio-app</module>
+		<module>cardio-back</module>
+		<module>cardio-common</module>
+		<module>cardio-ui</module>
+	</modules>
 
 	<properties>
 		<jdk.version>1.8</jdk.version>
@@ -38,6 +39,12 @@
 	</properties>
 
 	<dependencies>
+		<!--logging -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
 		<!-- tests -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -48,18 +55,18 @@
 	</dependencies>
 
 	<build>
-	<pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<source>${jdk.version}</source>
-					<target>${jdk.version}</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</pluginManagement>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.5.1</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
 </project>

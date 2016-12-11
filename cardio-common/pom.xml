@@ -8,9 +8,9 @@
 		<version>0.0.1</version>
     </parent>
 
-	<artifactId>agile.cardio-ui</artifactId>
+	<artifactId>agile.cardio-common</artifactId>
 
-	<name>cardio-ui component</name>
+	<name>cardio-common component</name>
 
 	<properties>
 	</properties>

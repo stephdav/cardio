@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.env.AbstractEnvironment;
 
-import com.sopra.agile.cardio.config.AppConfig;
+import com.sopra.agile.cardio.config.CardioBack;
 import com.sopra.agile.cardio.config.RestConfig;
 import com.sopra.agile.cardio.controller.RestController;
 import com.sopra.agile.cardio.utils.AppProfile;
@@ -19,7 +19,7 @@ public class App {
         activateProfiles(args);
 
         @SuppressWarnings("resource")
-        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+        AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext(CardioBack.class);
 
         // Setup REST
         new RestConfig(ctx.getBean(RestController.class));
