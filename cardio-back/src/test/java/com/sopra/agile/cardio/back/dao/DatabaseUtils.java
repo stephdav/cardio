@@ -20,6 +20,7 @@ public class DatabaseUtils {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2);
         // Create tables
         builder.addScript("db/sql/create-db.sql");
+        builder.addScript("db/sql/data-clear.sql");
         if (data != null) {
             // Insert data
             builder.addScript("db/sql/" + data);
