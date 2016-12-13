@@ -10,9 +10,11 @@ import org.springframework.context.annotation.Import;
 import com.sopra.agile.cardio.back.controller.ControllerConfig;
 import com.sopra.agile.cardio.back.dao.DaoConfig;
 import com.sopra.agile.cardio.back.service.ServiceConfig;
+import com.sopra.agile.cardio.back.utils.UtilConfig;
 
 @Configuration
-@Import(value = { DatabaseConfig.class, ControllerConfig.class, ServiceConfig.class, DaoConfig.class })
+@Import(value = { DatabaseConfig.class, ControllerConfig.class, ServiceConfig.class, DaoConfig.class,
+        UtilConfig.class })
 public class CardioBack {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CardioBack.class);

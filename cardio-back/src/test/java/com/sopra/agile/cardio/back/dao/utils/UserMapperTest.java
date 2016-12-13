@@ -12,7 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sopra.agile.cardio.back.dao.utils.UserMapper;
-import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.common.model.User;
 
 public class UserMapperTest {
 

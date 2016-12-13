@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.UserDao;
-import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.common.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {

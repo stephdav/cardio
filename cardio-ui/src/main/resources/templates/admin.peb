@@ -1,0 +1,24 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+  <p class="lead"><span id="nbSprints"></span> sprints</p>
+  <div class="block form-inline">
+    <div class="form-group">
+      <input type="text" class="form-control" id="sprintName" placeholder="#">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="sprintStartDate" placeholder="from">
+    </div>
+    <div class="form-group">
+      <input type="text" class="form-control" id="sprintEndDate" placeholder="to">
+    </div>
+    <button id="addSprint" type="button" class="btn btn-default">add sprint</button>
+  </div>
+  <div class="block">
+    <ul id="sprintslist" class="list-group"></ul>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/sprints.js"></script>
+{% endblock %}

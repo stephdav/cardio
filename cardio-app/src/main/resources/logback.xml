@@ -6,11 +6,12 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.sopra.agile.cardio.app" level="DEBUG" />
+	<logger name="com.sopra.agile.cardio" level="DEBUG" />
 
 	<logger name="org.eclipse.jetty" level="INFO" />
 	<logger name="spark" level="DEBUG" />
 	<logger name="spark.Request" level="INFO" />
+	<logger name="ma.glasnost.orika" level="INFO" />
 	
 	<root level="debug">
 		<appender-ref ref="STDOUT" />

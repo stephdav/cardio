@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.utils.UIDGenerator;
 import com.sopra.agile.cardio.back.dao.utils.UserMapper;
-import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.common.model.User;
 
 @Service
 public class UserDaoImpl implements UserDao {

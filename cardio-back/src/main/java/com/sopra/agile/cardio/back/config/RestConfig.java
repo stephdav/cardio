@@ -47,9 +47,15 @@ public class RestConfig {
 
     private void setupRoutes() {
 
-        // USERS
-        get("/api/config/parameters/" + PARAM_KEY, (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)),
+        // PARAMETERS
+        get("/api/config/parameters/" + PARAM_KEY,
+                (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)), new JsonTransformer());
+
+        // SPRINTS
+        get("/api/sprints", (req, res) -> controller.getAllSprints(req, res), new JsonTransformer());
+        get("/api/sprints/" + PARAM_ID, (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());
+        post("/api/sprints", (req, res) -> controller.createSprint(req, res));
 
         // USERS
         get("/api/users", (req, res) -> controller.getAllUsers(req, res), new JsonTransformer());

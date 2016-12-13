@@ -33,6 +33,8 @@
 		<logback.version>1.1.7</logback.version>
 
 		<commons.beanutils.version>1.9.2</commons.beanutils.version>
+		<orika.version>1.4.6</orika.version>
+		<joda.time.version>2.9.6</joda.time.version>
 
 		<junit.version>4.12</junit.version>
 		<mockito.version>2.1.0</mockito.version>

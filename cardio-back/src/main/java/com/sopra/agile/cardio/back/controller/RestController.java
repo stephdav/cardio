@@ -10,11 +10,13 @@ import org.springframework.stereotype.Controller;
 
 import com.sopra.agile.cardio.back.model.ObjectMapper;
 import com.sopra.agile.cardio.back.model.Parameter;
-import com.sopra.agile.cardio.back.model.User;
 import com.sopra.agile.cardio.back.service.ConfigService;
+import com.sopra.agile.cardio.back.service.SprintService;
 import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
+import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.model.User;
 
 import spark.Request;
 import spark.Response;
@@ -30,6 +32,9 @@ public class RestController {
     @Autowired
     private UserService svcUser;
 
+    @Autowired
+    private SprintService svcSprint;
+
     // === CONFIG ============================================================
 
     public Parameter getParameter(Request req, Response res, String key) {
@@ -42,6 +47,7 @@ public class RestController {
         }
         return new Parameter(key, value);
     }
+
     // === USERS =============================================================
 
     public List<User> getAllUsers(Request req, Response res) {
@@ -93,6 +99,53 @@ public class RestController {
         svcUser.remove(id);
         res.status(200);
         return "OK";
+    }
+
+    // === SPRINTS ===========================================================
+
+    public List<Sprint> getAllSprints(Request req, Response res) {
+
+        res.type("application/json");
+        List<Sprint> response = svcSprint.all();
+
+        // sort results
+        if (req.queryParams("sort") != null) {
+            String key = req.queryParams("sort");
+            LOGGER.debug("sort=" + key);
+            if ("name".equals(key)) {
+                response.sort(Comparator.comparing(Sprint::getName));
+            } else if ("startdate".equals(key)) {
+                response.sort(Comparator.comparing(Sprint::getStartDate));
+            } else if ("enddate".equals(key)) {
+                response.sort(Comparator.comparing(Sprint::getEndDate));
+            } else {
+                LOGGER.debug("unknown sorting key {}", key);
+                response.sort(Comparator.comparing(Sprint::getId));
+            }
+        }
+
+        // paginate results
+        List<Sprint> response2 = new Paginate<Sprint>(Sprint.class).paginate(req, res, response);
+
+        return response2;
+    }
+
+    public Sprint getSprint(Request req, Response res, String id) {
+        res.type("application/json");
+        Sprint sprint = svcSprint.find(id);
+        if (sprint != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return sprint;
+    }
+
+    public String createSprint(Request req, Response res) {
+        Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
+        res.status(201);
+        res.header("Location", "/api/sprints/" + sprint.getId());
+        return "";
     }
 
 }

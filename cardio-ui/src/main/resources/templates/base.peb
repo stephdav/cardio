@@ -42,6 +42,9 @@
         <ul class="nav navbar-nav">
           <li><a href="/ui/users/">users</a></li>
         </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/ui/admin/">administration</a></li>
+        </ul>
       </div><!--/.nav-collapse -->
     </div>
   </nav>

@@ -6,6 +6,7 @@ import static spark.Spark.get;
 import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
+import com.sopra.agile.cardio.ui.controller.AdminController;
 import com.sopra.agile.cardio.ui.controller.IndexController;
 import com.sopra.agile.cardio.ui.controller.UserController;
 import com.sopra.agile.cardio.ui.utils.Filters;
@@ -27,6 +28,7 @@ public class UIConfig {
 
         //
         get(Path.Web.INDEX, IndexController.home);
+        get(Path.Web.ADMIN, AdminController.admin);
         get(Path.Web.USERS, UserController.users);
         get(Path.Web.ALL, ViewUtil.notFound);
 

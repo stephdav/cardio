@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-import com.sopra.agile.cardio.back.model.User;
+import com.sopra.agile.cardio.common.model.User;
 
 public class UserMapper implements RowMapper<User> {
 

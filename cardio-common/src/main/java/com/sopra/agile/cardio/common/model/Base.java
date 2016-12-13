@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.model;
+package com.sopra.agile.cardio.common.model;
 
 public class Base {
 
