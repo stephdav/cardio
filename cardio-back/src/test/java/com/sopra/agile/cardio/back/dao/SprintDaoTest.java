@@ -46,11 +46,12 @@ public class SprintDaoTest {
     @Test
     public void testFindSprint() {
         // Sprint must be found
-        Sprint sprint1 = dao.find("SPR-1");
-        assertNotNull(sprint1);
-        assertEquals("1", sprint1.getName());
-        assertEquals("2016-01-01", sprint1.getStartDate());
-        assertEquals("2016-01-31", sprint1.getEndDate());
+        Sprint sprint = dao.find("SPR-1");
+        assertNotNull(sprint);
+        assertEquals("1", sprint.getName());
+        assertEquals("2016-01-01", sprint.getStartDate());
+        assertEquals("2016-01-31", sprint.getEndDate());
+        assertEquals("sprint1 goal", sprint.getGoal());
 
         // Sprint not found
         Sprint unk = dao.find("UNK");
@@ -78,6 +79,7 @@ public class SprintDaoTest {
         assertNotNull(sprint);
         assertEquals("SPR-2", sprint.getId());
         assertEquals("current", sprint.getName());
+        assertEquals("sprint2 goal", sprint.getGoal());
     }
 
 }

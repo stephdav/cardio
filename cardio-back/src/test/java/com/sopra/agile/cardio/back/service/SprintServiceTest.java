@@ -35,6 +35,7 @@ public class SprintServiceTest {
         for (int idx = 0; idx < 3; idx++) {
             month = idx + 1;
             aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
+            aSprints[idx].setGoal("GOAL" + idx);
         }
         List<Sprint> sprints = Arrays.asList(aSprints);
         when(dao.all()).thenReturn(sprints);
@@ -60,6 +61,9 @@ public class SprintServiceTest {
         Sprint sprint = svc.find("SPR-0");
         assertNotNull(sprint);
         assertEquals("NAME0", sprint.getName());
+        assertEquals("2016-1-01", sprint.getStartDate());
+        assertEquals("2016-1-15", sprint.getEndDate());
+        assertEquals("GOAL0", sprint.getGoal());
 
         // Sprint not found
         Sprint unk = svc.find("UNK");

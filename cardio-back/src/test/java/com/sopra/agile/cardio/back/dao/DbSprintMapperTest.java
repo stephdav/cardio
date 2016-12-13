@@ -15,13 +15,13 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sopra.agile.cardio.back.dao.DbSprintMapper;
 import com.sopra.agile.cardio.common.model.DbSprint;
 
 public class DbSprintMapperTest {
 
     private static final String SHOULD_BE_EQUALS = "Should be equals";
-    private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_ID, DbSprintMapper.COL_NAME };
+    private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_ID, DbSprintMapper.COL_NAME,
+            DbSprintMapper.COL_GOAL };
     private static final String[] DATE_COLUMNS = { DbSprintMapper.COL_STARTDATE, DbSprintMapper.COL_ENDDATE };
 
     private static final long NOW = System.currentTimeMillis();
@@ -52,7 +52,7 @@ public class DbSprintMapperTest {
         assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_NAME, usr.getName());
         assertEquals(SHOULD_BE_EQUALS, today, usr.getStartDate());
         assertEquals(SHOULD_BE_EQUALS, today, usr.getEndDate());
-        new Date(0).equals(null);
+        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_GOAL, usr.getGoal());
     }
 
     @Test

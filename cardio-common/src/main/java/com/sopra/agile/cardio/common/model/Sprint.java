@@ -5,6 +5,7 @@ public class Sprint extends Base {
     private String name;
     private String startDate;
     private String endDate;
+    private String goal;
 
     public Sprint() {
         super();
@@ -41,4 +42,11 @@ public class Sprint extends Base {
         this.endDate = endDate;
     }
 
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
 }

@@ -19,6 +19,7 @@ function getCurrentSprint() {
 function updateHomeView(sprint, hv) {
 	updateSprintDate(sprint.startDate, '#from-month', '#from-day');
 	$('#sprint-name').text('#' + sprint.name);
+	$('#sprint-goal').text(sprint.goal);
 	updateSprintDate(sprint.endDate, '#to-month', '#to-day');
 }
 

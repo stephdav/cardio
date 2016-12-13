@@ -11,7 +11,7 @@ public class DbSprintTest {
     @Test
     public void testDefaultConstructor() {
         DbSprint usr = new DbSprint();
-        assertObject(usr, null, null, null, null);
+        assertObject(usr, null, null, null, null, null);
     }
 
     @Test
@@ -20,7 +20,7 @@ public class DbSprintTest {
         LocalDate end = start.plusDays(14);
 
         DbSprint usr = new DbSprint("id", "name", start, end);
-        assertObject(usr, "id", "name", start, end);
+        assertObject(usr, "id", "name", start, end, null);
     }
 
     @Test
@@ -33,11 +33,12 @@ public class DbSprintTest {
         usr.setName("name");
         usr.setStartDate(start);
         usr.setEndDate(end);
-        assertObject(usr, "id", "name", start, end);
+        usr.setGoal("goal");
+        assertObject(usr, "id", "name", start, end, "goal");
     }
 
     private void assertObject(DbSprint usr, final String id, final String name, final LocalDate startDate,
-            final LocalDate endDate) {
+            final LocalDate endDate, final String goal) {
         if (id == null) {
             assertNull(usr.getId());
         } else {
@@ -57,6 +58,11 @@ public class DbSprintTest {
             assertNull(usr.getEndDate());
         } else {
             assertEquals(endDate, usr.getEndDate());
+        }
+        if (goal == null) {
+            assertNull(usr.getGoal());
+        } else {
+            assertEquals(goal, usr.getGoal());
         }
     }
 

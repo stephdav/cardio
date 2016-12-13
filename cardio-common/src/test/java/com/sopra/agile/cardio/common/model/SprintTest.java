@@ -10,13 +10,13 @@ public class SprintTest {
     @Test
     public void testDefaultConstructor() {
         Sprint usr = new Sprint();
-        assertObject(usr, null, null, null, null);
+        assertObject(usr, null, null, null, null, null);
     }
 
     @Test
     public void testConstructor() {
         Sprint usr = new Sprint("id", "name", "start", "end");
-        assertObject(usr, "id", "name", "start", "end");
+        assertObject(usr, "id", "name", "start", "end", null);
     }
 
     @Test
@@ -26,11 +26,12 @@ public class SprintTest {
         usr.setName("name");
         usr.setStartDate("start");
         usr.setEndDate("end");
-        assertObject(usr, "id", "name", "start", "end");
+        usr.setGoal("goal");
+        assertObject(usr, "id", "name", "start", "end", "goal");
     }
 
     private void assertObject(Sprint usr, final String id, final String name, final String startDate,
-            final String endDate) {
+            final String endDate, final String goal) {
         if (id == null) {
             assertNull(usr.getId());
         } else {
@@ -50,6 +51,11 @@ public class SprintTest {
             assertNull(usr.getEndDate());
         } else {
             assertEquals(endDate, usr.getEndDate());
+        }
+        if (goal == null) {
+            assertNull(usr.getGoal());
+        } else {
+            assertEquals(goal, usr.getGoal());
         }
     }
 

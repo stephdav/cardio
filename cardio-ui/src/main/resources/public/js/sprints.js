@@ -28,7 +28,7 @@ function updateSprints(data, hv) {
 			content += '<li class="list-group-item" id="' + sprint.id + '">';
 			content += '<div class="clearfix">';
 			content += '<label>';
-			content += '[' + sprint.name + '] from '+ sprint.startDate + ' to ' + sprint.endDate;
+			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + ' / goal: ' + sprint.goal;
 			content += '</label>';
 			content += '</div></li>';
 		});

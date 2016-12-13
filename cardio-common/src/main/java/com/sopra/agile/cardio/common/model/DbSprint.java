@@ -7,6 +7,7 @@ public class DbSprint extends Base {
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String goal;
 
     public DbSprint() {
         super();
@@ -43,4 +44,11 @@ public class DbSprint extends Base {
         this.endDate = endDate;
     }
 
+    public String getGoal() {
+        return goal;
+    }
+
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
 }

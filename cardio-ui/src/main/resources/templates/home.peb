@@ -11,7 +11,7 @@
     <div class="col-md-10">
       <div class="current-sprint-block">
         <div class="text-center current-sprint-name"><span id="sprint-name">no pending sprint</span></div>
-        <div class="text-center current-sprint-objective"> - </div>
+        <div class="text-center current-sprint-goal"><span id="sprint-goal">no goal</span></div>
       </div>
     </div>
     <div class="col-md-1">
