@@ -9,8 +9,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.sopra.agile.cardio.back.dao.utils.UIDGenerator;
-import com.sopra.agile.cardio.back.dao.utils.UserMapper;
 import com.sopra.agile.cardio.common.model.User;
 
 @Service

@@ -10,8 +10,6 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import com.sopra.agile.cardio.back.dao.utils.DbSprintMapper;
-import com.sopra.agile.cardio.back.dao.utils.UIDGenerator;
 import com.sopra.agile.cardio.back.utils.converter.Converter;
 import com.sopra.agile.cardio.common.model.DbSprint;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -80,6 +78,21 @@ public class SprintDaoImpl implements SprintDao {
         LOGGER.info("remove '{}' ...", id);
         String SQL = "delete from SPRINTS where id = ?";
         jdbcTemplate.update(SQL, id);
+    }
+
+    @Override
+    public Sprint current() {
+        LOGGER.info("current ...");
+        String sql = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
+
+        List<DbSprint> dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
+
+        Sprint sprint = null;
+        if (dbsprints != null && !dbsprints.isEmpty()) {
+            sprint = mapper.map(dbsprints.get(0));
+        }
+
+        return sprint;
     }
 
 }

@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.dao.utils;
+package com.sopra.agile.cardio.back.dao;
 
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.junit.Assert.assertEquals;
@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
-import com.sopra.agile.cardio.back.dao.utils.UIDGenerator;
+import com.sopra.agile.cardio.back.dao.UIDGenerator;
 
 public class UIDGeneratorTest {
 

@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.dao.utils;
+package com.sopra.agile.cardio.back.dao;
 
 import java.sql.Date;
 import java.sql.ResultSet;

@@ -40,4 +40,10 @@ public class SprintServiceImpl implements SprintService {
         return sprintDao.add(sprint);
     }
 
+    @Override
+    public Sprint currentSprint() {
+        LOGGER.info("currentSprint ...");
+        return sprintDao.current();
+    }
+
 }

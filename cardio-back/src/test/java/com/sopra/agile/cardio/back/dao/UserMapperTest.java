@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.dao.utils;
+package com.sopra.agile.cardio.back.dao;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -11,7 +11,7 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sopra.agile.cardio.back.dao.utils.UserMapper;
+import com.sopra.agile.cardio.back.dao.UserMapper;
 import com.sopra.agile.cardio.common.model.User;
 
 public class UserMapperTest {

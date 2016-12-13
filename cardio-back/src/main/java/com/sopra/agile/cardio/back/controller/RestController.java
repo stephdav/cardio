@@ -148,4 +148,15 @@ public class RestController {
         return "";
     }
 
+    public Sprint getCurrentSprint(Request req, Response res) {
+        res.type("application/json");
+        Sprint sprint = svcSprint.currentSprint();
+        if (sprint != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return sprint;
+    }
+
 }

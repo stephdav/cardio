@@ -22,10 +22,6 @@ public class UserServiceImpl implements UserService {
         // Empty constructor
     }
 
-    public UserServiceImpl(UserDao userDao) {
-        this.userDao = userDao;
-    }
-
     @Override
     public List<User> all() {
         LOGGER.info("all ...");
