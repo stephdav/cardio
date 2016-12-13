@@ -59,7 +59,7 @@ public class SprintServiceTest {
         // Sprint must be found
         Sprint sprint = svc.find("SPR-0");
         assertNotNull(sprint);
-        assertEquals("NAME1", sprint.getName());
+        assertEquals("NAME0", sprint.getName());
 
         // Sprint not found
         Sprint unk = svc.find("UNK");
