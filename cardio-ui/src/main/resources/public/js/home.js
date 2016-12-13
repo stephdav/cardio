@@ -17,14 +17,18 @@ function getCurrentSprint() {
 }
 
 function updateHomeView(sprint, hv) {
-	$('#current-sprint').empty();
-	var content = '';
-	if (hv.status == 200 || hv.status == 206) {
-		content += '<dt>name</dt><dd>' + sprint.name + '</dd>';
-		content += '<dt>from</dt><dd>' + sprint.startDate + '</dd>';
-		content += '<dt>to</dt><dd>' + sprint.endDate + '</dd>';
-	} else {
-		content += '<dt>no pending sprint</dt>';
-	}
-	$('#current-sprint').append(content);
+	updateSprintDate(sprint.startDate, '#from-month', '#from-day');
+	$('#sprint-name').text('#' + sprint.name);
+	updateSprintDate(sprint.endDate, '#to-month', '#to-day');
+}
+
+function updateSprintDate(date, monthSelector, daySelector) {
+	tokens = date.split(/-/);
+	$(monthSelector).text(getMonth(tokens[1]));
+	$(daySelector).text(tokens[2]);
+}
+
+function getMonth(value) {
+	months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+	return months[value-1];
 }

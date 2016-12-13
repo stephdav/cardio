@@ -72,3 +72,17 @@ body>.container, body>.container-fluid {
 }
 
 /** =======  ======= */
+.current-sprint-block {
+	margin: 5px;
+	padding: 5px;
+	border: 1px solid #777;
+	border-radius: 10px;
+}
+
+.current-sprint-name, .current-sprint-date-month {
+	font-size: x-large;
+}
+
+.current-sprint-objective, .current-sprint-date-day {
+	font-size: xx-large;
+}

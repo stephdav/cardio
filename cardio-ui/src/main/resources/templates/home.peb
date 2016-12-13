@@ -1,8 +1,26 @@
 {% extends "templates/base.peb" %}
 
 {% block content %}
-  <p class="lead">current sprint</p>
-  <dl id="current-sprint" class="dl-horizontal"></dl>
+  <div class="row">
+    <div class="col-md-1">
+      <div class="current-sprint-block">
+        <div class="text-center current-sprint-date-day"><span id="from-day"> - </span></div>
+        <div class="text-center current-sprint-date-month"><span id="from-month"> - </span></div>
+      </div>
+    </div>
+    <div class="col-md-10">
+      <div class="current-sprint-block">
+        <div class="text-center current-sprint-name"><span id="sprint-name">no pending sprint</span></div>
+        <div class="text-center current-sprint-objective"> - </div>
+      </div>
+    </div>
+    <div class="col-md-1">
+      <div class="current-sprint-block">
+        <div class="text-center current-sprint-date-day"><span id="to-day"> - </span></div>
+        <div class="text-center current-sprint-date-month"><span id="to-month"> - </span></div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
