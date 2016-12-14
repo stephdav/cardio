@@ -7,10 +7,10 @@
       <input type="text" class="form-control" id="sprintName" placeholder="#">
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" id="sprintStartDate" placeholder="from">
+      <input type="date" min="2010-01-01" class="form-control" id="sprintStartDate" placeholder="from">
     </div>
     <div class="form-group">
-      <input type="text" class="form-control" id="sprintEndDate" placeholder="to">
+      <input type="date" min="2010-01-01" class="form-control" id="sprintEndDate" placeholder="to">
     </div>
     <div class="form-group">
       <input type="text" class="form-control" id="sprintGoal" placeholder="goal">
