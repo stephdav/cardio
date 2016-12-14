@@ -26,6 +26,13 @@
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-template-pebble</artifactId>
 			<version>${spark.peeble.version}</version>
+			<exclusions>
+				<!-- CVE-2016-9177 -->
+				<exclusion>
+					<groupId>com.sparkjava</groupId>
+					<artifactId>spark-core</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
