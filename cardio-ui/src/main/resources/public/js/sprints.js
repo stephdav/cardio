@@ -5,7 +5,7 @@ $(document).ready(function() {
 function initSprints() {
 	$('#addSprint').on('click', function(e) {
 		e.stopPropagation();
-		createSprint($('#sprintName').val(),$('#sprintStartDate').val(),$('#sprintEndDate').val());
+		createSprint($('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val());
 	});
 	getSprints();
 }
@@ -36,11 +36,18 @@ function updateSprints(data, hv) {
 	}
 }
 
-function createSprint(name, startdate, enddate) {
-	var payload = {name: name, startDate: startdate, endDate: enddate};
+function createSprint(name, startdate, enddate, goal) {
+	log("name:"+name + " goal:"+goal);
+	var payload = {name: name, startDate: startdate, endDate: enddate, goal: goal};
 	ajaxPost("/api/sprints", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("Sprint " + hv.location + " created");
+			// reset form
+			$('#sprintName').val('');
+			$('#sprintStartDate').val('');
+			$('#sprintEndDate').val('');
+			$('#sprintGoal').val('');
+			// reload list
 			getSprints();	
 		} else {
 			log("Error creating sprint : " + errorThrown);

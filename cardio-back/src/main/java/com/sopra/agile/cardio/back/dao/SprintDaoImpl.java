@@ -66,10 +66,10 @@ public class SprintDaoImpl implements SprintDao {
         sprint.setId(UIDGenerator.getUniqueId("SPR"));
         DbSprint dbsprint = mapper.map(sprint);
 
-        String sql = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE) values (?, ?, ?, ?)";
+        String sql = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE, GOAL) values (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, dbsprint.getId(), dbsprint.getName(),
                 DbSprintMapper.convertToDate(dbsprint.getStartDate()),
-                DbSprintMapper.convertToDate(dbsprint.getEndDate()));
+                DbSprintMapper.convertToDate(dbsprint.getEndDate()), dbsprint.getGoal());
         return sprint;
     }
 
