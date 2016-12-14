@@ -76,6 +76,9 @@
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
 				<version>1.4.3</version>
+				<configuration>
+					<format>XML</format>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
