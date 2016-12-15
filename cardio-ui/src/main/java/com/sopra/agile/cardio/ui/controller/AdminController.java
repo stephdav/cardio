@@ -10,7 +10,7 @@ import spark.Response;
 import spark.Route;
 
 public class AdminController extends BaseController {
-    public static Route admin = (Request req, Response res) -> {
+    public static final Route ADMIN = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
         return ViewUtil.render(req, attributes, Path.Template.ADMIN);
     };

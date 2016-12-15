@@ -76,8 +76,16 @@ public class SprintServiceImpl implements SprintService {
             startDate = new LocalDate(current.getStartDate());
             endDate = new LocalDate(current.getEndDate());
             nbDays = computeLeftWorkingDays(current, startDate);
-        }
 
+            String[] days = computeDays(current, nbDays, endDate);
+            chart.setDays(days);
+
+            chart.setSeries(Arrays.asList(computeIdealBurndown(nbDays, current.getCommitment())));
+        }
+        return chart;
+    }
+
+    private String[] computeDays(Sprint current, int nbDays, LocalDate endDate) {
         String[] days = new String[nbDays];
         int idx = 0;
         LocalDate dayOfSprint = new LocalDate(current.getStartDate());
@@ -90,10 +98,7 @@ public class SprintServiceImpl implements SprintService {
         if (isWorkingDay(endDate)) {
             days[idx++] = endDate.toString();
         }
-
-        chart.setDays(days);
-        chart.setSeries(Arrays.asList(computeIdealBurndown(nbDays, current.getCommitment())));
-        return chart;
+        return days;
     }
 
     private Serie computeIdealBurndown(int days, int commitment) {
@@ -131,7 +136,7 @@ public class SprintServiceImpl implements SprintService {
         return count;
     }
 
-    private boolean isWorkingDay(LocalDate date) {
+    private boolean isWorkingDay(final LocalDate date) {
         return date.getDayOfWeek() < DateTimeConstants.SATURDAY;
     }
 

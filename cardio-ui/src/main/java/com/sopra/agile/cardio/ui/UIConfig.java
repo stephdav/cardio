@@ -27,10 +27,10 @@ public class UIConfig {
         before(Path.Web.ALL, Filters.addTrailingSlashes);
 
         //
-        get(Path.Web.INDEX, IndexController.home);
-        get(Path.Web.ADMIN, AdminController.admin);
-        get(Path.Web.USERS, UserController.users);
-        get(Path.Web.ALL, ViewUtil.notFound);
+        get(Path.Web.INDEX, IndexController.HOME);
+        get(Path.Web.ADMIN, AdminController.ADMIN);
+        get(Path.Web.USERS, UserController.USERS);
+        get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
         // Set up after-filters (called after each get/post)
         after(Path.Web.ALL, Filters.addGzipHeader);

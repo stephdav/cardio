@@ -10,7 +10,7 @@ import spark.Response;
 import spark.Route;
 
 public class IndexController extends BaseController {
-    public static Route home = (Request req, Response res) -> {
+    public static final Route HOME = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
         return ViewUtil.render(req, attributes, Path.Template.INDEX);
     };
