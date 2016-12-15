@@ -19,12 +19,15 @@ import com.sopra.agile.cardio.back.model.DbSprint;
 
 public class DbSprintMapperTest {
 
-    private static final String SHOULD_BE_EQUALS = "Should be equals";
     private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_ID, DbSprintMapper.COL_NAME,
             DbSprintMapper.COL_GOAL };
     private static final String[] DATE_COLUMNS = { DbSprintMapper.COL_STARTDATE, DbSprintMapper.COL_ENDDATE };
+    private static final String[] INT_COLUMNS = { DbSprintMapper.COL_COMMIT };
 
     private static final long NOW = System.currentTimeMillis();
+    private static final int INT_VALUE = 0;
+
+    private static final String SHOULD_BE_EQUALS = "Should be equals";
 
     private DbSprintMapper mapper;
     private ResultSet rs;
@@ -40,6 +43,9 @@ public class DbSprintMapperTest {
         for (String col : Arrays.asList(DATE_COLUMNS)) {
             when(rs.getDate(col)).thenReturn(today);
         }
+        for (String col : Arrays.asList(INT_COLUMNS)) {
+            when(rs.getInt(col)).thenReturn(INT_VALUE);
+        }
     }
 
     @Test
@@ -47,12 +53,13 @@ public class DbSprintMapperTest {
 
         LocalDate today = getLocalDateFromLong(NOW);
 
-        DbSprint usr = mapper.mapRow(rs, 0);
-        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_ID, usr.getId());
-        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_NAME, usr.getName());
-        assertEquals(SHOULD_BE_EQUALS, today, usr.getStartDate());
-        assertEquals(SHOULD_BE_EQUALS, today, usr.getEndDate());
-        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_GOAL, usr.getGoal());
+        DbSprint sprint = mapper.mapRow(rs, 0);
+        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_ID, sprint.getId());
+        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_NAME, sprint.getName());
+        assertEquals(SHOULD_BE_EQUALS, today, sprint.getStartDate());
+        assertEquals(SHOULD_BE_EQUALS, today, sprint.getEndDate());
+        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_GOAL, sprint.getGoal());
+        assertEquals(SHOULD_BE_EQUALS, INT_VALUE, sprint.getCommitment());
     }
 
     @Test

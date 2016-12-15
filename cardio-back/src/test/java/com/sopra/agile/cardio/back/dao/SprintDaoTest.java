@@ -52,6 +52,7 @@ public class SprintDaoTest {
         assertEquals("2016-01-01", sprint.getStartDate());
         assertEquals("2016-01-31", sprint.getEndDate());
         assertEquals("sprint1 goal", sprint.getGoal());
+        assertEquals(13, sprint.getCommitment());
 
         // Sprint not found
         Sprint unk = dao.find("UNK");
@@ -80,6 +81,7 @@ public class SprintDaoTest {
         assertEquals("SPR-2", sprint.getId());
         assertEquals("current", sprint.getName());
         assertEquals("sprint2 goal", sprint.getGoal());
+        assertEquals(44, sprint.getCommitment());
     }
 
 }

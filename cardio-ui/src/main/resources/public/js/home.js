@@ -67,6 +67,7 @@ function updateHomeView(sprint, hv) {
 	$('#sprint-name').text('#' + sprint.name);
 	$('#sprint-goal').text(sprint.goal);
 	updateSprintDate(sprint.endDate, '#to-month', '#to-day');
+	$('#sprint-commitment').text(sprint.commitment);
 }
 
 function updateSprintDate(date, monthSelector, daySelector) {

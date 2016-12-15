@@ -9,6 +9,7 @@ public class DbSprint {
     private LocalDate startDate;
     private LocalDate endDate;
     private String goal;
+    private int commitment;
 
     public DbSprint() {
         // Empty constructor
@@ -59,5 +60,13 @@ public class DbSprint {
 
     public void setGoal(String goal) {
         this.goal = goal;
+    }
+
+    public int getCommitment() {
+        return commitment;
+    }
+
+    public void setCommitment(int commitment) {
+        this.commitment = commitment;
     }
 }

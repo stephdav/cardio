@@ -9,54 +9,56 @@ public class SprintTest {
 
     @Test
     public void testDefaultConstructor() {
-        Sprint usr = new Sprint();
-        assertObject(usr, null, null, null, null, null);
+        Sprint sprint = new Sprint();
+        assertObject(sprint, null, null, null, null, null, 0);
     }
 
     @Test
     public void testConstructor() {
-        Sprint usr = new Sprint("id", "name", "start", "end");
-        assertObject(usr, "id", "name", "start", "end", null);
+        Sprint sprint = new Sprint("id", "name", "start", "end");
+        assertObject(sprint, "id", "name", "start", "end", null, 0);
     }
 
     @Test
     public void testFields() {
-        Sprint usr = new Sprint();
-        usr.setId("id");
-        usr.setName("name");
-        usr.setStartDate("start");
-        usr.setEndDate("end");
-        usr.setGoal("goal");
-        assertObject(usr, "id", "name", "start", "end", "goal");
+        Sprint sprint = new Sprint();
+        sprint.setId("id");
+        sprint.setName("name");
+        sprint.setStartDate("start");
+        sprint.setEndDate("end");
+        sprint.setGoal("goal");
+        sprint.setCommitment(666);
+        assertObject(sprint, "id", "name", "start", "end", "goal", 666);
     }
 
-    private void assertObject(Sprint usr, final String id, final String name, final String startDate,
-            final String endDate, final String goal) {
+    private void assertObject(Sprint sprint, final String id, final String name, final String startDate,
+            final String endDate, final String goal, int commitment) {
         if (id == null) {
-            assertNull(usr.getId());
+            assertNull(sprint.getId());
         } else {
-            assertEquals(id, usr.getId());
+            assertEquals(id, sprint.getId());
         }
         if (name == null) {
-            assertNull(usr.getName());
+            assertNull(sprint.getName());
         } else {
-            assertEquals(name, usr.getName());
+            assertEquals(name, sprint.getName());
         }
         if (startDate == null) {
-            assertNull(usr.getStartDate());
+            assertNull(sprint.getStartDate());
         } else {
-            assertEquals(startDate, usr.getStartDate());
+            assertEquals(startDate, sprint.getStartDate());
         }
         if (endDate == null) {
-            assertNull(usr.getEndDate());
+            assertNull(sprint.getEndDate());
         } else {
-            assertEquals(endDate, usr.getEndDate());
+            assertEquals(endDate, sprint.getEndDate());
         }
         if (goal == null) {
-            assertNull(usr.getGoal());
+            assertNull(sprint.getGoal());
         } else {
-            assertEquals(goal, usr.getGoal());
+            assertEquals(goal, sprint.getGoal());
         }
+        assertEquals(commitment, sprint.getCommitment());
     }
 
 }

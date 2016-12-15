@@ -6,6 +6,7 @@ public class Sprint extends Base {
     private String startDate;
     private String endDate;
     private String goal;
+    private int commitment;
 
     public Sprint() {
         super();
@@ -48,5 +49,13 @@ public class Sprint extends Base {
 
     public void setGoal(String goal) {
         this.goal = goal;
+    }
+
+    public int getCommitment() {
+        return commitment;
+    }
+
+    public void setCommitment(int commitment) {
+        this.commitment = commitment;
     }
 }

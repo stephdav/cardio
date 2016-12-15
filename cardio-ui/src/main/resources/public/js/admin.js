@@ -5,7 +5,7 @@ $(document).ready(function() {
 function initSprints() {
 	$('#addSprint').on('click', function(e) {
 		e.stopPropagation();
-		createSprint($('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val());
+		createSprint($('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
 	});
 	getSprints();
 }
@@ -28,17 +28,18 @@ function updateSprints(data, hv) {
 			content += '<li class="list-group-item" id="' + sprint.id + '">';
 			content += '<div class="clearfix">';
 			content += '<label>';
-			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + ' / goal: ' + sprint.goal;
+			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + '   ' + sprint.goal;
 			content += '</label>';
+			content += '<div class="pull-right"><span class="badge">' + sprint.commitment+ '</span></div>'
 			content += '</div></li>';
 		});
 		$('#sprintslist').append(content);
 	}
 }
 
-function createSprint(name, startdate, enddate, goal) {
+function createSprint(name, startdate, enddate, goal, commitment) {
 	log("name:"+name + " goal:"+goal);
-	var payload = {name: name, startDate: startdate, endDate: enddate, goal: goal};
+	var payload = {name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment};
 	ajaxPost("/api/sprints", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("Sprint " + hv.location + " created");
@@ -47,6 +48,7 @@ function createSprint(name, startdate, enddate, goal) {
 			$('#sprintStartDate').val('');
 			$('#sprintEndDate').val('');
 			$('#sprintGoal').val('');
+			$('#sprintCommitment').val('');
 			// reload list
 			getSprints();	
 		} else {

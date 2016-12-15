@@ -3,25 +3,75 @@
 {% block content %}
   <div class="row">
     <div class="col-md-1">
-      <div class="current-sprint-block">
-        <div class="text-center current-sprint-date-day"><span id="from-day"> - </span></div>
-        <div class="text-center current-sprint-date-month"><span id="from-month"> - </span></div>
+      <div class="rounded-block">
+        <div class="text-center font-XXL"><span id="from-day"> - </span></div>
+        <div class="text-center font-XL"><span id="from-month"> - </span></div>
       </div>
     </div>
     <div class="col-md-10">
-      <div class="current-sprint-block">
-        <div class="text-center current-sprint-name"><span id="sprint-name">no pending sprint</span></div>
-        <div class="text-center current-sprint-goal"><span id="sprint-goal">no goal</span></div>
+      <div class="rounded-block">
+        <div class="text-center font-XL"><span id="sprint-name">no pending sprint</span></div>
+        <div class="text-center font-XXL"><span id="sprint-goal">no goal</span></div>
       </div>
     </div>
     <div class="col-md-1">
-      <div class="current-sprint-block">
-        <div class="text-center current-sprint-date-day"><span id="to-day"> - </span></div>
-        <div class="text-center current-sprint-date-month"><span id="to-month"> - </span></div>
+      <div class="rounded-block">
+        <div class="text-center font-XXL"><span id="to-day"> - </span></div>
+        <div class="text-center font-XL"><span id="to-month"> - </span></div>
       </div>
     </div>
   </div>
-  <div id="container" style="width:100%; height:400px;"></div>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-handshake-o fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="font-XXL"><span id="sprint-commitment">-</span></div>
+            <div class="text-muted">commitment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-book fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="font-XXL"><span>-</span></div>
+            <div class="text-muted">stories</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-tasks fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="font-XXL"><span>-</span></div>
+            <div class="text-muted">tasks</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-calendar fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="font-XXL"><span>-</span></div>
+            <div class="text-muted">day(s) left</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <div id="container" style="width:100%; height:400px;"></div>
+    </div>
+  </div>
 {% endblock %}
 
 {% block scripts %}
