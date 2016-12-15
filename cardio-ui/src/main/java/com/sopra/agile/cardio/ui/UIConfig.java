@@ -24,7 +24,7 @@ public class UIConfig {
         redirect.get("/", Path.Web.INDEX);
 
         // Set up before-filters (called before each get/post)
-        before(Path.Web.ALL, Filters.addTrailingSlashes);
+        before(Path.Web.ALL, Filters.ADD_TRAILING_SLASHES);
 
         //
         get(Path.Web.INDEX, IndexController.HOME);
@@ -33,7 +33,7 @@ public class UIConfig {
         get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
         // Set up after-filters (called after each get/post)
-        after(Path.Web.ALL, Filters.addGzipHeader);
+        after(Path.Web.ALL, Filters.ADD_GZIP_HEADER);
 
     }
 
