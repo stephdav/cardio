@@ -15,7 +15,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.sopra.agile.cardio.common.model.DbSprint;
+import com.sopra.agile.cardio.back.model.DbSprint;
 
 public class DbSprintMapperTest {
 

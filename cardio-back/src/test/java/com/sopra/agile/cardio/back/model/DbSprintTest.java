@@ -1,10 +1,12 @@
-package com.sopra.agile.cardio.common.model;
+package com.sopra.agile.cardio.back.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import org.joda.time.LocalDate;
 import org.junit.Test;
+
+import com.sopra.agile.cardio.back.model.DbSprint;
 
 public class DbSprintTest {
 

@@ -83,7 +83,7 @@
 						</formats>
 						<instrumentation>
 							<excludes>
-								<exclude>**/*Config.class</exclude>
+								<exclude>**/config/*.class</exclude>
 								<exclude>**/*Test.class</exclude>
 							</excludes>
 						</instrumentation>

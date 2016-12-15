@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.config;
+package com.sopra.agile.cardio.back.rest;
 
 import static spark.Spark.before;
 import static spark.Spark.delete;

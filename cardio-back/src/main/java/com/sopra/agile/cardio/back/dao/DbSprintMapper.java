@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import org.joda.time.LocalDate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.sopra.agile.cardio.common.model.DbSprint;
+import com.sopra.agile.cardio.back.model.DbSprint;
 
 public class DbSprintMapper implements RowMapper<DbSprint> {
 

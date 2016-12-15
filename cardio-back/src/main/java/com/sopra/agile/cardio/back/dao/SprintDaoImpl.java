@@ -10,8 +10,8 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import com.sopra.agile.cardio.back.model.DbSprint;
 import com.sopra.agile.cardio.back.utils.converter.Converter;
-import com.sopra.agile.cardio.common.model.DbSprint;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 @Service

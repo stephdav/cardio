@@ -1,23 +1,32 @@
-package com.sopra.agile.cardio.common.model;
+package com.sopra.agile.cardio.back.model;
 
 import org.joda.time.LocalDate;
 
-public class DbSprint extends Base {
+public class DbSprint {
 
+    private String id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
     private String goal;
 
     public DbSprint() {
-        super();
+        // Empty constructor
     }
 
     public DbSprint(final String id, final String name, final LocalDate startDate, final LocalDate endDate) {
-        super(id);
+        this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {

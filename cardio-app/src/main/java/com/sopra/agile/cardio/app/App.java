@@ -6,8 +6,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.core.env.AbstractEnvironment;
 
 import com.sopra.agile.cardio.back.config.CardioBack;
-import com.sopra.agile.cardio.back.config.RestConfig;
 import com.sopra.agile.cardio.back.controller.RestController;
+import com.sopra.agile.cardio.back.rest.RestConfig;
 import com.sopra.agile.cardio.common.utils.AppProfile;
 import com.sopra.agile.cardio.ui.UIConfig;
 
