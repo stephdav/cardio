@@ -33,12 +33,12 @@ public class Paginate<T> {
 
         int page = DEFAULT_PAGE;
         if (req.queryParams(PAGE) != null) {
-            page = Integer.valueOf(req.queryParams(PAGE));
+            page = Integer.parseInt(req.queryParams(PAGE));
         }
 
         int limit = DEFAULT_LIMIT;
         if (req.queryParams(LIMIT) != null) {
-            limit = Integer.valueOf(req.queryParams(LIMIT));
+            limit = Integer.parseInt(req.queryParams(LIMIT));
         }
 
         int total = response.size();
