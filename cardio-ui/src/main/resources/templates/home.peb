@@ -76,5 +76,6 @@
 
 {% block scripts %}
   <script src="/js/home.js"></script>
+  <script src="/js/chart.js"></script>
   <script src="/js/ext/highcharts.js"></script>
 {% endblock %}

@@ -15,6 +15,7 @@ import com.sopra.agile.cardio.back.service.SprintService;
 import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
+import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.User;
 
@@ -168,6 +169,17 @@ public class RestController {
             res.status(204);
         }
         return param;
+    }
+
+    public Chart getCurrentBurndown(Request req, Response res) {
+        res.type("application/json");
+        Chart chart = svcSprint.burndown();
+        if (chart != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return chart;
     }
 
 }

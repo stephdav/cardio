@@ -18,6 +18,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.model.Parameter;
+import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 public class SprintServiceTest {
@@ -38,9 +39,10 @@ public class SprintServiceTest {
             month = idx + 1;
             aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
             aSprints[idx].setGoal("GOAL" + idx);
+            aSprints[idx].setCommitment(100 * idx);
         }
         LocalDate now = LocalDate.now();
-        aSprints[1].setStartDate(now.plusDays(-5).toString());
+        aSprints[1].setStartDate(now.plusDays(-7).toString());
         aSprints[1].setEndDate(now.plusDays(6).toString());
 
         List<Sprint> sprints = Arrays.asList(aSprints);
@@ -98,4 +100,17 @@ public class SprintServiceTest {
         assertEquals("5", param.getValue());
     }
 
+    @Test
+    public void testBurndown() {
+        Chart burndown = svc.burndown();
+        assertNotNull(burndown);
+        assertNotNull(burndown.getDays());
+        assertEquals(10, burndown.getDays().length);
+        assertNotNull(burndown.getSeries());
+        assertEquals(1, burndown.getSeries().size());
+        assertNotNull(burndown.getSeries().get(0).getData());
+        assertEquals(10, burndown.getSeries().get(0).getData().length);
+        assertEquals(100d, burndown.getSeries().get(0).getData()[0], 0.01d);
+        assertEquals(0d, burndown.getSeries().get(0).getData()[9], 0.01d);
+    }
 }

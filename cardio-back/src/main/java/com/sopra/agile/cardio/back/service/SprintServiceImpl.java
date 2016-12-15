@@ -1,5 +1,6 @@
 package com.sopra.agile.cardio.back.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.DateTimeConstants;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.model.Parameter;
+import com.sopra.agile.cardio.common.model.Chart;
+import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 @Service
@@ -54,17 +57,71 @@ public class SprintServiceImpl implements SprintService {
         String value = "-";
         Sprint current = currentSprint();
         if (current != null) {
-            value = String.valueOf(computeLeftWorkingDays(current));
+            value = String.valueOf(computeLeftWorkingDays(current, null));
         }
         return new Parameter("left-days", value);
     }
 
-    private int computeLeftWorkingDays(Sprint sprint) {
-        int count = 1;
+    @Override
+    public Chart burndown() {
+        Chart chart = new Chart();
 
+        Sprint current = currentSprint();
+
+        int nbDays = 0;
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+
+        if (current != null) {
+            startDate = new LocalDate(current.getStartDate());
+            endDate = new LocalDate(current.getEndDate());
+            nbDays = computeLeftWorkingDays(current, startDate);
+        }
+
+        String[] days = new String[nbDays];
+        int idx = 0;
+        LocalDate dayOfSprint = new LocalDate(current.getStartDate());
+        while (dayOfSprint.isBefore(endDate)) {
+            if (isWorkingDay(dayOfSprint)) {
+                days[idx++] = dayOfSprint.toString();
+            }
+            dayOfSprint = dayOfSprint.plusDays(1);
+        }
+        if (isWorkingDay(endDate)) {
+            days[idx++] = endDate.toString();
+        }
+
+        chart.setDays(days);
+        chart.setSeries(Arrays.asList(computeIdealBurndown(nbDays, current.getCommitment())));
+        return chart;
+    }
+
+    private Serie computeIdealBurndown(int days, int commitment) {
+        Double[] data = new Double[days];
+
+        for (int idx = 0; idx < days; idx++) {
+            data[idx] = commitment - (idx * commitment) * 1d / (days - 1);
+        }
+        return new Serie("ideal", data);
+    }
+
+    private Serie computeFakeReal(int days, int commitment) {
+        Double[] data = new Double[days / 2];
+
+        for (int idx = 0; idx < days / 2; idx++) {
+            data[idx] = (commitment - idx) * 1d;
+        }
+        return new Serie("real", data);
+    }
+
+    private int computeLeftWorkingDays(Sprint sprint, LocalDate from) {
+        LocalDate date = from;
+        if (from == null) {
+            date = LocalDate.now();
+        }
         LocalDate end = new LocalDate(sprint.getEndDate());
-        LocalDate date = LocalDate.now();
 
+        int count = 1;
         while (date.isBefore(end)) {
             if (isWorkingDay(date)) {
                 count++;
