@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 function initHome() {
 	getCurrentSprint();
+	getLeftDays();
 	displayChart();
 }
 
@@ -58,6 +59,16 @@ function getCurrentSprint() {
 			updateHomeView(data, hv);
 		} else {
 			log("Error getting sprints : " + errorThrown);
+		}
+	});
+}
+
+function getLeftDays() {
+	ajaxGet("/api/sprints/current/leftdays", function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 204) {
+			$('#left-days').text(data.value);
+		} else {
+			log("Error getting left days : " + errorThrown);
 		}
 	});
 }

@@ -11,11 +11,13 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
+import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 public class SprintServiceTest {
@@ -37,6 +39,10 @@ public class SprintServiceTest {
             aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
             aSprints[idx].setGoal("GOAL" + idx);
         }
+        LocalDate now = LocalDate.now();
+        aSprints[1].setStartDate(now.plusDays(-5).toString());
+        aSprints[1].setEndDate(now.plusDays(6).toString());
+
         List<Sprint> sprints = Arrays.asList(aSprints);
         when(dao.all()).thenReturn(sprints);
         when(dao.find("SPR-0")).thenReturn(aSprints[0]);
@@ -82,6 +88,14 @@ public class SprintServiceTest {
         Sprint sprint = svc.currentSprint();
         assertNotNull(sprint);
         assertEquals("NAME1", sprint.getName());
+    }
+
+    @Test
+    public void testLeftDays() {
+        Parameter param = svc.leftDays();
+        assertNotNull(param);
+        assertEquals("left-days", param.getKey());
+        assertEquals("5", param.getValue());
     }
 
 }

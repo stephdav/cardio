@@ -159,4 +159,15 @@ public class RestController {
         return sprint;
     }
 
+    public Parameter getCurrentLeftDays(Request req, Response res) {
+        res.type("application/json");
+        Parameter param = svcSprint.leftDays();
+        if (param != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return param;
+    }
+
 }

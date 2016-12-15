@@ -27,7 +27,7 @@
         <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-handshake-o fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="font-XXL"><span id="sprint-commitment">-</span></div>
+            <div class="large"><span id="sprint-commitment">-</span></div>
             <div class="text-muted">commitment</div>
           </div>
         </div>
@@ -38,7 +38,7 @@
         <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-book fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="font-XXL"><span>-</span></div>
+            <div class="large"><span>-</span></div>
             <div class="text-muted">stories</div>
           </div>
         </div>
@@ -49,7 +49,7 @@
         <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-tasks fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="font-XXL"><span>-</span></div>
+            <div class="large"><span>-</span></div>
             <div class="text-muted">tasks</div>
           </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-calendar fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="font-XXL"><span>-</span></div>
+            <div class="large"><span id="left-days">-</span></div>
             <div class="text-muted">day(s) left</div>
           </div>
         </div>
