@@ -24,21 +24,18 @@ function initUsers() {
 		e.stopPropagation();
 		getUsersSorted("lastname");
 	});
+	initUsersTable();
 	getUsers();
-	initTable();
 }
 
-function initTable() {
+function initUsersTable() {
 	$('#users-table').bootstrapTable({
 	    columns: [{
-	        field: 'login', title: 'login',
-	        sortable: true
+	        field: 'login', title: 'login'
 	    }, {
-	        field: 'firstname', title: 'first name',
-	        sortable: true
+	        field: 'firstname', title: 'first name'
 	    }, {
-	        field: 'lastname', title: 'last name',
-	        sortable: true
+	        field: 'lastname', title: 'last name'
 	    }]
 	});
 }

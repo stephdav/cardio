@@ -7,7 +7,24 @@ function initSprints() {
 		e.stopPropagation();
 		createSprint($('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
 	});
+	initSprintsTable();
 	getSprints();
+}
+
+function initSprintsTable() {
+	$('#sprints-table').bootstrapTable({
+	    columns: [{
+	        field: 'startDate', title: 'from'
+	    }, {
+	        field: 'endDate', title: 'to'
+	    }, {
+	        field: 'name', title: '#'
+	    }, {
+	        field: 'goal', title: 'sprint goal'
+	    }, {
+	        field: 'commitment', title: 'commitment'
+	    }]
+	});
 }
 
 function getSprints() {
@@ -23,17 +40,18 @@ function getSprints() {
 function updateSprints(data, hv) {
 	$('#sprintslist').empty();
 	if (hv.status == 200 || hv.status == 206) {
-		var content = "";
-		$.each(data, function(index, sprint) {
-			content += '<li class="list-group-item" id="' + sprint.id + '">';
-			content += '<div class="clearfix">';
-			content += '<label>';
-			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + '   ' + sprint.goal;
-			content += '</label>';
-			content += '<div class="pull-right"><span class="badge">' + sprint.commitment+ '</span></div>'
-			content += '</div></li>';
-		});
-		$('#sprintslist').append(content);
+		$('#sprints-table').bootstrapTable('load', data);
+//		var content = "";
+//		$.each(data, function(index, sprint) {
+//			content += '<li class="list-group-item" id="' + sprint.id + '">';
+//			content += '<div class="clearfix">';
+//			content += '<label>';
+//			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + '   ' + sprint.goal;
+//			content += '</label>';
+//			content += '<div class="pull-right"><span class="badge">' + sprint.commitment+ '</span></div>'
+//			content += '</div></li>';
+//		});
+//		$('#sprintslist').append(content);
 		$('#sprints-count').text(hv.contentRange.split(/\//)[1]);
 	}
 }
