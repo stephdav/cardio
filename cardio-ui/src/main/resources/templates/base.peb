@@ -17,6 +17,8 @@
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/font-awesome.min.css">
   <link rel="stylesheet" href="/css/style.css">
+  
+  {% block stylesheets %}{% endblock %}
 
   <!-- Favicon
   ------------------------------------------------------ -->
@@ -41,7 +43,6 @@
       <div id="navbar" class="collapse navbar-collapse">
         <p id="project-name" class="navbar-text"/>
         <ul class="nav navbar-nav">
-          <li><a href="/ui/users/">users</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/ui/admin/">administration</a></li>

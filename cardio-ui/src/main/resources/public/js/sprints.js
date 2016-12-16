@@ -34,6 +34,7 @@ function updateSprints(data, hv) {
 			content += '</div></li>';
 		});
 		$('#sprintslist').append(content);
+		$('#sprints-count').text(hv.contentRange.split(/\//)[1]);
 	}
 }
 
