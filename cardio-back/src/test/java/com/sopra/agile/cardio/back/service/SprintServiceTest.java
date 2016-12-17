@@ -8,30 +8,35 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
+import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.model.SprintDay;
 
 public class SprintServiceTest {
 
     private SprintService svc;
-    private SprintDao dao;
+    private SprintDao sprintDao;
+    private SprintDayDao sprintDayDao;
 
     @Before
     public void init() throws SQLException {
         svc = new SprintServiceImpl();
 
-        dao = mock(SprintDao.class);
-        ReflectionTestUtils.setField(svc, "sprintDao", dao);
+        sprintDao = mock(SprintDao.class);
+        ReflectionTestUtils.setField(svc, "sprintDao", sprintDao);
 
         Sprint[] aSprints = new Sprint[3];
         int month;
@@ -46,13 +51,18 @@ public class SprintServiceTest {
         aSprints[1].setEndDate(now.plusDays(6).toString());
 
         List<Sprint> sprints = Arrays.asList(aSprints);
-        when(dao.all()).thenReturn(sprints);
-        when(dao.find("SPR-0")).thenReturn(aSprints[0]);
-        when(dao.find("UNK")).thenReturn(null);
-        when(dao.current()).thenReturn(aSprints[1]);
+        when(sprintDao.all()).thenReturn(sprints);
+        when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
+        when(sprintDao.find("UNK")).thenReturn(null);
+        when(sprintDao.current()).thenReturn(aSprints[1]);
 
         Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
-        when(dao.add(any(Sprint.class))).thenReturn(newSprint);
+        when(sprintDao.add(any(Sprint.class))).thenReturn(newSprint);
+
+        sprintDayDao = mock(SprintDayDao.class);
+        ReflectionTestUtils.setField(svc, "sprintDayDao", sprintDayDao);
+
+        when(sprintDayDao.findBetween(Mockito.anyString(), Mockito.anyString())).thenReturn(new ArrayList<SprintDay>());
 
     }
 
@@ -107,10 +117,12 @@ public class SprintServiceTest {
         assertNotNull(burndown.getDays());
         assertEquals(10, burndown.getDays().length);
         assertNotNull(burndown.getSeries());
-        assertEquals(1, burndown.getSeries().size());
+        assertEquals(2, burndown.getSeries().size());
         assertNotNull(burndown.getSeries().get(0).getData());
         assertEquals(10, burndown.getSeries().get(0).getData().length);
         assertEquals(100d, burndown.getSeries().get(0).getData()[0], 0.01d);
         assertEquals(0d, burndown.getSeries().get(0).getData()[9], 0.01d);
+        assertNotNull(burndown.getSeries().get(1).getData());
+        assertEquals(10, burndown.getSeries().get(1).getData().length);
     }
 }

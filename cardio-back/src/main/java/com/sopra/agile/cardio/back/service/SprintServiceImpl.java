@@ -1,7 +1,9 @@
 package com.sopra.agile.cardio.back.service;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -10,9 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
+import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
 import com.sopra.agile.cardio.common.model.Chart;
+import com.sopra.agile.cardio.common.model.SprintDay;
 import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
 
@@ -23,6 +27,9 @@ public class SprintServiceImpl implements SprintService {
 
     @Autowired
     private SprintDao sprintDao;
+
+    @Autowired
+    private SprintDayDao sprintDayDao;
 
     public SprintServiceImpl() {
         // Empty constructor
@@ -75,13 +82,12 @@ public class SprintServiceImpl implements SprintService {
         if (current != null) {
             startDate = new LocalDate(current.getStartDate());
             endDate = new LocalDate(current.getEndDate());
-            // nbDays = LocalDateUtils.getNumberOfWorkingDays(startDate,
-            // endDate);
 
             String[] days = LocalDateUtils.getWorkingDays(startDate, endDate);
             chart.setDays(days);
 
-            chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, current.getCommitment())));
+            chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, current.getCommitment()),
+                    convertMeasures(getMeasures(current.getStartDate(), current.getEndDate()), days)));
         }
         return chart;
     }
@@ -95,11 +101,21 @@ public class SprintServiceImpl implements SprintService {
         return new Serie("ideal", data);
     }
 
-    private Serie computeFakeReal(int days, int commitment) {
-        Double[] data = new Double[days / 2];
+    private Map<String, Double> getMeasures(String from, String to) {
+        Map<String, Double> values = new HashMap<String, Double>();
 
-        for (int idx = 0; idx < days / 2; idx++) {
-            data[idx] = (commitment - idx) * 1d;
+        List<SprintDay> measures = sprintDayDao.findBetween(from, to);
+        for (SprintDay day : measures) {
+            values.put(day.getDay().toString(), Double.valueOf(day.getCommitmentLeft()));
+        }
+        return values;
+    }
+
+    private Serie convertMeasures(Map<String, Double> measures, String[] days) {
+        Double[] data = new Double[days.length];
+        int idx = 0;
+        for (String day : days) {
+            data[idx++] = measures.get(day);
         }
         return new Serie("real", data);
     }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.back.model.DbSprint;
 import com.sopra.agile.cardio.back.utils.converter.Converter;
 import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 
 @Service
 public class SprintDaoImpl implements SprintDao {
@@ -68,8 +69,8 @@ public class SprintDaoImpl implements SprintDao {
 
         String sql = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE, GOAL, COMMITMENT) values (?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql, dbsprint.getId(), dbsprint.getName(),
-                DbSprintMapper.convertToDate(dbsprint.getStartDate()),
-                DbSprintMapper.convertToDate(dbsprint.getEndDate()), dbsprint.getGoal(), dbsprint.getCommitment());
+                LocalDateUtils.convertToDate(dbsprint.getStartDate()),
+                LocalDateUtils.convertToDate(dbsprint.getEndDate()), dbsprint.getGoal(), dbsprint.getCommitment());
         return sprint;
     }
 
@@ -94,5 +95,4 @@ public class SprintDaoImpl implements SprintDao {
 
         return sprint;
     }
-
 }
