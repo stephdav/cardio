@@ -49,7 +49,7 @@ function displayCalendar(selector, data) {
 			content += '<div class="col-xs-1"></div>';
 		}
 		content += '<div class="col-xs-2">';
-		content += '<div class="form-group">';
+		content += '<div class="form-group sprint-day">';
 		content += '<input type="number" class="form-control input-lg"';
 		if (serie.data[index] != null) {
 			content += ' value="' + serie.data[index] + '"';

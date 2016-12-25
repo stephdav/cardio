@@ -88,12 +88,6 @@
             <div class="form-group">
               <input type="date" min="2010-01-01" class="form-control" id="sprintEndDate" placeholder="to">
             </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="sprintGoal" placeholder="goal">
-            </div>
-            <div class="form-group">
-              <input type="number" class="form-control" id="sprintCommitment" placeholder="0">
-            </div>
             <button id="addSprint" type="button" class="btn btn-default">add sprint</button>
           </div>
           
