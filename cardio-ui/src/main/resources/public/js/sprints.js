@@ -25,6 +25,10 @@ function initSprintsTable() {
 	        field: 'commitment', title: 'commitment'
 	    }]
 	});
+
+	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
+		window.location = "../sprint/" + row.id;
+	});
 }
 
 function getSprints() {

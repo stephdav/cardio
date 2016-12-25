@@ -58,13 +58,7 @@
       <div class="panel panel-default">
         <div class="panel-heading">sprint data</div>
         <div class="panel-body">
-  <table>
-  	<thead>
-  	  <tr><td>date</td><td>done</td></tr>
-  	</thead>
-  	<tbody id="measures">
-  	</tbody>
-  </table>
+          <div id="measures"></div>
         </div>
       </div>
     </div>

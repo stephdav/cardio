@@ -33,7 +33,6 @@ function updateSprint(id, name, startdate, enddate, goal, commitment) {
 }
 
 function displayCalendar(selector, data) {
-	var content = "";
 	var serie;
 	$.each(data.series, function(index, s) {
 		if (s.name == 'real') {
@@ -41,16 +40,36 @@ function displayCalendar(selector, data) {
 			return true;
 		}
 	});
-	
+
+	var content = "";
+	var count = 0;
 	$.each(data.days, function(index, day) {
-		content += '<tr>';
-		content += '<td>' + day + '</td>';
-		content += '<td><input type="number"';
+		if (count==0) {
+			content += '<div class="row">'
+			content += '<div class="col-xs-1"></div>';
+		}
+		content += '<div class="col-xs-2">';
+		content += '<div class="form-group">';
+		content += '<input type="number" class="form-control input-lg"';
 		if (serie.data[index] != null) {
 			content += ' value="' + serie.data[index] + '"';
 		}
-		content += '></td>';
-		content += '</tr>';
+		content += '>';
+		content += '<label>' + day + '</label>';
+		content += '</div>';
+		content += '</div>';
+		count++;
+		if (count==5) {
+			content += '</div>'
+			count=0;
+		}
 	});
+	if (count != 0) {
+		content += '</div>'
+	}
+	content += '<div class="row">'
+	content += '<div class="col-xs-1"></div>';
+	content += '<div class="col-xs-11"><button id="updateSprintData" type="button" class="btn btn-default">update data</button></div>';
+	content += '</div>'
 	$(selector).append(content);
 }

@@ -7,7 +7,7 @@ public class Path {
 		public static final String INDEX = BASE;
 		public static final String ADMIN = BASE + "admin/";
 		public static final String USERS = BASE + "users/";
-		public static final String SPRINT = BASE + "sprint/";
+		public static final String SPRINT = BASE + "sprint/*";
 	}
 
 	public static class Template {
