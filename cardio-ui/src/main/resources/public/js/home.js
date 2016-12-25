@@ -3,39 +3,9 @@ $(document).ready(function() {
 });
 
 function initHome() {
-	getCurrentSprint();
+	getCurrentSprint(updateHomeView);
 	getLeftDays();
-	getBurndown();
-}
-
-function getCurrentSprint() {
-	ajaxGet("/api/sprints/current", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 204) {
-			updateHomeView(data, hv);
-		} else {
-			log("Error getting sprints: " + errorThrown);
-		}
-	});
-}
-
-function getLeftDays() {
-	ajaxGet("/api/sprints/current/leftdays", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 204) {
-			$('#left-days').text(data.value);
-		} else {
-			log("Error getting left days: " + errorThrown);
-		}
-	});
-}
-
-function getBurndown() {
-	ajaxGet("/api/sprints/current/burndown", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 204) {
-			displayChart('container', data);
-		} else {
-			log("Error getting burndown: " + errorThrown);
-		}
-	});
+	getBurndown(displayChart, 'container');
 }
 
 function updateHomeView(sprint, hv) {

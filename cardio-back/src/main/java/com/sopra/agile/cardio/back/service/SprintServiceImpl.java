@@ -16,108 +16,118 @@ import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
 import com.sopra.agile.cardio.common.model.Chart;
-import com.sopra.agile.cardio.common.model.SprintDay;
 import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.model.SprintDay;
 
 @Service
 public class SprintServiceImpl implements SprintService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
 
-    @Autowired
-    private SprintDao sprintDao;
+	@Autowired
+	private SprintDao sprintDao;
 
-    @Autowired
-    private SprintDayDao sprintDayDao;
+	@Autowired
+	private SprintDayDao sprintDayDao;
 
-    public SprintServiceImpl() {
-        // Empty constructor
-    }
+	public SprintServiceImpl() {
+		// Empty constructor
+	}
 
-    @Override
-    public List<Sprint> all() {
-        LOGGER.info("all ...");
-        return sprintDao.all();
-    }
+	@Override
+	public List<Sprint> all() {
+		LOGGER.info("all ...");
+		return sprintDao.all();
+	}
 
-    @Override
-    public Sprint find(String id) {
-        LOGGER.info("find '{}' ...", id);
-        return sprintDao.find(id);
-    }
+	@Override
+	public Sprint find(String id) {
+		LOGGER.info("find '{}' ...", id);
+		return sprintDao.find(id);
+	}
 
-    @Override
-    public Sprint add(Sprint sprint) {
-        LOGGER.info("add ...");
-        return sprintDao.add(sprint);
-    }
+	@Override
+	public Sprint add(Sprint sprint) {
+		LOGGER.info("add ...");
+		return sprintDao.add(sprint);
+	}
 
-    @Override
-    public Sprint currentSprint() {
-        LOGGER.info("currentSprint ...");
-        return sprintDao.current();
-    }
+	@Override
+	public Sprint update(Sprint sprint) {
+		LOGGER.info("update ...");
+		return sprintDao.update(sprint);
+	}
 
-    @Override
-    public Parameter leftDays() {
-        String value = "-";
-        Sprint current = currentSprint();
-        if (current != null) {
-            value = String.valueOf(LocalDateUtils.getNumberOfWorkingDays(null, new LocalDate(current.getEndDate())));
-        }
-        return new Parameter("left-days", value);
-    }
+	@Override
+	public Sprint currentSprint() {
+		LOGGER.info("currentSprint ...");
+		return sprintDao.current();
+	}
 
-    @Override
-    public Chart burndown() {
-        Chart chart = new Chart();
+	@Override
+	public Parameter leftDays() {
+		String value = "-";
+		Sprint current = currentSprint();
+		if (current != null) {
+			value = String.valueOf(LocalDateUtils.getNumberOfWorkingDays(null, new LocalDate(current.getEndDate())));
+		}
+		return new Parameter("left-days", value);
+	}
 
-        Sprint current = currentSprint();
+	@Override
+	public Chart burndown() {
+		Chart chart = new Chart();
 
-        // int nbDays = 0;
-        LocalDate startDate = null;
-        LocalDate endDate = null;
+		Sprint current = currentSprint();
 
-        if (current != null) {
-            startDate = new LocalDate(current.getStartDate());
-            endDate = new LocalDate(current.getEndDate());
+		// int nbDays = 0;
+		LocalDate startDate = null;
+		LocalDate endDate = null;
 
-            String[] days = LocalDateUtils.getWorkingDays(startDate, endDate);
-            chart.setDays(days);
+		if (current != null) {
+			startDate = new LocalDate(current.getStartDate());
+			endDate = new LocalDate(current.getEndDate());
 
-            chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, current.getCommitment()),
-                    convertMeasures(getMeasures(current.getStartDate(), current.getEndDate()), days)));
-        }
-        return chart;
-    }
+			String[] days = LocalDateUtils.getWorkingDays(startDate, endDate);
+			chart.setDays(days);
 
-    private Serie computeIdealBurndown(int days, int commitment) {
-        Double[] data = new Double[days];
+			chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, current.getCommitment()),
+					convertMeasures(getMeasures(current), days)));
+		}
+		return chart;
+	}
 
-        for (int idx = 0; idx < days; idx++) {
-            data[idx] = commitment - (idx * commitment) * 1d / (days - 1);
-        }
-        return new Serie("ideal", data);
-    }
+	private Serie computeIdealBurndown(int days, int commitment) {
+		Double[] data = new Double[days];
 
-    private Map<String, Double> getMeasures(String from, String to) {
-        Map<String, Double> values = new HashMap<String, Double>();
+		for (int idx = 0; idx < days; idx++) {
+			data[idx] = commitment - (idx * commitment) * 1d / (days - 1);
+		}
+		return new Serie("ideal", data);
+	}
 
-        List<SprintDay> measures = sprintDayDao.findBetween(from, to);
-        for (SprintDay day : measures) {
-            values.put(day.getDay().toString(), Double.valueOf(day.getCommitmentLeft()));
-        }
-        return values;
-    }
+	private Map<String, Double> getMeasures(Sprint sprint) {
+		String from = sprint.getStartDate();
+		String to = sprint.getEndDate();
+		int commitment = sprint.getCommitment();
 
-    private Serie convertMeasures(Map<String, Double> measures, String[] days) {
-        Double[] data = new Double[days.length];
-        int idx = 0;
-        for (String day : days) {
-            data[idx++] = measures.get(day);
-        }
-        return new Serie("real", data);
-    }
+		Map<String, Double> values = new HashMap<String, Double>();
+
+		List<SprintDay> measures = sprintDayDao.findBetween(from, to);
+		for (SprintDay day : measures) {
+			values.put(day.getDay().toString(), Double.valueOf(commitment - day.getDone()));
+		}
+		return values;
+	}
+
+	private Serie convertMeasures(Map<String, Double> measures, String[] days) {
+		Double[] data = new Double[days.length];
+		int idx = 0;
+		for (String day : days) {
+			data[idx++] = measures.get(day);
+		}
+		return new Serie("real", data);
+	}
 
 }

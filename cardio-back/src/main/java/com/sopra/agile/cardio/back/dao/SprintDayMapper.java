@@ -10,14 +10,14 @@ import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 
 public class SprintDayMapper implements RowMapper<SprintDay> {
 
-    public static final String COL_DAY = "DAY";
-    public static final String COL_COMMIT = "COMMITMENT_LEFT";
+	public static final String COL_DAY = "DAY";
+	public static final String COL_DONE = "DONE";
 
-    public SprintDay mapRow(ResultSet rs, int rowNum) throws SQLException {
-        SprintDay sprintDay = new SprintDay();
-        sprintDay.setDay(LocalDateUtils.convertToLocalDate(rs.getDate(COL_DAY)));
-        sprintDay.setCommitmentLeft(rs.getInt(COL_COMMIT));
-        return sprintDay;
-    }
+	public SprintDay mapRow(ResultSet rs, int rowNum) throws SQLException {
+		SprintDay sprintDay = new SprintDay();
+		sprintDay.setDay(LocalDateUtils.convertToLocalDate(rs.getDate(COL_DAY)));
+		sprintDay.setDone(rs.getInt(COL_DONE));
+		return sprintDay;
+	}
 
 }

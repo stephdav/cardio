@@ -5,9 +5,11 @@ import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 public interface SprintService extends BaseService<Sprint> {
-    Sprint currentSprint();
+	Sprint update(Sprint sprint);
 
-    Parameter leftDays();
+	Sprint currentSprint();
 
-    Chart burndown();
+	Parameter leftDays();
+
+	Chart burndown();
 }

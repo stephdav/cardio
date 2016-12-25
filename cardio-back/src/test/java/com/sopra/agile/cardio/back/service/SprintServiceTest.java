@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.sql.SQLException;
@@ -27,102 +28,115 @@ import com.sopra.agile.cardio.common.model.SprintDay;
 
 public class SprintServiceTest {
 
-    private SprintService svc;
-    private SprintDao sprintDao;
-    private SprintDayDao sprintDayDao;
+	private SprintService svc;
+	private SprintDao sprintDao;
+	private SprintDayDao sprintDayDao;
 
-    @Before
-    public void init() throws SQLException {
-        svc = new SprintServiceImpl();
+	@Before
+	public void init() throws SQLException {
+		svc = new SprintServiceImpl();
 
-        sprintDao = mock(SprintDao.class);
-        ReflectionTestUtils.setField(svc, "sprintDao", sprintDao);
+		sprintDao = mock(SprintDao.class);
+		ReflectionTestUtils.setField(svc, "sprintDao", sprintDao);
 
-        Sprint[] aSprints = new Sprint[3];
-        int month;
-        for (int idx = 0; idx < 3; idx++) {
-            month = idx + 1;
-            aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
-            aSprints[idx].setGoal("GOAL" + idx);
-            aSprints[idx].setCommitment(100 * idx);
-        }
-        LocalDate now = LocalDate.now();
-        aSprints[1].setStartDate(now.plusDays(-7).toString());
-        aSprints[1].setEndDate(now.plusDays(6).toString());
+		Sprint[] aSprints = new Sprint[3];
+		int month;
+		for (int idx = 0; idx < 3; idx++) {
+			month = idx + 1;
+			aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
+			aSprints[idx].setGoal("GOAL" + idx);
+			aSprints[idx].setCommitment(100 * idx);
+		}
+		LocalDate now = LocalDate.now();
+		aSprints[1].setStartDate(now.plusDays(-7).toString());
+		aSprints[1].setEndDate(now.plusDays(6).toString());
 
-        List<Sprint> sprints = Arrays.asList(aSprints);
-        when(sprintDao.all()).thenReturn(sprints);
-        when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
-        when(sprintDao.find("UNK")).thenReturn(null);
-        when(sprintDao.current()).thenReturn(aSprints[1]);
+		List<Sprint> sprints = Arrays.asList(aSprints);
+		when(sprintDao.all()).thenReturn(sprints);
+		when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
+		when(sprintDao.find("UNK")).thenReturn(null);
+		when(sprintDao.current()).thenReturn(aSprints[1]);
 
-        Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
-        when(sprintDao.add(any(Sprint.class))).thenReturn(newSprint);
+		Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
+		when(sprintDao.add(any(Sprint.class))).thenReturn(newSprint);
 
-        sprintDayDao = mock(SprintDayDao.class);
-        ReflectionTestUtils.setField(svc, "sprintDayDao", sprintDayDao);
+		Sprint updatedSprint = new Sprint("TST2", "TST2", "TST2", "TST2");
+		when(sprintDao.update(any(Sprint.class))).thenReturn(updatedSprint);
 
-        when(sprintDayDao.findBetween(Mockito.anyString(), Mockito.anyString())).thenReturn(new ArrayList<SprintDay>());
+		sprintDayDao = mock(SprintDayDao.class);
+		ReflectionTestUtils.setField(svc, "sprintDayDao", sprintDayDao);
 
-    }
+		when(sprintDayDao.findBetween(Mockito.anyString(), Mockito.anyString())).thenReturn(new ArrayList<SprintDay>());
 
-    @Test
-    public void testAll() {
-        List<Sprint> sprints = svc.all();
-        assertNotNull(sprints);
-        assertEquals(3, sprints.size());
-    }
+	}
 
-    @Test
-    public void testFindSprint() {
-        // Sprint must be found
-        Sprint sprint = svc.find("SPR-0");
-        assertNotNull(sprint);
-        assertEquals("NAME0", sprint.getName());
-        assertEquals("2016-1-01", sprint.getStartDate());
-        assertEquals("2016-1-15", sprint.getEndDate());
-        assertEquals("GOAL0", sprint.getGoal());
+	@Test
+	public void testAll() {
+		List<Sprint> sprints = svc.all();
+		assertNotNull(sprints);
+		assertEquals(3, sprints.size());
+	}
 
-        // Sprint not found
-        Sprint unk = svc.find("UNK");
-        assertNull(unk);
-    }
+	@Test
+	public void testFindSprint() {
+		// Sprint must be found
+		Sprint sprint = svc.find("SPR-0");
+		assertNotNull(sprint);
+		assertEquals("NAME0", sprint.getName());
+		assertEquals("2016-1-01", sprint.getStartDate());
+		assertEquals("2016-1-15", sprint.getEndDate());
+		assertEquals("GOAL0", sprint.getGoal());
 
-    @Test
-    public void testAddSprint() {
-        Sprint usr = svc.add(new Sprint(null, "TST", "TST", "TST"));
-        assertNotNull(usr);
-        assertEquals("TST", usr.getName());
-    }
+		// Sprint not found
+		Sprint unk = svc.find("UNK");
+		assertNull(unk);
+	}
 
-    @Test
-    public void testCurrentSprint() {
-        Sprint sprint = svc.currentSprint();
-        assertNotNull(sprint);
-        assertEquals("NAME1", sprint.getName());
-    }
+	@Test
+	public void testAddSprint() {
+		Sprint sprint = svc.add(new Sprint(null, "TST", "TST", "TST"));
+		assertNotNull(sprint);
+		assertEquals("TST", sprint.getName());
+		// TODO : verfiy add is called with a sprint with a not null ID
+		verify(sprintDao).add(any(Sprint.class));
+	}
 
-    @Test
-    public void testLeftDays() {
-        Parameter param = svc.leftDays();
-        assertNotNull(param);
-        assertEquals("left-days", param.getKey());
-        assertEquals("5", param.getValue());
-    }
+	@Test
+	public void testUpdateSprint() {
+		Sprint sprint = svc.update(new Sprint(null, "TST", "TST", "TST"));
+		assertNotNull(sprint);
+		assertEquals("TST2", sprint.getName());
+		verify(sprintDao).update(any(Sprint.class));
+	}
 
-    @Test
-    public void testBurndown() {
-        Chart burndown = svc.burndown();
-        assertNotNull(burndown);
-        assertNotNull(burndown.getDays());
-        assertEquals(10, burndown.getDays().length);
-        assertNotNull(burndown.getSeries());
-        assertEquals(2, burndown.getSeries().size());
-        assertNotNull(burndown.getSeries().get(0).getData());
-        assertEquals(10, burndown.getSeries().get(0).getData().length);
-        assertEquals(100d, burndown.getSeries().get(0).getData()[0], 0.01d);
-        assertEquals(0d, burndown.getSeries().get(0).getData()[9], 0.01d);
-        assertNotNull(burndown.getSeries().get(1).getData());
-        assertEquals(10, burndown.getSeries().get(1).getData().length);
-    }
+	@Test
+	public void testCurrentSprint() {
+		Sprint sprint = svc.currentSprint();
+		assertNotNull(sprint);
+		assertEquals("NAME1", sprint.getName());
+	}
+
+	@Test
+	public void testLeftDays() {
+		Parameter param = svc.leftDays();
+		assertNotNull(param);
+		assertEquals("left-days", param.getKey());
+		assertEquals("5", param.getValue());
+	}
+
+	@Test
+	public void testBurndown() {
+		Chart burndown = svc.burndown();
+		assertNotNull(burndown);
+		assertNotNull(burndown.getDays());
+		assertEquals(10, burndown.getDays().length);
+		assertNotNull(burndown.getSeries());
+		assertEquals(2, burndown.getSeries().size());
+		assertNotNull(burndown.getSeries().get(0).getData());
+		assertEquals(10, burndown.getSeries().get(0).getData().length);
+		assertEquals(100d, burndown.getSeries().get(0).getData()[0], 0.01d);
+		assertEquals(0d, burndown.getSeries().get(0).getData()[9], 0.01d);
+		assertNotNull(burndown.getSeries().get(1).getData());
+		assertEquals(10, burndown.getSeries().get(1).getData().length);
+	}
 }
