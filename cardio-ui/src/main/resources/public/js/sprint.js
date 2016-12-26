@@ -1,8 +1,12 @@
 $(document).ready(function() {
 	initSprint();
-	$('#updateSprint').on('click', function(e) {
+	$('#updateSprintProperties').on('click', function(e) {
 		e.stopPropagation();
 		updateSprint($('#sprintId').val(), $('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
+	});
+	$('#measures').on('click', 'button', function(e) {
+		e.stopPropagation();
+		updateData($('#sprintId').val());
 	});
 });
 
@@ -35,7 +39,7 @@ function updateSprint(id, name, startdate, enddate, goal, commitment) {
 function displayCalendar(selector, data) {
 	var serie;
 	$.each(data.series, function(index, s) {
-		if (s.name == 'real') {
+		if (s.name == 'done') {
 			serie = s;
 			return true;
 		}
@@ -73,3 +77,22 @@ function displayCalendar(selector, data) {
 	content += '</div>'
 	$(selector).append(content);
 }
+
+function updateData(id) {
+	var payload = { data: {} };
+	$('#measures').find('.sprint-day').each(function( index ) {
+		var key = $(this).find('label').text();
+		var val = $(this).find('input').val();
+		payload.data[key] = val;
+	});
+	
+	ajaxPost("/api/sprints/"+id+"/data", payload, function(data, hv, errorThrown) {
+		if (hv.status == 201 || hv.status == 200) {
+			log("Sprint " + hv.location + " data updated");
+			// reset form
+		} else {
+			log("Error updating sprint data : " + errorThrown);
+		}
+	});
+}
+

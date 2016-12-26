@@ -15,59 +15,64 @@ import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 @Service
 public class SprintDayDaoImpl implements SprintDayDao {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(SprintDayDaoImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SprintDayDaoImpl.class);
 
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
-	public SprintDayDaoImpl() {
-		// Empty constructor
-	}
+    public SprintDayDaoImpl() {
+        // Empty constructor
+    }
 
-	public SprintDayDaoImpl(JdbcTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
-	}
+    public SprintDayDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-	@Override
-	public List<SprintDay> all() {
-		LOGGER.info("all ...");
-		String sql = "select * from SPRINT_DAYS";
-		return jdbcTemplate.query(sql, new SprintDayMapper());
-	}
+    @Override
+    public List<SprintDay> all() {
+        LOGGER.info("all ...");
+        String sql = "select * from SPRINT_DAYS";
+        return jdbcTemplate.query(sql, new SprintDayMapper());
+    }
 
-	@Override
-	public SprintDay find(String day) {
-		LOGGER.info("find '{}' ...", day);
-		String sql = "select * from SPRINT_DAYS where day = ?";
-		SprintDay sprintDay = null;
-		try {
-			sprintDay = jdbcTemplate.queryForObject(sql, new Object[] { day }, new SprintDayMapper());
-		} catch (EmptyResultDataAccessException notFound) {
-			LOGGER.info("No result found with day '{}'", day);
-		}
-		return sprintDay;
-	}
+    @Override
+    public SprintDay find(String day) {
+        LOGGER.info("find '{}' ...", day);
+        String sql = "select * from SPRINT_DAYS where day = ?";
+        SprintDay sprintDay = null;
+        try {
+            sprintDay = jdbcTemplate.queryForObject(sql, new Object[] { day }, new SprintDayMapper());
+        } catch (EmptyResultDataAccessException notFound) {
+            LOGGER.info("No result found with day '{}'", day);
+        }
+        return sprintDay;
+    }
 
-	@Override
-	public SprintDay add(SprintDay sprintDay) {
-		LOGGER.info("add ...");
-		String sql = "insert into SPRINT_DAYS(DAY, DONE) values (?, ?)";
-		jdbcTemplate.update(sql, LocalDateUtils.convertToDate(sprintDay.getDay()), sprintDay.getDone());
-		return sprintDay;
-	}
+    @Override
+    public SprintDay add(SprintDay sprintDay) {
+        return insertOrUpdate(sprintDay);
+    }
 
-	@Override
-	public void remove(String day) {
-		LOGGER.info("remove '{}' ...", day);
-		String SQL = "delete from SPRINT_DAYS where day = ?";
-		jdbcTemplate.update(SQL, day);
-	}
+    @Override
+    public SprintDay insertOrUpdate(SprintDay sprintDay) {
+        LOGGER.info("insertOrUpdate ...");
+        String sql = "merge into SPRINT_DAYS(DAY, DONE) key(DAY) values (?, ?)";
+        jdbcTemplate.update(sql, LocalDateUtils.convertToDate(sprintDay.getDay()), sprintDay.getDone());
+        return sprintDay;
+    }
 
-	@Override
-	public List<SprintDay> findBetween(String start, String end) {
-		LOGGER.info("all ...");
-		String sql = String.format("select * from SPRINT_DAYS where DATE '%s' <= DAY AND DAY <= DATE '%s'", start, end);
-		List<SprintDay> days = jdbcTemplate.query(sql, new SprintDayMapper());
-		return days;
-	}
+    @Override
+    public void remove(String day) {
+        LOGGER.info("remove '{}' ...", day);
+        String SQL = "delete from SPRINT_DAYS where day = ?";
+        jdbcTemplate.update(SQL, day);
+    }
+
+    @Override
+    public List<SprintDay> findBetween(String start, String end) {
+        LOGGER.info("all ...");
+        String sql = String.format("select * from SPRINT_DAYS where DATE '%s' <= DAY AND DAY <= DATE '%s'", start, end);
+        List<SprintDay> days = jdbcTemplate.query(sql, new SprintDayMapper());
+        return days;
+    }
 }

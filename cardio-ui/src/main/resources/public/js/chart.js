@@ -18,7 +18,9 @@ function getBurndownChart(burndown) {
 			serie.dashStyle = 'DashDot';
 			serie.marker =  { enabled: false };
 		}
-		chart.series.push(serie);
+		if (serie.name != 'done') {
+		  chart.series.push(serie);
+		}
 	});
 	return chart;
 }

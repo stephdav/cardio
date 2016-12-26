@@ -45,17 +45,6 @@ function updateSprints(data, hv) {
 	$('#sprintslist').empty();
 	if (hv.status == 200 || hv.status == 206) {
 		$('#sprints-table').bootstrapTable('load', data);
-//		var content = "";
-//		$.each(data, function(index, sprint) {
-//			content += '<li class="list-group-item" id="' + sprint.id + '">';
-//			content += '<div class="clearfix">';
-//			content += '<label>';
-//			content += '['+ sprint.startDate + ', ' + sprint.endDate + '] #' + sprint.name + '   ' + sprint.goal;
-//			content += '</label>';
-//			content += '<div class="pull-right"><span class="badge">' + sprint.commitment+ '</span></div>'
-//			content += '</div></li>';
-//		});
-//		$('#sprintslist').append(content);
 		$('#sprints-count').text(hv.contentRange.split(/\//)[1]);
 	}
 }
