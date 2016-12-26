@@ -103,6 +103,11 @@
 							<format>xml</format>
 						</formats>
 						<instrumentation>
+							<ignores>
+								<ignore>com.sopra.agile.cardio.app.*</ignore>
+								<ignore>com.sopra.agile.cardio.back.rest.*</ignore>
+								<ignore>com.sopra.agile.cardio.ui.*</ignore>
+							</ignores>
 							<excludes>
 								<exclude>**/config/*.class</exclude>
 								<exclude>**/*Test.class</exclude>

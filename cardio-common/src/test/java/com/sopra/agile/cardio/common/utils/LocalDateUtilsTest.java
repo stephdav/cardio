@@ -26,7 +26,7 @@ public class LocalDateUtilsTest {
     public void convertToDate() {
         assertEquals(SHOULD_BE_EQUALS, getExactDateFromLong(NOW),
                 LocalDateUtils.convertToDate(getLocalDateFromLong(NOW)));
-        assertNull(LocalDateUtils.convertToLocalDate(null));
+        assertNull(LocalDateUtils.convertToDate(null));
     }
 
     private Date getDateFromLong(long time) {
