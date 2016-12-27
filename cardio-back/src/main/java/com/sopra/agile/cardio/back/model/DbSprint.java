@@ -10,6 +10,7 @@ public class DbSprint {
     private LocalDate endDate;
     private String goal;
     private int commitment;
+    private int velocity;
 
     public DbSprint() {
         // Empty constructor
@@ -68,5 +69,13 @@ public class DbSprint {
 
     public void setCommitment(int commitment) {
         this.commitment = commitment;
+    }
+
+    public int getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(int velocity) {
+        this.velocity = velocity;
     }
 }

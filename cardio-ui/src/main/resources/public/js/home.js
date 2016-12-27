@@ -5,7 +5,8 @@ $(document).ready(function() {
 function initHome() {
 	getCurrentSprint(updateHomeView);
 	getLeftDays();
-	getBurndown(displayChart, 'container');
+	getBurndown(displayBurndown, 'burndown');
+	getBurnup(displayBurnup, 'burnup');
 }
 
 function updateHomeView(sprint, hv) {

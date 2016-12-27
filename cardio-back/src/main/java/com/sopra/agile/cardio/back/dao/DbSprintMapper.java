@@ -16,6 +16,7 @@ public class DbSprintMapper implements RowMapper<DbSprint> {
     public static final String COL_ENDDATE = "END_DATE";
     public static final String COL_GOAL = "GOAL";
     public static final String COL_COMMIT = "COMMITMENT";
+    public static final String COL_VELOCITY = "VELOCITY";
 
     public DbSprint mapRow(ResultSet rs, int rowNum) throws SQLException {
         DbSprint sprint = new DbSprint();
@@ -25,6 +26,7 @@ public class DbSprintMapper implements RowMapper<DbSprint> {
         sprint.setEndDate(LocalDateUtils.convertToLocalDate(rs.getDate(COL_ENDDATE)));
         sprint.setGoal(rs.getString(COL_GOAL));
         sprint.setCommitment(rs.getInt(COL_COMMIT));
+        sprint.setVelocity(rs.getInt(COL_VELOCITY));
         return sprint;
     }
 

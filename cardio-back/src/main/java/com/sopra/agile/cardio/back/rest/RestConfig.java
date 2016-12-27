@@ -53,6 +53,7 @@ public class RestConfig {
 
         // CURRENT SPRINT
 
+        get("/api/sprints/current/burnup", (req, res) -> controller.getBurnup(req, res), new JsonTransformer());
         get("/api/sprints/current/burndown", (req, res) -> controller.getCurrentBurndown(req, res),
                 new JsonTransformer());
         get("/api/sprints/current/leftdays", (req, res) -> controller.getCurrentLeftDays(req, res),

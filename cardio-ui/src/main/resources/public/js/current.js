@@ -27,3 +27,13 @@ function getBurndown(callback, selector) {
 		}
 	});
 }
+
+function getBurnup(callback, selector) {
+	ajaxGet("/api/sprints/current/burnup", function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 204) {
+			callback(selector, data);
+		} else {
+			log("Error getting burndown: " + errorThrown);
+		}
+	});
+}

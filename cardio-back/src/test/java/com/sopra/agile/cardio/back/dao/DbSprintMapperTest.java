@@ -21,7 +21,7 @@ public class DbSprintMapperTest {
     private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_ID, DbSprintMapper.COL_NAME,
             DbSprintMapper.COL_GOAL };
     private static final String[] DATE_COLUMNS = { DbSprintMapper.COL_STARTDATE, DbSprintMapper.COL_ENDDATE };
-    private static final String[] INT_COLUMNS = { DbSprintMapper.COL_COMMIT };
+    private static final String[] INT_COLUMNS = { DbSprintMapper.COL_COMMIT, DbSprintMapper.COL_VELOCITY };
 
     private static final long NOW = System.currentTimeMillis();
     private static final int INT_VALUE = 0;
@@ -59,6 +59,7 @@ public class DbSprintMapperTest {
         assertEquals(SHOULD_BE_EQUALS, today, sprint.getEndDate());
         assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_GOAL, sprint.getGoal());
         assertEquals(SHOULD_BE_EQUALS, INT_VALUE, sprint.getCommitment());
+        assertEquals(SHOULD_BE_EQUALS, INT_VALUE, sprint.getVelocity());
     }
 
     private Date getDateFromLong(long time) {

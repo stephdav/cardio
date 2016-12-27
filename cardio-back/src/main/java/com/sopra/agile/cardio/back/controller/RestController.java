@@ -211,4 +211,14 @@ public class RestController {
         return chart;
     }
 
+    public Chart getBurnup(Request req, Response res) {
+        res.type("application/json");
+        Chart chart = svcSprint.burnup();
+        if (chart != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return chart;
+    }
 }
