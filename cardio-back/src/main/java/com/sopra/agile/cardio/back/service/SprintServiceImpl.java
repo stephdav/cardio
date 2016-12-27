@@ -1,6 +1,7 @@
 package com.sopra.agile.cardio.back.service;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,6 +173,8 @@ public class SprintServiceImpl implements SprintService {
         Chart chart = new Chart();
 
         List<Sprint> sprints = all();
+        sprints.sort(Comparator.comparing(Sprint::getStartDate));
+
         int nbSprints = sprints.size();
 
         String[] days = new String[nbSprints];
