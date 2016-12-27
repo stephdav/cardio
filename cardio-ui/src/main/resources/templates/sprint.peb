@@ -69,5 +69,6 @@
 
 {% block scripts %}
   <script src="/js/current.js"></script>
+  <script src="/js/fnSprint.js"></script>
   <script src="/js/sprint.js"></script>
 {% endblock %}

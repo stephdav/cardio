@@ -25,6 +25,19 @@ function updateProjectName(data, hv) {
 
 // ===========================================================================
 
+function getLastPathLocation() {
+	var pathArray = window.location.pathname.split( '/' );
+	var idx = pathArray.length-1;
+	var pathLocation = pathArray[idx]; 
+	while (pathLocation == '' && idx > 0) {
+		idx--;
+		pathLocation = pathArray[idx];
+	}
+	return pathLocation;
+}
+
+//===========================================================================
+
 function handleAjaxError(jqXHR, status, errorThrown) {
 	log("Ajax error (jqXHR.status=" + jqXHR.status + " - status=" + status + " - errorThrown=" + errorThrown+")");
 }

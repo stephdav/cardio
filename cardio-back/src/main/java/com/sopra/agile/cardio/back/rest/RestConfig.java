@@ -51,19 +51,26 @@ public class RestConfig {
         get("/api/config/parameters/" + PARAM_KEY,
                 (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)), new JsonTransformer());
 
-        // SPRINTS
+        // CURRENT SPRINT
+
         get("/api/sprints/current/burndown", (req, res) -> controller.getCurrentBurndown(req, res),
                 new JsonTransformer());
         get("/api/sprints/current/leftdays", (req, res) -> controller.getCurrentLeftDays(req, res),
                 new JsonTransformer());
         get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
 
+        // SPRINTS
+
+        get("/api/sprints/" + PARAM_ID + "/data",
+                (req, res) -> controller.getSprintData(req, res, req.params(PARAM_ID)), new JsonTransformer());
         get("/api/sprints/" + PARAM_ID, (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());
         get("/api/sprints", (req, res) -> controller.getAllSprints(req, res), new JsonTransformer());
+
         post("/api/sprints/" + PARAM_ID + "/data",
                 (req, res) -> controller.updateSprintData(req, res, req.params(PARAM_ID)));
-        post("/api/sprints/" + PARAM_ID, (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
+        post("/api/sprints/" + PARAM_ID,
+                (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
         post("/api/sprints", (req, res) -> controller.createSprint(req, res));
 
         // USERS

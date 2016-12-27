@@ -6,6 +6,9 @@ import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 
 public interface SprintService extends BaseService<Sprint> {
+
+    Chart data(String id);
+
     Sprint update(Sprint sprint);
 
     Sprint currentSprint();

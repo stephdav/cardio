@@ -1,18 +1,23 @@
 $(document).ready(function() {
 	initSprint();
+	initSprintEvents();
+});
+
+function initSprint() {
+	var sprintId = getLastPathLocation();
+	fnSprintGet(sprintId, updateSprintView);
+	fnSprintGetData(sprintId, displayCalendar);
+}
+
+function initSprintEvents() {
 	$('#updateSprintProperties').on('click', function(e) {
 		e.stopPropagation();
-		updateSprint($('#sprintId').val(), $('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
+		fnSprintUpdate($('#sprintId').val(), $('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
 	});
 	$('#measures').on('click', 'button', function(e) {
 		e.stopPropagation();
 		updateData($('#sprintId').val());
 	});
-});
-
-function initSprint() {
-	getCurrentSprint(updateSprintView);
-	getBurndown(displayCalendar, '#measures');
 }
 
 function updateSprintView(sprint, hv) {
@@ -24,19 +29,8 @@ function updateSprintView(sprint, hv) {
 	$('#sprintCommitment').val(sprint.commitment);
 }
 
-function updateSprint(id, name, startdate, enddate, goal, commitment) {
-	var payload = {id: id, name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment};
-	ajaxPost("/api/sprints/"+id, payload, function(data, hv, errorThrown) {
-		if (hv.status == 201 || hv.status == 200) {
-			log("Sprint " + hv.location + " updated");
-			// reset form
-		} else {
-			log("Error updating sprint : " + errorThrown);
-		}
-	});
-}
-
-function displayCalendar(selector, data) {
+function displayCalendar(data, hv) {
+	var selector = '#measures';
 	var serie;
 	$.each(data.series, function(index, s) {
 		if (s.name == 'done') {

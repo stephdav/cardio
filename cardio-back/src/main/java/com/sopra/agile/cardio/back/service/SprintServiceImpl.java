@@ -77,25 +77,32 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Chart burndown() {
-        Chart chart = new Chart();
+    public Chart data(String id) {
+        return sprintData(find(id));
+    }
 
-        Sprint current = currentSprint();
+    @Override
+    public Chart burndown() {
+        return sprintData(currentSprint());
+    }
+
+    private Chart sprintData(Sprint sprint) {
+        Chart chart = new Chart();
 
         // int nbDays = 0;
         LocalDate startDate = null;
         LocalDate endDate = null;
 
-        if (current != null) {
-            startDate = new LocalDate(current.getStartDate());
-            endDate = new LocalDate(current.getEndDate());
+        if (sprint != null) {
+            startDate = new LocalDate(sprint.getStartDate());
+            endDate = new LocalDate(sprint.getEndDate());
 
             String[] days = LocalDateUtils.getWorkingDays(startDate, endDate);
             chart.setDays(days);
 
-            chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, current.getCommitment()),
-                    convertMeasures("real", getMeasures(current), days),
-                    convertMeasures("done", getDoneMeasures(current), days)));
+            chart.setSeries(Arrays.asList(computeIdealBurndown(days.length, sprint.getCommitment()),
+                    convertMeasures("real", getMeasures(sprint), days),
+                    convertMeasures("done", getDoneMeasures(sprint), days)));
         }
         return chart;
     }

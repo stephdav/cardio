@@ -143,6 +143,17 @@ public class RestController {
         return sprint;
     }
 
+    public Chart getSprintData(Request req, Response res, String id) {
+        res.type("application/json");
+        Chart chart = svcSprint.data(id);
+        if (chart != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return chart;
+    }
+
     public String createSprint(Request req, Response res) {
         Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
         res.status(201);

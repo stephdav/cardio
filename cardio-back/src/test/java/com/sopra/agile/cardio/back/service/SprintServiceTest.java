@@ -58,6 +58,7 @@ public class SprintServiceTest {
         List<Sprint> sprints = Arrays.asList(aSprints);
         when(sprintDao.all()).thenReturn(sprints);
         when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
+        when(sprintDao.find("SPR-1")).thenReturn(aSprints[1]);
         when(sprintDao.find("UNK")).thenReturn(null);
         when(sprintDao.current()).thenReturn(aSprints[1]);
 
@@ -144,6 +145,23 @@ public class SprintServiceTest {
         assertNotNull(burndown.getSeries().get(1).getData());
         assertEquals(10, burndown.getSeries().get(1).getData().length);
         assertEquals(10, burndown.getSeries().get(2).getData().length);
+    }
+
+    @Test
+    public void testData() {
+        Chart data = svc.data("SPR-1");
+        assertNotNull(data);
+        assertNotNull(data.getDays());
+        assertEquals(10, data.getDays().length);
+        assertNotNull(data.getSeries());
+        assertEquals(3, data.getSeries().size());
+        assertNotNull(data.getSeries().get(0).getData());
+        assertEquals(10, data.getSeries().get(0).getData().length);
+        assertEquals(100d, data.getSeries().get(0).getData()[0], 0.01d);
+        assertEquals(0d, data.getSeries().get(0).getData()[9], 0.01d);
+        assertNotNull(data.getSeries().get(1).getData());
+        assertEquals(10, data.getSeries().get(1).getData().length);
+        assertEquals(10, data.getSeries().get(2).getData().length);
     }
 
     @Test
