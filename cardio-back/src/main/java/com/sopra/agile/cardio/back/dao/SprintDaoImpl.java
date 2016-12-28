@@ -109,4 +109,18 @@ public class SprintDaoImpl implements SprintDao {
 
         return sprint;
     }
+
+    @Override
+    public List<Sprint> allCompleted() {
+        LOGGER.info("all ...");
+        String sql = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
+        List<DbSprint> dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
+
+        List<Sprint> sprints = new ArrayList<Sprint>();
+        for (DbSprint s : dbsprints) {
+            sprints.add(mapper.map(s));
+        }
+        return sprints;
+    }
+
 }

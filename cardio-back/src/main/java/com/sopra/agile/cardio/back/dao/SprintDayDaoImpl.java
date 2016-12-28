@@ -70,9 +70,24 @@ public class SprintDayDaoImpl implements SprintDayDao {
 
     @Override
     public List<SprintDay> findBetween(String start, String end) {
-        LOGGER.info("all ...");
-        String sql = String.format("select * from SPRINT_DAYS where DATE '%s' <= DAY AND DAY <= DATE '%s'", start, end);
+        LOGGER.info("findBetween {} and {} ...", start, end);
+        String sql = String.format(
+                "select * from SPRINT_DAYS where DATE '%s' <= DAY AND DAY <= DATE '%s' ORDER BY DAY ASC", start, end);
         List<SprintDay> days = jdbcTemplate.query(sql, new SprintDayMapper());
         return days;
+    }
+
+    @Override
+    public SprintDay findLastBetween(String start, String end) {
+        LOGGER.info("findLastBetween {} and {} ...", start, end);
+        SprintDay day = null;
+        String sql = String.format(
+                "select * from SPRINT_DAYS where DATE '%s' <= DAY AND DAY <= DATE '%s' ORDER BY DAY DESC", start, end);
+        List<SprintDay> days = jdbcTemplate.query(sql, new SprintDayMapper());
+
+        if (days != null && !days.isEmpty()) {
+            day = days.get(0);
+        }
+        return day;
     }
 }

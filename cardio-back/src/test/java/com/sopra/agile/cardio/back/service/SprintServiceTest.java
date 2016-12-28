@@ -19,6 +19,7 @@ import java.util.Map;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.springframework.test.util.ReflectionTestUtils;
 
@@ -165,7 +166,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateData() {
+    public void testUpdateData_data_nullVelocity() {
         Map<String, String> data = new HashMap<String, String>();
         data.put("2016-07-14", "7");
         data.put("2016-08-15", "");
@@ -173,9 +174,29 @@ public class SprintServiceTest {
         SprintData sprintData = new SprintData();
         sprintData.setData(data);
 
-        svc.updateData(sprintData);
+        ArgumentCaptor<Sprint> savedCaptor = ArgumentCaptor.forClass(Sprint.class);
+
+        svc.updateData("SPR-1", sprintData);
         verify(sprintDayDao, Mockito.times(1)).insertOrUpdate(any(SprintDay.class));
         verify(sprintDayDao, Mockito.times(2)).remove(anyString());
+        verify(sprintDao, Mockito.times(1)).update(savedCaptor.capture());
+        assertNotNull(savedCaptor.getValue());
+        assertEquals(0, savedCaptor.getValue().getVelocity());
     }
 
+    @Test
+    public void testUpdateData_velocityNotNull() {
+        SprintData sprintData = new SprintData();
+        sprintData.setData(new HashMap<String, String>());
+
+        SprintDay sd = new SprintDay();
+        sd.setDone(7);
+        when(sprintDayDao.findLastBetween(anyString(), Mockito.anyString())).thenReturn(sd);
+        ArgumentCaptor<Sprint> savedCaptor = ArgumentCaptor.forClass(Sprint.class);
+
+        svc.updateData("SPR-1", sprintData);
+        verify(sprintDao, Mockito.times(1)).update(savedCaptor.capture());
+        assertNotNull(savedCaptor.getValue());
+        assertEquals(7, savedCaptor.getValue().getVelocity());
+    }
 }

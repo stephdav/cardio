@@ -101,4 +101,12 @@ public class SprintDaoTest {
         assertEquals(23, sprint.getVelocity());
     }
 
+    @Test
+    public void testAllCompleted() {
+        List<Sprint> sprints = dao.allCompleted();
+        assertNotNull(sprints);
+        assertEquals(count(jdbc, SPRINTS) - 1, sprints.size());
+        // TODO : assert that sprints are sorted => impact on testAddSprint
+    }
+
 }

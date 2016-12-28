@@ -77,10 +77,21 @@ public class SprintDayDaoTest {
 
     @Test
     public void testFindBetween() {
-        // User must be found
         List<SprintDay> days = dao.findBetween("2016-01-01", "2016-01-31");
         assertNotNull(days);
         assertEquals(6, days.size());
     }
 
+    @Test
+    public void testFindLastBetween() {
+        SprintDay day = dao.findLastBetween("2016-01-01", "2016-01-10");
+        assertNotNull(day);
+        assertEquals(new LocalDate("2016-01-08"), day.getDay());
+    }
+
+    @Test
+    public void testFindLastBetween_noResult() {
+        SprintDay day = dao.findLastBetween("2016-03-01", "2016-03-10");
+        assertNull(day);
+    }
 }

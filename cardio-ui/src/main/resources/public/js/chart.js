@@ -33,6 +33,8 @@ function getBurnupChart(burndown) {
 	chart =  {
         title: { text: 'Project Burnup' },
         xAxis: {
+        	title: { text: 'sprint' },
+        	labels: { formatter: function () { return '#' + this.value; } },
             categories: burndown.days
         },
         yAxis: { title: { text: '' } },

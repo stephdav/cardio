@@ -1,7 +1,6 @@
 package com.sopra.agile.cardio.back.service;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,7 +153,7 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public void updateData(SprintData days) {
+    public void updateData(String id, SprintData days) {
         for (Map.Entry<String, String> e : days.getData().entrySet()) {
             LOGGER.info("{}: {}", e.getKey(), e.getValue());
 
@@ -166,14 +165,29 @@ public class SprintServiceImpl implements SprintService {
                 sprintDayDao.remove(e.getKey());
             }
         }
+        updateVelocity(id);
+    }
+
+    private void updateVelocity(String id) {
+        Sprint sprint = find(id);
+        String from = sprint.getStartDate();
+        String to = sprint.getEndDate();
+
+        SprintDay day = sprintDayDao.findLastBetween(from, to);
+
+        int velocity = 0;
+        if (day != null) {
+            velocity = day.getDone();
+        }
+        sprint.setVelocity(velocity);
+        update(sprint);
     }
 
     @Override
     public Chart burnup() {
         Chart chart = new Chart();
 
-        List<Sprint> sprints = all();
-        sprints.sort(Comparator.comparing(Sprint::getStartDate));
+        List<Sprint> sprints = sprintDao.allCompleted();
 
         int nbSprints = sprints.size();
 
@@ -184,6 +198,9 @@ public class SprintServiceImpl implements SprintService {
         for (Sprint s : sprints) {
             days[idx] = s.getName();
             data[idx] = Double.valueOf(s.getVelocity());
+            if (idx > 0) {
+                data[idx] = data[idx] + data[idx - 1];
+            }
             idx++;
         }
         chart.setSeries(Arrays.asList(new Serie("velocity", data)));

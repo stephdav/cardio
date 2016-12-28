@@ -171,7 +171,7 @@ public class RestController {
     public String updateSprintData(Request req, Response res, String id) {
         Sprint sprint = svcSprint.find(id);
         if (sprint != null) {
-            svcSprint.updateData(new ObjectMapper<SprintData>(SprintData.class).parse(req.body()));
+            svcSprint.updateData(id, new ObjectMapper<SprintData>(SprintData.class).parse(req.body()));
             res.status(201);
             res.header("Location", "/api/sprints/" + sprint.getId());
         }
