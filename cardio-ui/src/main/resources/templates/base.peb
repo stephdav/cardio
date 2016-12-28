@@ -16,6 +16,7 @@
   ------------------------------------------------------ -->
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/css/sb-admin.css">
   <link rel="stylesheet" href="/css/style.css">
   
   {% block stylesheets %}{% endblock %}
@@ -27,42 +28,74 @@
 </head>
 
 <body>
+  <div id="wrapper">
 
-  <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="/ui/"><img alt="cardio" src="/images/cardio.png"></a>
-      </div>
-      <div id="navbar" class="collapse navbar-collapse">
-        <p id="project-name" class="navbar-text"/>
-        <ul class="nav navbar-nav">
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">administration <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="/ui/admin/sprints">sprints</a></li>
-              <li><a href="/ui/admin/users">users</a></li>
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/ui/"><img alt="cardio" src="/images/cardio.png"></a>
+            </div>
+            <!-- Top Menu Items -->
+            <p id="project-name" class="navbar-text"/>
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> administration <b class="caret"></b></a>
+                    <ul class="dropdown-menu admin-dropdown">
+                        <li><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat"></i> sprints</a></li>
+                        <li><a href="/ui/admin/users"><i class="fa fa-fw fa-users"></i> users</a></li>
+                    </ul>
+                </li>
             </ul>
-          </li>
-        </ul>
-      </div><!--/.nav-collapse -->
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li class="active"><a href="/ui/"><i class="fa fa-fw fa-dashboard fa-2x"></i></a></li>
+                    <li><a href="/ui/"><i class="fa fa-fw fa-bar-chart-o fa-2x"></i></a></li>
+                    <li><a href="/ui/"><i class="fa fa-fw fa-table fa-2x"></i></a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+    
+<!--    
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/ui/"><img alt="cardio" src="/images/cardio.png"></a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <p id="project-name" class="navbar-text"/>
+        </div>
+      </div>
+    </nav>
+-->
+    <div id="page-wrapper">
+
+      <div class="container-fluid">
+        {% block content %}{% endblock %}
+
+        <footer class="footer">
+          <span class="appVersion"></span> provided by <a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a>
+        </footer>
+
+      </div>
+
     </div>
-  </nav>
 
-  <div class="container-fluid">
-    {% block content %}{% endblock %}
-  </div>
-
-  <footer class="footer">
-    <span class="appVersion"></span> provided by <a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a>
-  </footer>
+  </div> <!-- /#wrapper -->
 
   <script src="/js/ext/jquery-3.1.0.min.js"></script>
   <script src="/js/ext/bootstrap.min.js"></script>
