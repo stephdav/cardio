@@ -9,7 +9,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-public class UserController extends BaseController {
+public class UsersController extends BaseController {
     public static final Route USERS = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
         return ViewUtil.render(req, attributes, Path.Template.USERS);

@@ -29,7 +29,7 @@ function initSprintsTable() {
 	});
 
 	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
-		window.location = "../sprint/" + row.id;
+		window.location = "../../sprint/" + row.id;
 	});
 }
 

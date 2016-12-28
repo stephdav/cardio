@@ -37,7 +37,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <!-- <a class="navbar-brand" href="/ui/">{{ title }}</a> -->
         <a class="navbar-brand" href="/ui/"><img alt="cardio" src="/images/cardio.png"></a>
       </div>
       <div id="navbar" class="collapse navbar-collapse">
@@ -45,7 +44,13 @@
         <ul class="nav navbar-nav">
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/ui/admin/">administration</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">administration <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/ui/admin/sprints">sprints</a></li>
+              <li><a href="/ui/admin/users">users</a></li>
+            </ul>
+          </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>

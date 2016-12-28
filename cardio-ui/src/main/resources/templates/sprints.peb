@@ -1,0 +1,54 @@
+{% extends "templates/base.peb" %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+
+    <div class="col-lg-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-repeat fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="sprints-count">-</span></div>
+            <div class="text-muted">sprints</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-9">
+      <div class="panel panel-default">
+        <div class="panel-heading">sprints</div>
+        <div class="panel-body">
+
+          <table id="sprints-table"></table>
+          
+          <div class="block form-inline">
+            <div class="form-group">
+              <input type="text" class="form-control" id="sprintName" placeholder="#">
+            </div>
+            <div class="form-group">
+              <input type="date" min="2010-01-01" class="form-control" id="sprintStartDate" placeholder="from">
+            </div>
+            <div class="form-group">
+              <input type="date" min="2010-01-01" class="form-control" id="sprintEndDate" placeholder="to">
+            </div>
+            <button id="addSprint" type="button" class="btn btn-default">add sprint</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/ext/bootstrap-table.min.js"></script>
+  <script src="/js/sprints.js"></script>
+{% endblock %}
