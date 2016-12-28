@@ -7,17 +7,7 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-lg-5">
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-users fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="users-count">-</span></div>
-            <div class="text-muted">users</div>
-          </div>
-        </div>
-      </div>
-    </div>
+
     <div class="col-lg-7">
       <div class="panel panel-blue panel-widget ">
         <div class="row no-padding">
@@ -29,6 +19,19 @@
         </div>
       </div>
     </div>
+
+    <div class="col-lg-5">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-users fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="users-count">-</span></div>
+            <div class="text-muted">users</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div class="block">
@@ -36,44 +39,10 @@
   </div>
 
   <div class="row">
-    <div class="col-lg-5">
-      <div class="panel panel-default">
-
-        <div class="panel-heading">
-          users
-          <button id="sortByLogin" type="button" class="btn btn-default">login <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-          <button id="sortByFirstname" type="button" class="btn btn-default">firstname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-          <button id="sortByLastname" type="button" class="btn btn-default">lastname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-        </div>
-
-        <div class="panel-body">
-
-          <table id="users-table"></table>
-          
-          <div class="block form-inline">
-            <div class="form-group">
-              <input type="text" class="form-control" id="userLogin" placeholder="JDO">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="userFirstname" placeholder="John">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="userLastname" placeholder="Doe">
-            </div>
-            <button id="addUser" type="button" class="btn btn-default">add user</button>
-          </div>
-          
-        </div>
-      </div>
-    </div>
-  
+    
     <div class="col-lg-7">
       <div class="panel panel-default">
-
-        <div class="panel-heading">
-          sprints
-        </div>
-
+        <div class="panel-heading">sprints</div>
         <div class="panel-body">
 
           <table id="sprints-table"></table>
@@ -94,6 +63,36 @@
         </div>
       </div>
     </div>
+
+    <div class="col-lg-5">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          users
+          <button id="sortByLogin" type="button" class="btn btn-default">login <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
+          <button id="sortByFirstname" type="button" class="btn btn-default">firstname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
+          <button id="sortByLastname" type="button" class="btn btn-default">lastname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
+        </div>
+        <div class="panel-body">
+
+          <table id="users-table"></table>
+          
+          <div class="block form-inline">
+            <div class="form-group">
+              <input type="text" class="form-control" id="userLogin" placeholder="JDO">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="userFirstname" placeholder="John">
+            </div>
+            <div class="form-group">
+              <input type="text" class="form-control" id="userLastname" placeholder="Doe">
+            </div>
+            <button id="addUser" type="button" class="btn btn-default">add user</button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
   </div>
 
 {% endblock %}

@@ -8,7 +8,8 @@ function displayBurnup(selector, data) {
 
 function getBurndownChart(burndown) {
 	chart =  {
-        title: { text: 'Sprint Burndown' },
+		exporting: { enabled: false},
+        title: { text: '' },
         xAxis: {
             categories: burndown.days
         },
@@ -31,7 +32,7 @@ function getBurndownChart(burndown) {
 
 function getBurnupChart(burndown) {
 	chart =  {
-        title: { text: 'Project Burnup' },
+        title: { text: '' },
         xAxis: {
         	title: { text: 'sprint' },
         	labels: { formatter: function () { return '#' + this.value; } },

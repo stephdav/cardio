@@ -4,31 +4,18 @@
   <div class="row">
     <div class="col-md-12">
       <div class="pull-right">
-        <div class="text-center font-XXL"><span id="to-day"> - </span></div>
-        <div class="text-center font-XL"><span id="to-month"> - </span></div>
+        <span id="to-day" class="font-XXL"> - </span> <span id="to-month" class="font-XL"> - </span>
       </div>
       <div class="pull-left">
-        <div class="text-center font-XXL"><span id="from-day"> - </span></div>
-        <div class="text-center font-XL"><span id="from-month"> - </span></div>
+        <span id="from-day" class="font-XXL"> - </span> <span id="from-month" class="font-XL"> - </span>
       </div>
-      <div class="">
-        <div class="text-center font-XL"><span id="sprint-name">no pending sprint</span></div>
-        <div class="text-center font-XXL"><span id="sprint-goal">no goal</span></div>
+      <div class="text-center">
+        <span id="sprint-name" class="font-XL">no pending sprint</span> - <span id="sprint-goal" class="font-XXL">no goal</span>
       </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-md-3">
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-handshake-o fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="sprint-commitment">-</span></div>
-            <div class="text-muted">commitment</div>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="col-md-3">
       <div class="panel panel-blue panel-widget ">
         <div class="row no-padding">
@@ -54,6 +41,17 @@
     <div class="col-md-3">
       <div class="panel panel-blue panel-widget ">
         <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-handshake-o fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="sprint-commitment">-</span></div>
+            <div class="text-muted">commitment</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-calendar fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
             <div class="large"><span id="left-days">-</span></div>
@@ -65,10 +63,16 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-      <div id="burnup" style="width:100%; height:500px;"></div>
+      <div class="panel panel-default">
+        <div class="panel-heading">project burnup</div>
+        <div class="panel-body"><div id="burnup" style="width:100%; height:400px;"></div></div>
+      </div>
     </div>
     <div class="col-lg-6">
-      <div id="burndown" style="width:100%; height:500px;"></div>
+      <div class="panel panel-default">
+        <div class="panel-heading">sprint burndown</div>
+        <div class="panel-body"><div id="burndown" style="width:100%; height:400px;"></div></div>
+      </div>
     </div>
   </div>
 {% endblock %}
@@ -78,4 +82,7 @@
   <script src="/js/home.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/ext/highcharts.js"></script>
+  <script src="/js/ext/exporting.js"></script>
+  <script src="/js/ext/offline-exporting.js"></script>
+  <script src="/js/ext/sand-signika.js"></script>
 {% endblock %}
