@@ -58,6 +58,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="{{ menuDashboard }}"><a href="/ui/"><i class="fa fa-fw fa-dashboard fa-2x"></i></a></li>
+                    <li class="{{ menuSprintPlanning }}"><a href="/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
                     <li class="{{ menuSprints }}"><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
                     <li class="{{ menuUsers }}"><a href="/ui/admin/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
                 </ul>

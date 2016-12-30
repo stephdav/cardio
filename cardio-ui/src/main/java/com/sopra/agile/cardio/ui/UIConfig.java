@@ -7,6 +7,7 @@ import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
 import com.sopra.agile.cardio.ui.controller.IndexController;
+import com.sopra.agile.cardio.ui.controller.PlanningController;
 import com.sopra.agile.cardio.ui.controller.SprintController;
 import com.sopra.agile.cardio.ui.controller.SprintsController;
 import com.sopra.agile.cardio.ui.controller.UsersController;
@@ -31,6 +32,7 @@ public class UIConfig {
         get(Path.Web.INDEX, IndexController.HOME);
         get(Path.Web.USERS, UsersController.USERS);
         get(Path.Web.SPRINTS, SprintsController.SPRINTS);
+        get(Path.Web.PLANNING, PlanningController.PLANNING);
         get(Path.Web.SPRINT, SprintController.SPRINT);
         get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
