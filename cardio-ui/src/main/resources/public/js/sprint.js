@@ -40,11 +40,31 @@ function displayCalendar(data, hv) {
 	});
 
 	var content = "";
-	var count = 0;
+	content += '<div class="row">';
+	content += '<div class="col-xs-1"></div>';
+	content += '<div class="col-xs-2 day-of-week">monday</div>';
+	content += '<div class="col-xs-2 day-of-week">tuesday</div>';
+	content += '<div class="col-xs-2 day-of-week">wednesday</div>';
+	content += '<div class="col-xs-2 day-of-week">thursday</div>';
+	content += '<div class="col-xs-2 day-of-week">friday</div>';
+	content += '</div>'
+
+	var day0 = getDay(data.days[0]);
+	if (day0 > 1) {
+		content += '<div class="row">';
+		content += '<div class="col-xs-1 week-of-year">S' + getWeek(data.days[0]) + '</div>';
+		var idx = 1;
+		for (; idx < day0; idx++) {
+			content += '<div class="col-xs-2"></div>';
+		}
+	}
+
+	var count = day0 - 1;
 	$.each(data.days, function(index, day) {
+		
 		if (count==0) {
-			content += '<div class="row">'
-			content += '<div class="col-xs-1"></div>';
+			content += '<div class="row">';
+			content += '<div class="col-xs-1 week-of-year">S' + getWeek(day) + '</div>';
 		}
 		content += '<div class="col-xs-2">';
 		content += '<div class="form-group sprint-day">';

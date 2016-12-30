@@ -12,6 +12,7 @@ import spark.Route;
 public class SprintsController extends BaseController {
     public static final Route SPRINTS = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
+        attributes.put("menuSprints", "active");
         return ViewUtil.render(req, attributes, Path.Template.SPRINTS);
     };
 }

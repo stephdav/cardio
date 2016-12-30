@@ -12,6 +12,7 @@ import spark.Route;
 public class UsersController extends BaseController {
     public static final Route USERS = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
+        attributes.put("menuUsers", "active");
         return ViewUtil.render(req, attributes, Path.Template.USERS);
     };
 }

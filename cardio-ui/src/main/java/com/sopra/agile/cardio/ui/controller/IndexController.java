@@ -12,6 +12,7 @@ import spark.Route;
 public class IndexController extends BaseController {
     public static final Route HOME = (Request req, Response res) -> {
         Map<String, Object> attributes = initAttributes(req);
+        attributes.put("menuDashboard", "active");
         return ViewUtil.render(req, attributes, Path.Template.INDEX);
     };
 }

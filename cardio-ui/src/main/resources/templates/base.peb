@@ -57,9 +57,9 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li class="active"><a href="/ui/"><i class="fa fa-fw fa-dashboard fa-2x"></i></a></li>
-                    <li><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
-                    <li><a href="/ui/admin/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
+                    <li class="{{ menuDashboard }}"><a href="/ui/"><i class="fa fa-fw fa-dashboard fa-2x"></i></a></li>
+                    <li class="{{ menuSprints }}"><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
+                    <li class="{{ menuUsers }}"><a href="/ui/admin/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

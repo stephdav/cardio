@@ -10,7 +10,7 @@
         <span id="from-day" class="font-XXL"> - </span> <span id="from-month" class="font-XL"> - </span>
       </div>
       <div class="text-center">
-        <span id="sprint-name" class="font-XL">no pending sprint</span> - <span id="sprint-goal" class="font-XXL">no goal</span>
+        <span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL">no goal</span>
       </div>
     </div>
   </div>
@@ -79,9 +79,11 @@
 
 {% block scripts %}
   <script src="/js/current.js"></script>
+  <script src="/js/fnDate.js"></script>
   <script src="/js/home.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/ext/highcharts.js"></script>
+  <script src="/js/ext/dark-unica.js"></script>
   <script src="/js/ext/exporting.js"></script>
   <script src="/js/ext/offline-exporting.js"></script>
 {% endblock %}

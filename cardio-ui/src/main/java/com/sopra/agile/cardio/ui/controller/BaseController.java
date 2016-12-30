@@ -9,14 +9,18 @@ public class BaseController {
 
     protected static Map<String, Object> initAttributes(final Request req) {
         Map<String, Object> attributes = initMap();
-        attributes.put("title", "cardio");
-        attributes.put("description", "cardio application");
-        attributes.put("projectName", "projectName");
         return attributes;
     }
 
     protected static Map<String, Object> initMap() {
         Map<String, Object> attributes = new HashMap<String, Object>();
+
+        attributes.put("title", "cardio");
+
+        attributes.put("menuDashboard", "");
+        attributes.put("menuSprints", "");
+        attributes.put("menuUsers", "");
+
         return attributes;
     }
 }
