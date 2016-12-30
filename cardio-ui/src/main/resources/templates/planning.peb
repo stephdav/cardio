@@ -1,0 +1,29 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">project burnup</div>
+        <div class="panel-body"><div id="burnup" style="width:100%; height:400px;"></div></div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/current.js"></script>
+  <script src="/js/fnDate.js"></script>
+  <script src="/js/planning.js"></script>
+  <script src="/js/chart.js"></script>
+  <script src="/js/ext/highcharts.js"></script>
+  <script src="/js/ext/dark-unica.js"></script>
+  <script src="/js/ext/exporting.js"></script>
+  <script src="/js/ext/offline-exporting.js"></script>
+{% endblock %}
