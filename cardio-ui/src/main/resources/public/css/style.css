@@ -1,3 +1,103 @@
+/* Global Styles */
+body {
+	margin-top: 100px;
+	background-color: #eee;
+}
+
+@media ( min-width :768px) {
+	body {
+		margin-top: 50px;
+	}
+}
+
+#wrapper {
+	padding-left: 0;
+}
+
+#page-wrapper {
+	width: 100%;
+	padding: 0;
+	background-color: #eee;
+	color: #333;
+}
+
+@media ( min-width :768px) {
+	#wrapper {
+		padding-left: 70px;
+	}
+	#page-wrapper {
+		padding: 10px;
+	}
+}
+
+/* Top Navigation */
+.top-nav {
+	padding: 0 15px;
+}
+
+.top-nav>li {
+	display: inline-block;
+	float: left;
+}
+
+.top-nav>li>a {
+	padding-top: 15px;
+	padding-bottom: 15px;
+	line-height: 20px;
+	color: #999;
+}
+
+.top-nav>li>a:hover, .top-nav>li>a:focus, .top-nav>.open>a, .top-nav>.open>a:hover,
+	.top-nav>.open>a:focus {
+	color: #fff;
+	background-color: #1D2023;
+}
+
+.top-nav>.open>.dropdown-menu {
+	float: left;
+	position: absolute;
+	margin-top: 0;
+	border: 1px solid rgba(0, 0, 0, .15);
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	background-color: #fff;
+	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.top-nav>.open>.dropdown-menu>li>a {
+	white-space: normal;
+}
+
+ul.admin-dropdown {
+	width: 100px;
+}
+
+/* Side Navigation */
+@media ( min-width :768px) {
+	.side-nav {
+		position: fixed;
+		top: 51px;
+		left: 70px;
+		width: 70px;
+		margin-left: -70px;
+		border: none;
+		border-radius: 0;
+		overflow-y: auto;
+		background-color: #eee;
+		bottom: 0;
+		overflow-x: hidden;
+		padding-bottom: 40px;
+	}
+	.side-nav>li>a {
+		width: 70px;
+	}
+	.side-nav li a:hover, .side-nav li a:focus {
+		outline: none;
+		background-color: #000 !important;
+	}
+}
+
 /** ======= NAVBAR ======= */
 .navbar-inverse {
 	background-color: #1D2023;
@@ -21,27 +121,30 @@
 
 #project-name {
 	font-weight: bold;
+	text-align: center;
+	margin: 15px 70px;
+	color: #9d9d9d;
 }
 
 /** ======= FOOTER ======= */
 .footer {
 	/* Set the fixed height of the footer here */
 	height: 25px;
-	background-color: #21272C;
+	background-color: #eee;
 	text-align: center;
 	border-top: 1px solid #000;
 	padding: 5px 15px;
-	color: #fff;
+	color: #333;
 	font-size: 11px;
 }
 
 .footer a, .footer a:hover {
-	color: #fff;
+	color: #333;
 }
 
 .footer a:hover {
 	text-decoration: none;
-	color: #fff;
+	color: #333;
 }
 
 .footer>.container {
@@ -112,17 +215,17 @@ body>.container, body>.container-fluid {
 }
 
 .panel-default {
-	background: #242B32;
+	background: #fff;
 }
 
 .panel-default .panel-heading {
-	background: #242B32;
+	background: #fff;
 	border-bottom: 1px solid #000;
-	color: #fff;
+	color: #333;
 }
 
 .panel-footer {
-	background: #242B32;
+	background: #fff;
 	border-top: 1px solid #000;
 }
 
@@ -194,7 +297,7 @@ body>.container, body>.container-fluid {
 	height: 80px;
 	color: #999;
 	font-weight: 300;
-	background: #262D34;
+	background: #fff;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
 }

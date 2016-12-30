@@ -84,5 +84,4 @@
   <script src="/js/ext/highcharts.js"></script>
   <script src="/js/ext/exporting.js"></script>
   <script src="/js/ext/offline-exporting.js"></script>
-  <script src="/js/ext/dark-unica.js"></script>
 {% endblock %}
