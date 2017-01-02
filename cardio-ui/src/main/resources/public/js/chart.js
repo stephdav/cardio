@@ -6,9 +6,12 @@ function displayBurnup(selector, data) {
 	Highcharts.chart(selector, getBurnupChart(data));
 }
 
+function displayVelocities(selector, data) {
+	Highcharts.chart(selector, getVelocitiesChart(data));
+}
+
 function getBurndownChart(burndown) {
 	chart =  {
-		exporting: { enabled: false},
         title: { text: '' },
         xAxis: {
             categories: burndown.days
@@ -32,6 +35,25 @@ function getBurndownChart(burndown) {
 
 function getBurnupChart(burndown) {
 	chart =  {
+        title: { text: '' },
+        xAxis: {
+        	title: { text: 'sprint' },
+        	labels: { formatter: function () { return '#' + this.value; } },
+            categories: burndown.days
+        },
+        yAxis: { title: { text: '' } },
+        series: []
+    };
+	
+	$.each(burndown.series, function(index, serie) {
+	  chart.series.push(serie);
+	});
+	return chart;
+}
+
+function getVelocitiesChart(burndown) {
+	chart =  {
+		chart: { type: 'column' },
         title: { text: '' },
         xAxis: {
         	title: { text: 'sprint' },

@@ -221,4 +221,15 @@ public class RestController {
         }
         return chart;
     }
+
+    public Chart getVelocity(Request req, Response res) {
+        res.type("application/json");
+        Chart chart = svcSprint.velocity();
+        if (chart != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return chart;
+    }
 }

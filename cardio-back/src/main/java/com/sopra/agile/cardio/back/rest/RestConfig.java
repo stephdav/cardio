@@ -59,6 +59,7 @@ public class RestConfig {
         get("/api/sprints/current/leftdays", (req, res) -> controller.getCurrentLeftDays(req, res),
                 new JsonTransformer());
         get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
+        get("/api/sprints/velocity", (req, res) -> controller.getVelocity(req, res), new JsonTransformer());
 
         // SPRINTS
 

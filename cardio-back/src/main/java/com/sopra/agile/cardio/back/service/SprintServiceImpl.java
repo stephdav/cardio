@@ -203,10 +203,32 @@ public class SprintServiceImpl implements SprintService {
             }
             idx++;
         }
-        chart.setSeries(Arrays.asList(new Serie("velocity", data)));
+        chart.setSeries(Arrays.asList(new Serie("done", data)));
 
         chart.setDays(days);
         return chart;
     }
 
+    @Override
+    public Chart velocity() {
+        Chart chart = new Chart();
+
+        List<Sprint> sprints = sprintDao.allCompleted();
+
+        int nbSprints = sprints.size();
+
+        String[] days = new String[nbSprints];
+        Double[] data = new Double[nbSprints];
+
+        int idx = 0;
+        for (Sprint s : sprints) {
+            days[idx] = s.getName();
+            data[idx] = Double.valueOf(s.getVelocity());
+            idx++;
+        }
+        chart.setSeries(Arrays.asList(new Serie("velocity", data)));
+
+        chart.setDays(days);
+        return chart;
+    }
 }

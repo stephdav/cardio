@@ -19,5 +19,7 @@ public interface SprintService extends BaseService<Sprint> {
 
     Chart burnup();
 
+    Chart velocity();
+
     void updateData(String id, SprintData data);
 }

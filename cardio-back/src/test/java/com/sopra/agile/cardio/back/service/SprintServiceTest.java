@@ -51,6 +51,7 @@ public class SprintServiceTest {
             aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
             aSprints[idx].setGoal("GOAL" + idx);
             aSprints[idx].setCommitment(100 * idx);
+            aSprints[idx].setVelocity(100 * idx + 50);
         }
         LocalDate now = LocalDate.now();
         aSprints[1].setStartDate(now.plusDays(-7).toString());
@@ -62,6 +63,7 @@ public class SprintServiceTest {
         when(sprintDao.find("SPR-1")).thenReturn(aSprints[1]);
         when(sprintDao.find("UNK")).thenReturn(null);
         when(sprintDao.current()).thenReturn(aSprints[1]);
+        when(sprintDao.allCompleted()).thenReturn(Arrays.asList(aSprints[0], aSprints[1]));
 
         Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
         when(sprintDao.add(any(Sprint.class))).thenReturn(newSprint);
@@ -198,5 +200,33 @@ public class SprintServiceTest {
         verify(sprintDao, Mockito.times(1)).update(savedCaptor.capture());
         assertNotNull(savedCaptor.getValue());
         assertEquals(7, savedCaptor.getValue().getVelocity());
+    }
+
+    @Test
+    public void testBurnup() {
+        Chart burnup = svc.burnup();
+        assertNotNull(burnup);
+        assertNotNull(burnup.getDays());
+        assertEquals(2, burnup.getDays().length);
+        assertNotNull(burnup.getSeries());
+        assertEquals(1, burnup.getSeries().size());
+        assertNotNull(burnup.getSeries().get(0).getData());
+        assertEquals(2, burnup.getSeries().get(0).getData().length);
+        assertEquals(50, burnup.getSeries().get(0).getData()[0], 0.01d);
+        assertEquals(200, burnup.getSeries().get(0).getData()[1], 0.01d);
+    }
+
+    @Test
+    public void testVelocity() {
+        Chart burnup = svc.velocity();
+        assertNotNull(burnup);
+        assertNotNull(burnup.getDays());
+        assertEquals(2, burnup.getDays().length);
+        assertNotNull(burnup.getSeries());
+        assertEquals(1, burnup.getSeries().size());
+        assertNotNull(burnup.getSeries().get(0).getData());
+        assertEquals(2, burnup.getSeries().get(0).getData().length);
+        assertEquals(50, burnup.getSeries().get(0).getData()[0], 0.01d);
+        assertEquals(150, burnup.getSeries().get(0).getData()[1], 0.01d);
     }
 }
