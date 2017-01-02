@@ -30,6 +30,7 @@ import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.SprintDay;
+import com.sopra.agile.cardio.common.model.VelocityData;
 
 public class SprintServiceTest {
 
@@ -218,15 +219,14 @@ public class SprintServiceTest {
 
     @Test
     public void testVelocity() {
-        Chart burnup = svc.velocity();
+        VelocityData burnup = svc.velocity();
         assertNotNull(burnup);
-        assertNotNull(burnup.getDays());
-        assertEquals(2, burnup.getDays().length);
-        assertNotNull(burnup.getSeries());
-        assertEquals(1, burnup.getSeries().size());
-        assertNotNull(burnup.getSeries().get(0).getData());
-        assertEquals(2, burnup.getSeries().get(0).getData().length);
-        assertEquals(50, burnup.getSeries().get(0).getData()[0], 0.01d);
-        assertEquals(150, burnup.getSeries().get(0).getData()[1], 0.01d);
+        assertNotNull(burnup.getNames());
+        assertEquals(2, burnup.getNames().length);
+        assertNotNull(burnup.getData());
+        Integer[] data = burnup.getData();
+        assertEquals(2, data.length);
+        assertEquals(50, (int) data[0]);
+        assertEquals(150, (int) data[1]);
     }
 }

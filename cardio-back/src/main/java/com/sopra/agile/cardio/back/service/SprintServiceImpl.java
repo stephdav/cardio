@@ -1,6 +1,8 @@
 package com.sopra.agile.cardio.back.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,11 +22,14 @@ import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.SprintDay;
+import com.sopra.agile.cardio.common.model.VelocityData;
 
 @Service
 public class SprintServiceImpl implements SprintService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
+
+    private static final int SAMPLE = 6;
 
     @Autowired
     private SprintDao sprintDao;
@@ -210,25 +215,62 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Chart velocity() {
-        Chart chart = new Chart();
+    public VelocityData velocity() {
+        VelocityData response = new VelocityData();
 
-        List<Sprint> sprints = sprintDao.allCompleted();
+        List<Sprint> tail = sprintDao.allCompleted();
+        // Keep only 10 last sprints
+        List<Sprint> sprints = tail.subList(Math.max(tail.size() - SAMPLE, 0), tail.size());
 
         int nbSprints = sprints.size();
-
         String[] days = new String[nbSprints];
-        Double[] data = new Double[nbSprints];
+        List<Integer> values = new ArrayList<Integer>();
+        Integer[] data = new Integer[nbSprints];
 
         int idx = 0;
+        int average = 0;
+        int overCommit = 0;
+
         for (Sprint s : sprints) {
             days[idx] = s.getName();
-            data[idx] = Double.valueOf(s.getVelocity());
+            data[idx] = Integer.valueOf(s.getVelocity());
+
+            average += data[idx];
+            values.add(data[idx]);
+            if (data[idx] < Integer.valueOf(s.getCommitment())) {
+                overCommit++;
+            }
+
             idx++;
         }
-        chart.setSeries(Arrays.asList(new Serie("velocity", data)));
 
-        chart.setDays(days);
-        return chart;
+        response.setNames(days);
+        response.setData(data);
+
+        // sort values
+        values.sort(Comparator.naturalOrder());
+
+        int nb = values.size() / 2;
+
+        List<Integer> worstList = values.subList(0, Math.min(values.size(), nb));
+        int worst = 0;
+        for (int x : worstList) {
+            worst += x;
+        }
+        worst /= nb;
+
+        List<Integer> bestList = values.subList(Math.max(values.size() - nb, 0), values.size());
+        int best = 0;
+        for (int x : bestList) {
+            best += x;
+        }
+        best /= nb;
+
+        response.setWorst(worst);
+        response.setAverage(average / idx);
+        response.setBest(best);
+        response.setOverCommit(100 * overCommit / idx);
+
+        return response;
     }
 }

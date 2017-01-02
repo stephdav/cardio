@@ -19,6 +19,7 @@ import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.User;
+import com.sopra.agile.cardio.common.model.VelocityData;
 
 import spark.Request;
 import spark.Response;
@@ -222,9 +223,9 @@ public class RestController {
         return chart;
     }
 
-    public Chart getVelocity(Request req, Response res) {
+    public VelocityData getVelocity(Request req, Response res) {
         res.type("application/json");
-        Chart chart = svcSprint.velocity();
+        VelocityData chart = svcSprint.velocity();
         if (chart != null) {
             res.status(200);
         } else {

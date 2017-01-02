@@ -51,21 +51,37 @@ function getBurnupChart(burndown) {
 	return chart;
 }
 
-function getVelocitiesChart(burndown) {
+function getVelocitiesChart(data) {
 	chart =  {
 		chart: { type: 'column' },
         title: { text: '' },
         xAxis: {
         	title: { text: 'sprint' },
         	labels: { formatter: function () { return '#' + this.value; } },
-            categories: burndown.days
+            categories: data.names
         },
         yAxis: { title: { text: '' } },
-        series: []
+        plotOptions: {
+            spline: { lineWidth: 4, states: { hover: { lineWidth: 5 } }, marker: { enabled: false } }
+        },
+        series: [ { type: 'column', name: "velocity", data: data.data } ]
     };
 	
-	$.each(burndown.series, function(index, serie) {
-	  chart.series.push(serie);
-	});
+	var nb = data.data.length;
+	var s1 = { type: 'spline', color: '#FF0000', name: "low", data: [] }
+	var s2 = { type: 'spline', color: '#0000FF', name: "average", data: [] }
+	var s3 = { type: 'spline', color: '#00FF00', name: "high", data: [] }
+	
+	var idx = 0;
+	for ( ; idx<nb; idx++) {
+		s1.data.push(data.worst);
+		s2.data.push(data.average);
+		s3.data.push(data.best);
+	}
+
+	chart.series.push(s1);
+	chart.series.push(s2);
+	chart.series.push(s3);
+
 	return chart;
 }
