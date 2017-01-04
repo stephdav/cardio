@@ -88,19 +88,6 @@ function updateUsers(data, hv) {
 	$('#userlist').empty();
 	if (hv.status == 200 || hv.status == 206) {
 		$('#users-table').bootstrapTable('load', data);
-
-//		var content = "";
-//		$.each(data, function(index, user) {
-//			content += '<li class="list-group-item" id="' + user.id + '">';
-//			content += '<div class="clearfix">';
-//			content += '<label>';
-//			content += '[' + user.login + '] '+ user.firstname + ' ' + user.lastname;
-//			content += '</label>';
-//			content += '<button class="deleteUser btn btn-xs btn-default pull-right"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>';
-//			content += '</div></li>';
-//		});
-//		$('#userlist').append(content);
-
 		$('#users-count').text(hv.contentRange.split(/\//)[1]);
 	}
 }

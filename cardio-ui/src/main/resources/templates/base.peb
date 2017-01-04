@@ -48,8 +48,8 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog"></i> administration <b class="caret"></b></a>
                     <ul class="dropdown-menu admin-dropdown">
-                        <li><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat"></i> sprints</a></li>
-                        <li><a href="/ui/admin/users"><i class="fa fa-fw fa-users"></i> users</a></li>
+                        <li><a href="/ui/sprints"><i class="fa fa-fw fa-repeat"></i> sprints</a></li>
+                        <li><a href="/ui/users"><i class="fa fa-fw fa-users"></i> users</a></li>
                     </ul>
                 </li>
             </ul>
@@ -58,8 +58,8 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                     <li class="{{ menuSprintPlanning }}"><a href="/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
-                    <li class="{{ menuSprints }}"><a href="/ui/admin/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
-                    <!-- <li class="{{ menuUsers }}"><a href="/ui/admin/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li> -->
+                    <li class="{{ menuSprints }}"><a href="/ui/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
+                    <!-- <li class="{{ menuUsers }}"><a href="/ui/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li> -->
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
