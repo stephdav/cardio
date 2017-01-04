@@ -4,4 +4,6 @@ public interface ConfigService {
 
     String getProperty(String key);
 
+    int getIntProperty(String key);
+
 }

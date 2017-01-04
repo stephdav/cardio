@@ -29,4 +29,14 @@ public class ConfigServiceImpl implements ConfigService {
         return value;
     }
 
+    @Override
+    public int getIntProperty(String key) {
+        String value = getProperty(key);
+        int val = 0;
+        if (!value.isEmpty()) {
+            val = Integer.parseInt(value);
+        }
+        return val;
+    }
+
 }

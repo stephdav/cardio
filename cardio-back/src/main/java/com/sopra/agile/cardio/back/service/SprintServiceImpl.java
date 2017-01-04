@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +31,10 @@ public class SprintServiceImpl implements SprintService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
 
-    private static final int SAMPLE = 6;
+    private static int sample = 6;
+
+    @Autowired
+    private ConfigService configSvc;
 
     @Autowired
     private SprintDao sprintDao;
@@ -39,6 +44,11 @@ public class SprintServiceImpl implements SprintService {
 
     public SprintServiceImpl() {
         // Empty constructor
+    }
+
+    @PostConstruct
+    public void init() {
+        sample = configSvc.getIntProperty("statistic.sprints.sample");
     }
 
     @Override
@@ -220,7 +230,7 @@ public class SprintServiceImpl implements SprintService {
 
         List<Sprint> tail = sprintDao.allCompleted();
         // Keep only 10 last sprints
-        List<Sprint> sprints = tail.subList(Math.max(tail.size() - SAMPLE, 0), tail.size());
+        List<Sprint> sprints = tail.subList(Math.max(tail.size() - sample, 0), tail.size());
 
         int nbSprints = sprints.size();
         String[] days = new String[nbSprints];
