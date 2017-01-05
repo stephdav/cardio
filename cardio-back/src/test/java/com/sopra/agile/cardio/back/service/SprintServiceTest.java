@@ -25,10 +25,10 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
-import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
+import com.sopra.agile.cardio.common.model.SprintDataDetails;
 import com.sopra.agile.cardio.common.model.SprintDay;
 import com.sopra.agile.cardio.common.model.VelocityData;
 
@@ -127,45 +127,25 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testLeftDays() {
-        Parameter param = svc.leftDays();
-        assertNotNull(param);
-        assertEquals("left-days", param.getKey());
-        assertEquals("5", param.getValue());
-    }
-
-    @Test
-    public void testBurndown() {
-        Chart burndown = svc.burndown();
-        assertNotNull(burndown);
-        assertNotNull(burndown.getDays());
-        assertEquals(10, burndown.getDays().length);
-        assertNotNull(burndown.getSeries());
-        assertEquals(3, burndown.getSeries().size());
-        assertNotNull(burndown.getSeries().get(0).getData());
-        assertEquals(10, burndown.getSeries().get(0).getData().length);
-        assertEquals(100d, burndown.getSeries().get(0).getData()[0], 0.01d);
-        assertEquals(0d, burndown.getSeries().get(0).getData()[9], 0.01d);
-        assertNotNull(burndown.getSeries().get(1).getData());
-        assertEquals(10, burndown.getSeries().get(1).getData().length);
-        assertEquals(10, burndown.getSeries().get(2).getData().length);
-    }
-
-    @Test
-    public void testData() {
-        Chart data = svc.data("SPR-1");
+    public void testFindData() {
+        SprintData data = svc.findData("SPR-1");
         assertNotNull(data);
-        assertNotNull(data.getDays());
-        assertEquals(10, data.getDays().length);
-        assertNotNull(data.getSeries());
-        assertEquals(3, data.getSeries().size());
-        assertNotNull(data.getSeries().get(0).getData());
-        assertEquals(10, data.getSeries().get(0).getData().length);
-        assertEquals(100d, data.getSeries().get(0).getData()[0], 0.01d);
-        assertEquals(0d, data.getSeries().get(0).getData()[9], 0.01d);
-        assertNotNull(data.getSeries().get(1).getData());
-        assertEquals(10, data.getSeries().get(1).getData().length);
-        assertEquals(10, data.getSeries().get(2).getData().length);
+
+        SprintDataDetails details = data.getDetails();
+        assertNotNull(details);
+
+        assertNotNull(details.getDays());
+        assertEquals(10, details.getDays().size());
+
+        assertNotNull(details.getIdeal());
+        assertEquals(10, details.getIdeal().size());
+        assertEquals(100, (int) details.getIdeal().get(0));
+        assertEquals(0, (int) details.getIdeal().get(9));
+
+        assertNotNull(details.getDone());
+        assertEquals(10, details.getDone().size());
+        assertNotNull(details.getLeft());
+        assertEquals(10, details.getLeft().size());
     }
 
     @Test

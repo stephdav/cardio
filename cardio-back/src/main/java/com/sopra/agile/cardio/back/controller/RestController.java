@@ -144,15 +144,15 @@ public class RestController {
         return sprint;
     }
 
-    public Chart getSprintData(Request req, Response res, String id) {
+    public SprintData getSprintData(Request req, Response res, String id) {
         res.type("application/json");
-        Chart chart = svcSprint.data(id);
-        if (chart != null) {
+        SprintData data = svcSprint.findData(id);
+        if (data != null) {
             res.status(200);
         } else {
             res.status(204);
         }
-        return chart;
+        return data;
     }
 
     public String createSprint(Request req, Response res) {
@@ -190,26 +190,16 @@ public class RestController {
         return sprint;
     }
 
-    public Parameter getCurrentLeftDays(Request req, Response res) {
+    public SprintData getCurrentData(Request req, Response res) {
         res.type("application/json");
-        Parameter param = svcSprint.leftDays();
-        if (param != null) {
+        Sprint sprint = svcSprint.currentSprint();
+        SprintData data = svcSprint.findData(sprint.getId());
+        if (data != null) {
             res.status(200);
         } else {
             res.status(204);
         }
-        return param;
-    }
-
-    public Chart getCurrentBurndown(Request req, Response res) {
-        res.type("application/json");
-        Chart chart = svcSprint.burndown();
-        if (chart != null) {
-            res.status(200);
-        } else {
-            res.status(204);
-        }
-        return chart;
+        return data;
     }
 
     public Chart getBurnup(Request req, Response res) {

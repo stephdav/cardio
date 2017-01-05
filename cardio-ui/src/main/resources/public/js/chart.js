@@ -10,27 +10,24 @@ function displayVelocities(selector, data) {
 	Highcharts.chart(selector, getVelocitiesChart(data));
 }
 
-function getBurndownChart(burndown) {
+function getBurndownChart(data) {
+	var details = data.details;
 	chart =  {
         title: { text: '' },
         xAxis: {
-            categories: burndown.days
+            categories: details.days
         },
         yAxis: { title: { text: '' } },
         series: []
     };
-	
-	$.each(burndown.series, function(index, serie) {
-		if (serie.name == 'ideal') {
-			serie.lineWidth = 2;
-			serie.dashStyle = 'DashDot';
-			serie.marker =  { enabled: false };
-		}
-		if (serie.name != 'done') {
-		  chart.series.push(serie);
-		}
-	});
-	return chart;
+
+	var serieIdeal = { name: 'ideal', data: details.ideal, lineWidth:2, dashStyle: 'DashDot', marker: { enabled: false } };
+    chart.series.push(serieIdeal);
+
+    var serieReal = { name: 'real', data: details.left};
+    chart.series.push(serieReal);
+
+    return chart;
 }
 
 function getBurnupChart(burndown) {

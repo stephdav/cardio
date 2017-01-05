@@ -4,9 +4,13 @@ $(document).ready(function() {
 
 function initHome() {
 	getCurrentSprint(updateHomeView);
-	getLeftDays();
-	getBurndown(displayBurndown, 'burndown');
+	getBurndown(updateBurndown, 'burndown');
 	getBurnup(displayBurnup, 'burnup');
+}
+
+function updateBurndown(selector, data) {
+	displayBurndown(selector, data);
+	$('#left-days').text(data.details.leftDays);
 }
 
 function updateHomeView(sprint, hv) {

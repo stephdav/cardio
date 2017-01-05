@@ -8,18 +8,8 @@ function getCurrentSprint(callback) {
 	});
 }
 
-function getLeftDays() {
-	ajaxGet("/api/sprints/current/leftdays", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 204) {
-			$('#left-days').text(data.value);
-		} else {
-			log("Error getting left days: " + errorThrown);
-		}
-	});
-}
-
 function getBurndown(callback, selector) {
-	ajaxGet("/api/sprints/current/burndown", function(data, hv, errorThrown) {
+	ajaxGet("/api/sprints/current/data", function(data, hv, errorThrown) {
 		if (hv.status == 200 || hv.status == 204) {
 			callback(selector, data);
 		} else {

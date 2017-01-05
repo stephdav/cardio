@@ -31,13 +31,7 @@ function updateSprintView(sprint, hv) {
 
 function displayCalendar(data, hv) {
 	var selector = '#measures';
-	var serie;
-	$.each(data.series, function(index, s) {
-		if (s.name == 'done') {
-			serie = s;
-			return true;
-		}
-	});
+	var details = data.details;
 
 	var content = "";
 	content += '<div class="row">';
@@ -49,10 +43,10 @@ function displayCalendar(data, hv) {
 	content += '<div class="col-xs-2 day-of-week">friday</div>';
 	content += '</div>'
 
-	var day0 = getDay(data.days[0]);
+	var day0 = getDay(details.days[0]);
 	if (day0 > 1) {
 		content += '<div class="row">';
-		content += '<div class="col-xs-1 week-of-year">S' + getWeek(data.days[0]) + '</div>';
+		content += '<div class="col-xs-1 week-of-year">S' + getWeek(details.days[0]) + '</div>';
 		var idx = 1;
 		for (; idx < day0; idx++) {
 			content += '<div class="col-xs-2"></div>';
@@ -60,7 +54,7 @@ function displayCalendar(data, hv) {
 	}
 
 	var count = day0 - 1;
-	$.each(data.days, function(index, day) {
+	$.each(details.days, function(index, day) {
 		
 		if (count==0) {
 			content += '<div class="row">';
@@ -69,8 +63,8 @@ function displayCalendar(data, hv) {
 		content += '<div class="col-xs-2">';
 		content += '<div class="form-group sprint-day">';
 		content += '<input type="number" class="form-control input-lg"';
-		if (serie.data[index] != null) {
-			content += ' value="' + serie.data[index] + '"';
+		if (details.done[index] != null) {
+			content += ' value="' + details.done[index] + '"';
 		}
 		content += '>';
 		content += '<label>' + day + '</label>';
