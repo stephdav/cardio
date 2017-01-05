@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 import org.joda.time.LocalDate;
 import org.junit.Test;
 
@@ -22,17 +24,19 @@ public class LocalDateUtilsTest {
                 "2016-12-08");
         assertWorkingDays(new String[] { "2016-12-05", "2016-12-06", "2016-12-07", "2016-12-08", "2016-12-09" },
                 "2016-12-03", "2016-12-10");
+
+        // TODO: test with from null
     }
 
     private void assertWorkingDays(String[] expectedDays, String from, String to) {
-        String[] days = LocalDateUtils.getWorkingDays(new LocalDate(from), new LocalDate(to));
+        List<String> days = LocalDateUtils.getWorkingDaysAsList(new LocalDate(from), new LocalDate(to));
         if (expectedDays == null) {
             assertNull(days);
         } else {
             assertNotNull(days);
-            assertEquals(days.length, expectedDays.length);
-            for (int idx = 0; idx < expectedDays.length; idx++) {
-                assertEquals(expectedDays[idx], days[idx]);
+            assertEquals(days.size(), expectedDays.length);
+            for (String d : expectedDays) {
+                assertTrue(days.contains(d));
             }
         }
     }

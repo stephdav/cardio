@@ -12,12 +12,6 @@ public class LocalDateUtils {
         // static class
     }
 
-    public static String[] getWorkingDays(LocalDate fromDate, LocalDate toDate) {
-        List<String> workingDays = getWorkingDaysAsList(fromDate, toDate);
-        String[] result = new String[workingDays.size()];
-        return getWorkingDaysAsList(fromDate, toDate).toArray(result);
-    }
-
     public static List<String> getWorkingDaysAsList(LocalDate fromDate, LocalDate toDate) {
         List<String> workingDays = new ArrayList<>();
 

@@ -15,7 +15,7 @@ public class SprintDataTest {
     @Test
     public void testDefaultConstructor() {
         SprintData sprintData = new SprintData();
-        assertObject(sprintData, new HashMap<String, String>());
+        assertObject(sprintData, new HashMap<String, String>(), null);
     }
 
     @Test
@@ -25,10 +25,12 @@ public class SprintDataTest {
         data.put("key1", "value");
         data.put("key2", null);
         sprintData.setData(data);
-        assertObject(sprintData, data);
+        SprintDataDetails details = new SprintDataDetails();
+        sprintData.setDetails(details);
+        assertObject(sprintData, data, details);
     }
 
-    private void assertObject(SprintData sprintData, final Map<String, String> data) {
+    private void assertObject(SprintData sprintData, final Map<String, String> data, SprintDataDetails details) {
         if (data == null) {
             assertNull(sprintData.getData());
         } else {
@@ -37,6 +39,12 @@ public class SprintDataTest {
                 assertTrue(sprintData.getData().containsKey(entry.getKey()));
                 assertEquals(entry.getValue(), sprintData.getData().get(entry.getKey()));
             }
+        }
+        if (details == null) {
+            assertNull(sprintData.getDetails());
+        } else {
+            SprintDataDetailsTest.assertObject(sprintData.getDetails(), details.getLeftDays(), details.getDays(),
+                    details.getDone(), details.getIdeal(), details.getLeft());
         }
     }
 
