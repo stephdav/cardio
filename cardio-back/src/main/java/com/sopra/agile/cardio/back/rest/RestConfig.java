@@ -54,7 +54,6 @@ public class RestConfig {
         // CURRENT SPRINT
 
         get("/api/sprints/current/burnup", (req, res) -> controller.getBurnup(req, res), new JsonTransformer());
-        get("/api/sprints/current/data", (req, res) -> controller.getCurrentData(req, res), new JsonTransformer());
         get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
         get("/api/sprints/velocity", (req, res) -> controller.getVelocity(req, res), new JsonTransformer());
 

@@ -80,10 +80,11 @@
 {% block scripts %}
   <script src="/js/current.js"></script>
   <script src="/js/fnDate.js"></script>
-  <script src="/js/home.js"></script>
+  <script src="/js/fnSprint.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/ext/highcharts.js"></script>
   <script src="/js/ext/dark-unica.js"></script>
   <script src="/js/ext/exporting.js"></script>
   <script src="/js/ext/offline-exporting.js"></script>
+  <script src="/js/home.js"></script>
 {% endblock %}

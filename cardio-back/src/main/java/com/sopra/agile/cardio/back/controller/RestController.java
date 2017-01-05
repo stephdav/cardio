@@ -190,18 +190,6 @@ public class RestController {
         return sprint;
     }
 
-    public SprintData getCurrentData(Request req, Response res) {
-        res.type("application/json");
-        Sprint sprint = svcSprint.currentSprint();
-        SprintData data = svcSprint.findData(sprint.getId());
-        if (data != null) {
-            res.status(200);
-        } else {
-            res.status(204);
-        }
-        return data;
-    }
-
     public Chart getBurnup(Request req, Response res) {
         res.type("application/json");
         Chart chart = svcSprint.burnup();

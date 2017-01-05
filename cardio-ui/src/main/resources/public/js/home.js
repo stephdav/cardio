@@ -4,13 +4,7 @@ $(document).ready(function() {
 
 function initHome() {
 	getCurrentSprint(updateHomeView);
-	getBurndown(updateBurndown, 'burndown');
 	getBurnup(displayBurnup, 'burnup');
-}
-
-function updateBurndown(selector, data) {
-	displayBurndown(selector, data);
-	$('#left-days').text(data.details.leftDays);
 }
 
 function updateHomeView(sprint, hv) {
@@ -19,6 +13,13 @@ function updateHomeView(sprint, hv) {
 	$('#sprint-goal').text(sprint.goal);
 	updateSprintDate(sprint.endDate, '#to-month', '#to-day');
 	$('#sprint-commitment').text(sprint.commitment);
+	
+	fnSprintGetData(sprint.id, updateBurndown);
+}
+
+function updateBurndown(data, hv) {
+	displayBurndown('burndown', data);
+	$('#left-days').text(data.details.leftDays);
 }
 
 function updateSprintDate(date, monthSelector, daySelector) {
