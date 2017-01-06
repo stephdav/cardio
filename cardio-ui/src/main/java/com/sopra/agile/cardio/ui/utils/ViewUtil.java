@@ -5,11 +5,12 @@ import java.util.Map;
 
 import org.eclipse.jetty.http.HttpStatus;
 
+import com.sopra.agile.cardio.ui.pebble.FixedPebbleEngine;
+
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.Route;
-import spark.template.pebble.PebbleTemplateEngine;
 
 public class ViewUtil {
 
@@ -23,7 +24,7 @@ public class ViewUtil {
         return render(request, new HashMap<>(), Path.Template.NOT_FOUND);
     };
 
-    private static PebbleTemplateEngine strictPebbleEngine() {
-        return new PebbleTemplateEngine();
+    private static FixedPebbleEngine strictPebbleEngine() {
+        return new FixedPebbleEngine();
     }
 }

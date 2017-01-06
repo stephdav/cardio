@@ -22,17 +22,23 @@
 			<artifactId>spark-core</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
+<!-- 
 		<dependency>
 			<groupId>com.sparkjava</groupId>
 			<artifactId>spark-template-pebble</artifactId>
 			<version>${spark.peeble.version}</version>
 			<exclusions>
-				<!-- CVE-2016-9177 -->
 				<exclusion>
 					<groupId>com.sparkjava</groupId>
 					<artifactId>spark-core</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+ -->
+ 		<dependency>
+			<groupId>com.mitchellbosecke</groupId>
+			<artifactId>pebble</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 	</dependencies>
 

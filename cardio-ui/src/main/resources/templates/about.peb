@@ -2,11 +2,12 @@
 
 {% block content %}
 
-  <div class="footer">
-    <span class="appVersion"></span> provided by <a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a>
+  <div class="footer"> 
+    cardio <span id="app-version"></span> provided by <a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a>
   </div>
 
 {% endblock %}
 
 {% block scripts %}
+  <script src="/js/about.js"></script>
 {% endblock %}

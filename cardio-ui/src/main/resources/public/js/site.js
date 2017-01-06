@@ -8,7 +8,6 @@ function initSite() {
 
 var BACK_URL = "http://localhost:4567";
 
-
 function getProjectName() {
 	ajaxGet("/api/config/parameters/project.name", function(data, hv, errorThrown) {
 		if (hv.status == 200 || hv.status == 206) {
