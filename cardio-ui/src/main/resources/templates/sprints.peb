@@ -21,12 +21,17 @@
     </div>
 
     <div class="col-lg-9">
+
       <div class="panel panel-default">
         <div class="panel-heading">sprints</div>
         <div class="panel-body">
-
           <table id="sprints-table"></table>
-          
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">new sprint</div>
+        <div class="panel-body">
           <div class="block form-inline">
             <div class="form-group">
               <input type="text" class="form-control" id="sprintName" placeholder="#">
@@ -39,9 +44,9 @@
             </div>
             <button id="addSprint" type="button" class="btn btn-default">add sprint</button>
           </div>
-          
         </div>
       </div>
+
     </div>
 
   </div>

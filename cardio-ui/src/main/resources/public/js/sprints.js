@@ -15,19 +15,14 @@ function initSprintsTable() {
 	$('#sprints-table').bootstrapTable({
 		pagination: true,
 		sidePagination: 'server',
-	    columns: [{
-	        field: 'startDate', title: 'from'
-	    }, {
-	        field: 'endDate', title: 'to'
-	    }, {
-	        field: 'name', title: '#'
-	    }, {
-	        field: 'goal', title: 'sprint goal'
-	    }, {
-	        field: 'commitment', title: 'commitment'
-	    }, {
-	        field: 'velocity', title: 'velocity'
-	    }]
+	    columns: [
+	      { field: 'startDate', title: 'from', align: 'center' },
+	      { field: 'endDate', title: 'to', align: 'center' },
+	      { field: 'name', title: '#', align: 'center' },
+	      { field: 'goal', title: 'sprint goal' },
+	      { field: 'commitment', title: 'commitment', align: 'center' },
+	      { field: 'velocity', title: 'velocity', align: 'center' }
+	    ]
 	});
 
 	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
