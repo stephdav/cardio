@@ -2,18 +2,35 @@
 
 ## configuration (cardio.properties)
 
-db.driver
-db.url
-db.username
-db.password
+Database settings:
+* db.driver:
+* db.url:
+* db.username:
+* db.password:
 
-If one og these parameters is missing, database is created "in memory".
+If one of these previous parameters is missing, database is created "in memory".
 
-## starting app
+Other settings:
+* project.name: project name
+* statistic.sprints.sample: number of sprints collected to compute statistics
+
+## running application
+
+### command line
+
+```
+java -classpath ".;lib/*" com.sopra.agile.cardio.app.App
+```
+
+### command line parameters
 
 If "cleardb" is present as argument, database is cleared at startup.
 If "populatedb" is present, database is cleared at startup and a sample dataset is imported.
 
-## 
+## changelog
 
-java -classpath ".;lib/*" com.sopra.agile.cardio.app.App
+### 0.1
+* sprints
+* sprint burndown
+* project burnup
+* velocity statistics

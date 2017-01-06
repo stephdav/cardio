@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.sopra</groupId>
 		<artifactId>agile.cardio</artifactId>
-		<version>0.1</version>
+		<version>0.2</version>
 	</parent>
 
 	<artifactId>agile.cardio-ui</artifactId>
@@ -39,6 +39,21 @@
 			<groupId>com.mitchellbosecke</groupId>
 			<artifactId>pebble</artifactId>
 			<version>2.3.0</version>
+		</dependency>
+
+		<!-- Log Dependencies (SLF4J, LogBack) -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

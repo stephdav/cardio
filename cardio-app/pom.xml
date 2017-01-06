@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.sopra</groupId>
 		<artifactId>agile.cardio</artifactId>
-		<version>0.1</version>
+		<version>0.2</version>
 	</parent>
 
 	<artifactId>agile.cardio-app</artifactId>
@@ -31,17 +31,24 @@
 		<dependency>
 			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-common</artifactId>
-			<version>0.1</version>
+			<version>${cardio.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-ui</artifactId>
-			<version>0.1</version>
+			<version>${cardio.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-back</artifactId>
-			<version>0.1</version>
+			<version>${cardio.version}</version>
+		</dependency>
+
+		<!-- Log Dependencies (SLF4J, LogBack) -->
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
 
 	</dependencies>
