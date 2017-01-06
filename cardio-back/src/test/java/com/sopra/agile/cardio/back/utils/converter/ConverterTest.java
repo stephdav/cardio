@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.sopra.agile.cardio.back.model.DbSprint;
-import com.sopra.agile.cardio.back.utils.converter.Converter;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 public class ConverterTest {
@@ -23,7 +23,7 @@ public class ConverterTest {
     }
 
     @Test
-    public void testConvertFromSprintToDbSprint() {
+    public void testConvertFromSprintToDbSprint() throws CardioTechnicalException {
         Sprint input = new Sprint("id", null, "2016-07-14", null);
         DbSprint output = converter.map(input);
         assertNotNull(output);
@@ -34,7 +34,7 @@ public class ConverterTest {
     }
 
     @Test
-    public void testConvertFromDbSprintToSprint() {
+    public void testConvertFromDbSprintToSprint() throws CardioTechnicalException {
         DbSprint input = new DbSprint("id", null, new LocalDate(2016, 07, 14), null);
         Sprint output = converter.map(input);
         assertNotNull(output);

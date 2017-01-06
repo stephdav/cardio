@@ -14,6 +14,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.SprintDay;
 
 public class SprintDayDaoTest {
@@ -35,14 +36,14 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws CardioTechnicalException {
         List<SprintDay> days = dao.all();
         assertNotNull(days);
         assertEquals(count(jdbc, SPRINT_DAYS), days.size());
     }
 
     @Test
-    public void testFindSprintDay() {
+    public void testFindSprintDay() throws CardioTechnicalException {
         // Sprint must be found
         SprintDay day = dao.find("2016-01-05");
         assertNotNull(day);
@@ -55,7 +56,7 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testAddSprintDay() {
+    public void testAddSprintDay() throws CardioTechnicalException {
         int count = count(jdbc, SPRINT_DAYS);
         dao.add(new SprintDay(new LocalDate("2016-02-14"), 2));
         assertEquals(count + 1, count(jdbc, SPRINT_DAYS));
@@ -69,7 +70,7 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testRemoveSprintDay() {
+    public void testRemoveSprintDay() throws CardioTechnicalException {
         int count = count(jdbc, SPRINT_DAYS);
         dao.remove("2015-12-31");
         assertEquals(count - 1, count(jdbc, SPRINT_DAYS));

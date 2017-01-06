@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -54,31 +55,94 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public List<Sprint> all() {
         LOGGER.info("all ...");
-        return sprintDao.all();
+        List<Sprint> response = null;
+        try {
+            response = sprintDao.all();
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
     public Sprint find(String id) {
         LOGGER.info("find '{}' ...", id);
-        return sprintDao.find(id);
+        Sprint response = null;
+        try {
+            response = sprintDao.find(id);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
     public Sprint add(Sprint sprint) {
         LOGGER.info("add ...");
-        return sprintDao.add(sprint);
+
+        Sprint response = null;
+
+        if (sprint.getName() == null) {
+            LOGGER.error("Sprint name is mandatory", sprint.getName());
+        } else {
+            Sprint existing = findByName(sprint.getName());
+            if (existing == null) {
+                try {
+                    response = sprintDao.add(sprint);
+                } catch (CardioTechnicalException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } else {
+                LOGGER.error("A sprint '{}' already exists", sprint.getName());
+            }
+        }
+
+        return response;
+    }
+
+    @Override
+    public Sprint findByName(String name) {
+        LOGGER.info("findByName '{}' ...", name);
+
+        Sprint response = null;
+        try {
+            response = sprintDao.findByName(name);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
     public Sprint update(Sprint sprint) {
         LOGGER.info("update ...");
-        return sprintDao.update(sprint);
+
+        Sprint response = null;
+        try {
+            response = sprintDao.update(sprint);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
     public Sprint currentSprint() {
         LOGGER.info("currentSprint ...");
-        return sprintDao.current();
+
+        Sprint response = null;
+        try {
+            response = sprintDao.current();
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
@@ -96,7 +160,12 @@ public class SprintServiceImpl implements SprintService {
                 SprintDay day = new SprintDay(new LocalDate(e.getKey()), Integer.parseInt(e.getValue()));
                 sprintDayDao.insertOrUpdate(day);
             } else {
-                sprintDayDao.remove(e.getKey());
+                try {
+                    sprintDayDao.remove(e.getKey());
+                } catch (CardioTechnicalException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
             }
         }
         updateVelocity(id);
@@ -121,25 +190,32 @@ public class SprintServiceImpl implements SprintService {
     public Chart burnup() {
         Chart chart = new Chart();
 
-        List<Sprint> sprints = sprintDao.allCompleted();
+        List<Sprint> sprints = null;
+        try {
+            sprints = sprintDao.allCompleted();
 
-        int nbSprints = sprints.size();
+            int nbSprints = sprints.size();
 
-        String[] days = new String[nbSprints];
-        Double[] data = new Double[nbSprints];
+            String[] days = new String[nbSprints];
+            Double[] data = new Double[nbSprints];
 
-        int idx = 0;
-        for (Sprint s : sprints) {
-            days[idx] = s.getName();
-            data[idx] = Double.valueOf(s.getVelocity());
-            if (idx > 0) {
-                data[idx] = data[idx] + data[idx - 1];
+            int idx = 0;
+            for (Sprint s : sprints) {
+                days[idx] = s.getName();
+                data[idx] = Double.valueOf(s.getVelocity());
+                if (idx > 0) {
+                    data[idx] = data[idx] + data[idx - 1];
+                }
+                idx++;
             }
-            idx++;
-        }
-        chart.setSeries(Arrays.asList(new Serie("done", data)));
+            chart.setSeries(Arrays.asList(new Serie("done", data)));
 
-        chart.setDays(days);
+            chart.setDays(days);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
         return chart;
     }
 
@@ -147,60 +223,65 @@ public class SprintServiceImpl implements SprintService {
     public VelocityData velocity() {
         VelocityData response = new VelocityData();
 
-        List<Sprint> tail = sprintDao.allCompleted();
-        // Keep only 10 last sprints
-        List<Sprint> sprints = tail.subList(Math.max(tail.size() - sample, 0), tail.size());
+        try {
+            List<Sprint> tail = sprintDao.allCompleted();
+            // Keep only 10 last sprints
+            List<Sprint> sprints = tail.subList(Math.max(tail.size() - sample, 0), tail.size());
 
-        int nbSprints = sprints.size();
+            int nbSprints = sprints.size();
 
-        if (nbSprints > 0) {
-            String[] days = new String[nbSprints];
-            List<Integer> values = new ArrayList<Integer>();
-            Integer[] data = new Integer[nbSprints];
+            if (nbSprints > 0) {
+                String[] days = new String[nbSprints];
+                List<Integer> values = new ArrayList<Integer>();
+                Integer[] data = new Integer[nbSprints];
 
-            int idx = 0;
-            int average = 0;
-            int overCommit = 0;
+                int idx = 0;
+                int average = 0;
+                int overCommit = 0;
 
-            for (Sprint s : sprints) {
-                days[idx] = s.getName();
-                data[idx] = Integer.valueOf(s.getVelocity());
+                for (Sprint s : sprints) {
+                    days[idx] = s.getName();
+                    data[idx] = Integer.valueOf(s.getVelocity());
 
-                average += data[idx];
-                values.add(data[idx]);
-                if (data[idx] < Integer.valueOf(s.getCommitment())) {
-                    overCommit++;
+                    average += data[idx];
+                    values.add(data[idx]);
+                    if (data[idx] < Integer.valueOf(s.getCommitment())) {
+                        overCommit++;
+                    }
+
+                    idx++;
                 }
 
-                idx++;
+                response.setNames(days);
+                response.setData(data);
+
+                // sort values
+                values.sort(Comparator.naturalOrder());
+
+                int nb = values.size() / 2;
+
+                List<Integer> worstList = values.subList(0, Math.min(values.size(), nb));
+                int worst = 0;
+                for (int x : worstList) {
+                    worst += x;
+                }
+                worst /= nb;
+
+                List<Integer> bestList = values.subList(Math.max(values.size() - nb, 0), values.size());
+                int best = 0;
+                for (int x : bestList) {
+                    best += x;
+                }
+                best /= nb;
+
+                response.setWorst(worst);
+                response.setAverage(average / idx);
+                response.setBest(best);
+                response.setOverCommit(100 * overCommit / idx);
             }
-
-            response.setNames(days);
-            response.setData(data);
-
-            // sort values
-            values.sort(Comparator.naturalOrder());
-
-            int nb = values.size() / 2;
-
-            List<Integer> worstList = values.subList(0, Math.min(values.size(), nb));
-            int worst = 0;
-            for (int x : worstList) {
-                worst += x;
-            }
-            worst /= nb;
-
-            List<Integer> bestList = values.subList(Math.max(values.size() - nb, 0), values.size());
-            int best = 0;
-            for (int x : bestList) {
-                best += x;
-            }
-            best /= nb;
-
-            response.setWorst(worst);
-            response.setAverage(average / idx);
-            response.setBest(best);
-            response.setOverCommit(100 * overCommit / idx);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
         return response;

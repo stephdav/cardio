@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.utils.converter.Converter;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 public class SprintDaoTest {
@@ -37,14 +38,14 @@ public class SprintDaoTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws CardioTechnicalException {
         List<Sprint> sprints = dao.all();
         assertNotNull(sprints);
         assertEquals(count(jdbc, SPRINTS), sprints.size());
     }
 
     @Test
-    public void testFindSprint() {
+    public void testFindSprint() throws CardioTechnicalException {
         // Sprint must be found
         Sprint sprint = dao.find("SPR-1");
         assertNotNull(sprint);
@@ -61,14 +62,26 @@ public class SprintDaoTest {
     }
 
     @Test
-    public void testAddSprint() {
+    public void testAddSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
         dao.add(new Sprint(null, "2016-02", "2016-02-01", "2016-02-29"));
         assertEquals(count + 1, count(jdbc, SPRINTS));
     }
 
     @Test
-    public void testUpdateSprint() {
+    public void testFindSprintByName() throws CardioTechnicalException {
+        // Sprint must be found
+        Sprint sprint = dao.findByName("0");
+        assertNotNull(sprint);
+        assertEquals("0", sprint.getName());
+
+        // Sprint not found
+        Sprint unk = dao.findByName("UNK");
+        assertNull(unk);
+    }
+
+    @Test
+    public void testUpdateSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
         Sprint sprint = new Sprint("SPR-0", "0", "2015-12-01", "2015-12-31");
         sprint.setGoal("mise à jour");
@@ -83,14 +96,14 @@ public class SprintDaoTest {
     }
 
     @Test
-    public void testRemoveSprint() {
+    public void testRemoveSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
         dao.remove("TO_BE_DELETED");
         assertEquals(count - 1, count(jdbc, SPRINTS));
     }
 
     @Test
-    public void testCurrentSprint() {
+    public void testCurrentSprint() throws CardioTechnicalException {
         // User must be found
         Sprint sprint = dao.current();
         assertNotNull(sprint);
@@ -102,7 +115,7 @@ public class SprintDaoTest {
     }
 
     @Test
-    public void testAllCompleted() {
+    public void testAllCompleted() throws CardioTechnicalException {
         List<Sprint> sprints = dao.allCompleted();
         assertNotNull(sprints);
         assertEquals(count(jdbc, SPRINTS) - 1, sprints.size());

@@ -9,7 +9,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,6 +24,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
@@ -39,7 +39,7 @@ public class SprintServiceTest {
     private SprintDayDao sprintDayDao;
 
     @Before
-    public void init() throws SQLException {
+    public void init() throws CardioTechnicalException {
         svc = new SprintServiceImpl();
 
         sprintDao = mock(SprintDao.class);
@@ -103,7 +103,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testAddSprint() {
+    public void testAddSprint() throws CardioTechnicalException {
         Sprint sprint = svc.add(new Sprint(null, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST", sprint.getName());
@@ -112,7 +112,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateSprint() {
+    public void testUpdateSprint() throws CardioTechnicalException {
         Sprint sprint = svc.update(new Sprint(null, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST2", sprint.getName());
@@ -149,7 +149,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateData_data_nullVelocity() {
+    public void testUpdateData_data_nullVelocity() throws CardioTechnicalException {
         Map<String, String> data = new HashMap<String, String>();
         data.put("2016-07-14", "7");
         data.put("2016-08-15", "");
@@ -168,7 +168,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateData_velocityNotNull() {
+    public void testUpdateData_velocityNotNull() throws CardioTechnicalException {
         SprintData sprintData = new SprintData();
         sprintData.setData(new HashMap<String, String>());
 

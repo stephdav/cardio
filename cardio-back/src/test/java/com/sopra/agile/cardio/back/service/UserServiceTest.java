@@ -8,7 +8,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,6 +16,7 @@ import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.UserDao;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.User;
 
 public class UserServiceTest {
@@ -25,7 +25,7 @@ public class UserServiceTest {
     private UserDao dao;
 
     @Before
-    public void init() throws SQLException {
+    public void init() throws CardioTechnicalException {
         svc = new UserServiceImpl();
 
         dao = mock(UserDao.class);
@@ -72,7 +72,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testRemoveUser() {
+    public void testRemoveUser() throws CardioTechnicalException {
         svc.remove("USR-0");
         verify(dao).remove("USR-0");
     }

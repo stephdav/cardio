@@ -162,8 +162,12 @@ public class RestController {
 
     public String createSprint(Request req, Response res) {
         Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
-        res.status(201);
-        res.header("Location", "/api/sprints/" + sprint.getId());
+        if (sprint != null) {
+            res.status(201);
+            res.header("Location", "/api/sprints/" + sprint.getId());
+        } else {
+            res.status(500);
+        }
         return "";
     }
 

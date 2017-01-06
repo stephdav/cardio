@@ -13,8 +13,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import com.sopra.agile.cardio.back.dao.UserDao;
-import com.sopra.agile.cardio.back.dao.UserDaoImpl;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.User;
 
 public class UserDaoTest {
@@ -34,14 +33,14 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws CardioTechnicalException {
         List<User> users = dao.all();
         assertNotNull(users);
         assertEquals(count(jdbc, "USERS"), users.size());
     }
 
     @Test
-    public void testFindUser() {
+    public void testFindUser() throws CardioTechnicalException {
         // User must be found
         User usr01 = dao.find("01");
         assertNotNull(usr01);
@@ -53,14 +52,14 @@ public class UserDaoTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws CardioTechnicalException {
         int count = count(jdbc, "USERS");
         dao.add(new User(null, "TST", "TST", "TST"));
         assertEquals(count + 1, count(jdbc, "USERS"));
     }
 
     @Test
-    public void testRemoveUser() {
+    public void testRemoveUser() throws CardioTechnicalException {
         int count = count(jdbc, "USERS");
         dao.remove("TO_BE_DELETED");
         assertEquals(count - 1, count(jdbc, "USERS"));

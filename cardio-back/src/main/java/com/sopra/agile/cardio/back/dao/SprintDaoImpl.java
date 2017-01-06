@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.model.DbSprint;
 import com.sopra.agile.cardio.back.utils.converter.Converter;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 
@@ -35,8 +36,8 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public List<Sprint> all() {
-        LOGGER.info("all ...");
+    public List<Sprint> all() throws CardioTechnicalException {
+        LOGGER.info("[DAO] all ...");
         String sql = "select * from SPRINTS";
         List<DbSprint> dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
 
@@ -48,8 +49,8 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public Sprint find(String id) {
-        LOGGER.info("find '{}' ...", id);
+    public Sprint find(String id) throws CardioTechnicalException {
+        LOGGER.info("[DAO] find '{}' ...", id);
         String sql = "select * from SPRINTS where id = ?";
         DbSprint sprint = null;
         try {
@@ -61,8 +62,8 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public Sprint add(Sprint sprint) {
-        LOGGER.info("add ...");
+    public Sprint add(Sprint sprint) throws CardioTechnicalException {
+        LOGGER.info("[DAO] add ...");
 
         sprint.setId(UIDGenerator.getUniqueId("SPR"));
         DbSprint dbsprint = mapper.map(sprint);
@@ -76,8 +77,21 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public Sprint update(Sprint sprint) {
-        LOGGER.info("update ...");
+    public Sprint findByName(String name) throws CardioTechnicalException {
+        LOGGER.info("[DAO] findByName '{}' ...", name);
+        String sql = "select * from SPRINTS where name = ?";
+        DbSprint sprint = null;
+        try {
+            sprint = jdbcTemplate.queryForObject(sql, new Object[] { name }, new DbSprintMapper());
+        } catch (EmptyResultDataAccessException notFound) {
+            LOGGER.info("No result found with id '{}'", name);
+        }
+        return mapper.map(sprint);
+    }
+
+    @Override
+    public Sprint update(Sprint sprint) throws CardioTechnicalException {
+        LOGGER.info("[DAO] update ...");
 
         DbSprint dbsprint = mapper.map(sprint);
 
@@ -90,14 +104,14 @@ public class SprintDaoImpl implements SprintDao {
 
     @Override
     public void remove(String id) {
-        LOGGER.info("remove '{}' ...", id);
+        LOGGER.info("[DAO] remove '{}' ...", id);
         String SQL = "delete from SPRINTS where id = ?";
         jdbcTemplate.update(SQL, id);
     }
 
     @Override
-    public Sprint current() {
-        LOGGER.info("current ...");
+    public Sprint current() throws CardioTechnicalException {
+        LOGGER.info("[DAO] current ...");
         String sql = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
 
         List<DbSprint> dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
@@ -111,8 +125,8 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public List<Sprint> allCompleted() {
-        LOGGER.info("all ...");
+    public List<Sprint> allCompleted() throws CardioTechnicalException {
+        LOGGER.info("[DAO] allCompleted ...");
         String sql = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
         List<DbSprint> dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
 

@@ -7,6 +7,8 @@ import com.sopra.agile.cardio.common.model.VelocityData;
 
 public interface SprintService extends BaseService<Sprint> {
 
+    Sprint findByName(String name);
+
     Sprint update(Sprint sprint);
 
     Sprint currentSprint();

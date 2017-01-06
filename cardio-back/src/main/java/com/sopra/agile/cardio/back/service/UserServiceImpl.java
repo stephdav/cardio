@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.UserDao;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.User;
 
 @Service
@@ -25,19 +26,42 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> all() {
         LOGGER.info("all ...");
-        return userDao.all();
+
+        List<User> response = null;
+        try {
+            response = userDao.all();
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return response;
     }
 
     @Override
     public User find(String id) {
         LOGGER.info("find '{}' ...", id);
-        return userDao.find(id);
+        User response = null;
+        try {
+            response = userDao.find(id);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
     public User add(User user) {
         LOGGER.info("add ...");
-        return userDao.add(user);
+        User response = null;
+        try {
+            response = userDao.add(user);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
     }
 
     @Override
@@ -45,7 +69,12 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("remove '{}' ...", id);
         User usr = find(id);
         if (usr != null) {
-            userDao.remove(id);
+            try {
+                userDao.remove(id);
+            } catch (CardioTechnicalException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         return id;
     }
