@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.back.utils;
+package com.sopra.agile.cardio.back.utils.converter;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

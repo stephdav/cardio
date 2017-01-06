@@ -34,7 +34,11 @@ public class ConfigServiceImpl implements ConfigService {
         String value = getProperty(key);
         int val = 0;
         if (!value.isEmpty()) {
-            val = Integer.parseInt(value);
+            try {
+                val = Integer.parseInt(value);
+            } catch (NumberFormatException ex) {
+                LOGGER.warn("Bad integer '{}'", value);
+            }
         }
         return val;
     }

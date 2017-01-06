@@ -16,20 +16,46 @@ public class ConfigServiceTest {
     private ConfigService svc;
     private Environment env;
 
+    private static final String STRING = "KEY";
+    private static final String EMPTY = "";
+    private static final String INT = "7";
+    private static final String DOUBLE = "3.14";
+    private static final String UNKNOWN = "UNK.KEY";
+
+    private static final String STRING_VALUE = "VALUE";
+    private static final String EMPTY_VALUE = "";
+    private static int INT_VALUE = 7;
+    private static double DOUBLE_VALUE = 3.14;
+
     @Before
     public void init() throws SQLException {
         env = mock(Environment.class);
         svc = new ConfigServiceImpl();
 
         ReflectionTestUtils.setField(svc, "env", env);
-        when(env.getRequiredProperty("KEY")).thenReturn("VALUE");
-        when(env.getRequiredProperty("UNKNOWN KEY")).thenThrow(new IllegalStateException());
+        when(env.getRequiredProperty(EMPTY)).thenReturn(EMPTY_VALUE);
+        when(env.getRequiredProperty(STRING)).thenReturn(STRING_VALUE);
+        when(env.getRequiredProperty(INT)).thenReturn(String.valueOf(INT_VALUE));
+        when(env.getRequiredProperty(DOUBLE)).thenReturn(String.valueOf(DOUBLE_VALUE));
+        when(env.getRequiredProperty(UNKNOWN)).thenThrow(new IllegalStateException());
     }
 
     @Test
     public void testGetProperty() {
-        assertEquals("VALUE", svc.getProperty("KEY"));
-        assertEquals("", svc.getProperty("UNKNOWN KEY"));
+        assertEquals(STRING_VALUE, svc.getProperty(STRING));
+        assertEquals(EMPTY_VALUE, svc.getProperty(EMPTY));
+        assertEquals(INT, svc.getProperty(INT));
+        assertEquals(DOUBLE, svc.getProperty(DOUBLE));
+        assertEquals(EMPTY_VALUE, svc.getProperty(UNKNOWN));
+    }
+
+    @Test
+    public void testGetIntProperty() {
+        assertEquals(0, svc.getIntProperty(STRING));
+        assertEquals(0, svc.getIntProperty(EMPTY));
+        assertEquals(INT_VALUE, svc.getIntProperty(INT));
+        assertEquals(0, svc.getIntProperty(DOUBLE));
+        assertEquals(0, svc.getIntProperty(UNKNOWN));
     }
 
 }

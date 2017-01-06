@@ -31,7 +31,7 @@ public class SprintServiceImpl implements SprintService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
 
-    private static int sample = 6;
+    private int sample = 6;
 
     @Autowired
     private ConfigService configSvc;
