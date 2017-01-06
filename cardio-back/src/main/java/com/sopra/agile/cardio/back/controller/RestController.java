@@ -1,5 +1,6 @@
 package com.sopra.agile.cardio.back.controller;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -124,6 +125,10 @@ public class RestController {
             } else {
                 LOGGER.debug("unknown sorting key {}", key);
                 response.sort(Comparator.comparing(Sprint::getId));
+            }
+            if (req.queryParams("desc") != null) {
+                LOGGER.debug("reverse order");
+                Collections.reverse(response);
             }
         }
 

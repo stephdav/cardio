@@ -143,7 +143,6 @@ ul.admin-dropdown {
 }
 
 /** ======= FOOTER ======= */
-
 .footer {
 	text-align: center;
 	color: #eee;
@@ -398,6 +397,10 @@ body>.container, body>.container-fluid {
 	border-bottom: 1px solid #e6e7e8;
 	vertical-align: middle;
 	height: 50px;
+}
+
+.fixed-table-pagination {
+	color: #333;
 }
 
 .fixed-table-pagination .pagination {

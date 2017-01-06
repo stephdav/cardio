@@ -13,6 +13,8 @@ function initSprints() {
 
 function initSprintsTable() {
 	$('#sprints-table').bootstrapTable({
+		pagination: true,
+		sidePagination: 'server',
 	    columns: [{
 	        field: 'startDate', title: 'from'
 	    }, {
@@ -31,10 +33,19 @@ function initSprintsTable() {
 	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
 		window.location = "../sprint/" + row.id;
 	});
+	$('#sprints-table').on('page-change.bs.table', function (e, number, size) {
+		getSprints(number, size);
+	});
 }
 
-function getSprints() {
-	ajaxGet("/api/sprints?limit=10&sort=enddate", function(data, hv, errorThrown) {
+function getSprints(page, limit) {
+	if (page == undefined) {
+		page = 1;
+	}
+	if (limit == undefined) {
+		limit = 10;
+	}
+	ajaxGet("/api/sprints?page=" + page + "&limit=" + limit + "&sort=enddate&desc", function(data, hv, errorThrown) {
 		if (hv.status == 200 || hv.status == 206) {
 			updateSprints(data, hv);
 		} else {
@@ -46,8 +57,12 @@ function getSprints() {
 function updateSprints(data, hv) {
 	$('#sprintslist').empty();
 	if (hv.status == 200 || hv.status == 206) {
-		$('#sprints-table').bootstrapTable('load', data);
-		$('#sprints-count').text(hv.contentRange.split(/\//)[1]);
+		var nb = hv.contentRange.split(/\//)[1];
+		var bootstrapTableData = { rows: [] };
+		bootstrapTableData.total = nb;
+		bootstrapTableData.rows = data;
+		$('#sprints-table').bootstrapTable('load', bootstrapTableData);
+		$('#sprints-count').text(nb);
 	}
 }
 
