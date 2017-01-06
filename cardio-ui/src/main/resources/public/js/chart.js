@@ -64,16 +64,18 @@ function getVelocitiesChart(data) {
         series: [ { type: 'column', name: "velocity", data: data.data } ]
     };
 	
-	var nb = data.data.length;
 	var s1 = { type: 'spline', color: '#FF0000', name: "low", data: [] }
 	var s2 = { type: 'spline', color: '#0000FF', name: "average", data: [] }
 	var s3 = { type: 'spline', color: '#00FF00', name: "high", data: [] }
-	
-	var idx = 0;
-	for ( ; idx<nb; idx++) {
-		s1.data.push(data.worst);
-		s2.data.push(data.average);
-		s3.data.push(data.best);
+
+	if (data.data != undefined) {
+		var nb = data.data.length;
+		var idx = 0;
+		for ( ; idx<nb; idx++) {
+			s1.data.push(data.worst);
+			s2.data.push(data.average);
+			s3.data.push(data.best);
+		}
 	}
 
 	chart.series.push(s1);

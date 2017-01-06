@@ -8,18 +8,31 @@ function initHome() {
 }
 
 function updateHomeView(sprint, hv) {
-	updateSprintDate(sprint.startDate, '#from-month', '#from-day');
-	$('#sprint-name').text('[#' + sprint.name + ']');
-	$('#sprint-goal').text(sprint.goal);
-	updateSprintDate(sprint.endDate, '#to-month', '#to-day');
-	$('#sprint-commitment').text(sprint.commitment);
-	
-	fnSprintGetData(sprint.id, updateBurndown);
+	if (hv.status == 204) {
+		$('#from-day').text('');
+		$('#from-month').text('');
+		$('#to-day').text('');
+		$('#to-month').text('');
+		$('#sprint-name').text('no pending sprint');
+		$('#sprint-goal').text('');
+		$('#sprint-commitment').text('-');
+	} else {
+		updateSprintDate(sprint.startDate, '#from-month', '#from-day');
+		$('#sprint-name').text('[#' + sprint.name + ']');
+		$('#sprint-goal').text(sprint.goal);
+		updateSprintDate(sprint.endDate, '#to-month', '#to-day');
+		$('#sprint-commitment').text(sprint.commitment);
+		fnSprintGetData(sprint.id, updateBurndown);
+	}
 }
 
 function updateBurndown(data, hv) {
-	displayBurndown('burndown', data);
-	$('#left-days').text(data.details.leftDays);
+	if (hv.status == 204) {
+		$('#left-days').text('-');
+	} else {
+		displayBurndown('burndown', data);
+		$('#left-days').text(data.details.leftDays);
+	}
 }
 
 function updateSprintDate(date, monthSelector, daySelector) {
