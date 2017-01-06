@@ -3,6 +3,16 @@
 {% block content %}
 
   <div class="footer"> 
+	<div>
+<pre>
+                   _ _       
+                  | (_)      
+  ___ __ _ _ __ __| |_  ___  
+ / __/ _` | '__/ _` | |/ _ \ 
+| (_| (_| | | | (_| | | (_) |
+ \___\__,_|_|  \__,_|_|\___/ 
+</pre>
+	</div>    
     cardio <span id="app-version"></span> provided by <a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a>
   </div>
 

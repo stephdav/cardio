@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.sopra</groupId>
 		<artifactId>agile.cardio</artifactId>
-		<version>0.0.1</version>
+		<version>0.1</version>
 	</parent>
 
 	<artifactId>agile.cardio-dist</artifactId>
@@ -19,7 +19,7 @@
 		<dependency>
 			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-app</artifactId>
-			<version>0.0.1</version>
+			<version>0.1</version>
 		</dependency>
 	</dependencies>
 

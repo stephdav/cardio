@@ -98,6 +98,13 @@ ul.admin-dropdown {
 	}
 }
 
+/* CODE */
+pre {
+	color: #fff;
+	background-color: #102010;
+	border: none;
+}
+
 /** ======= NAVBAR ======= */
 .navbar-inverse {
 	background-color: #102010;
