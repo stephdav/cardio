@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
+import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Serie;
@@ -79,28 +80,26 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Sprint add(Sprint sprint) {
+    public Sprint add(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.info("add ...");
 
-        Sprint response = null;
+        testSprintIsValid(sprint);
 
-        if (sprint.getName() == null) {
-            LOGGER.error("Sprint name is mandatory", sprint.getName());
-        } else {
-            Sprint existing = findByName(sprint.getName());
-            if (existing == null) {
-                try {
-                    response = sprintDao.add(sprint);
-                } catch (CardioTechnicalException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            } else {
-                LOGGER.error("A sprint '{}' already exists", sprint.getName());
-            }
+        if (findByName(sprint.getName()) != null) {
+            LOGGER.error("A sprint '{}' already exists", sprint.getName());
+            throw new CardioFunctionalException("sprint with same name already exists");
         }
 
-        return response;
+        List<Sprint> conflicts = sprintDao.overlaping(sprint);
+        if (conflicts != null && !conflicts.isEmpty()) {
+            LOGGER.error("{} sprints are overlaping sprint period", conflicts.size());
+            for (Sprint s : conflicts) {
+                LOGGER.debug("{} from {} to {}", s.getName(), s.getStartDate(), s.getEndDate());
+            }
+            throw new CardioFunctionalException("sprint overlapping");
+        }
+
+        return sprintDao.add(sprint);
     }
 
     @Override
@@ -363,4 +362,22 @@ public class SprintServiceImpl implements SprintService {
         }
     }
 
+    private void testSprintIsValid(Sprint sprint) throws CardioFunctionalException {
+        if (sprint == null) {
+            LOGGER.error("sprint can't be null");
+            throw new CardioFunctionalException("sprint can't be null");
+        }
+        if (sprint.getName() == null || sprint.getName().isEmpty()) {
+            LOGGER.error("name is mandatory");
+            throw new CardioFunctionalException("name is mandatory");
+        }
+        if (sprint.getStartDate() == null || sprint.getStartDate().isEmpty()) {
+            LOGGER.error("start date is mandatory");
+            throw new CardioFunctionalException("start date is mandatory");
+        }
+        if (sprint.getEndDate() == null || sprint.getEndDate().isEmpty()) {
+            LOGGER.error("enddate is mandatory");
+            throw new CardioFunctionalException("end date is mandatory");
+        }
+    }
 }

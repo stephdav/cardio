@@ -62,7 +62,6 @@ function updateSprints(data, hv) {
 }
 
 function createSprint(name, startdate, enddate, goal, commitment) {
-	log("name:"+name + " goal:"+goal);
 	var payload = {name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment};
 	ajaxPost("/api/sprints", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
@@ -73,10 +72,14 @@ function createSprint(name, startdate, enddate, goal, commitment) {
 			$('#sprintEndDate').val('');
 			$('#sprintGoal').val('');
 			$('#sprintCommitment').val('');
+			$('#errors').text('');
+			$('.form-error').hide();
 			// reload list
 			getSprints();	
 		} else {
 			log("Error creating sprint : " + errorThrown);
+			$('#errors').text(data);
+			$('.form-error').show();
 		}
 	});
 }

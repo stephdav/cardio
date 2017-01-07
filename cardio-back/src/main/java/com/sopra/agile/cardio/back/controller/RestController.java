@@ -16,6 +16,8 @@ import com.sopra.agile.cardio.back.service.SprintService;
 import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
+import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
@@ -27,6 +29,8 @@ import spark.Response;
 
 @Controller
 public class RestController {
+
+    private static final String LOCATION = "Location";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
@@ -93,9 +97,17 @@ public class RestController {
     }
 
     public String createUser(Request req, Response res) {
-        User usr = svcUser.add(new ObjectMapper<User>(User.class).parse(req.body()));
-        res.status(201);
-        res.header("Location", "/api/users/" + usr.getId());
+
+        try {
+            User usr = svcUser.add(new ObjectMapper<User>(User.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/users/" + usr.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+        }
+
         return "";
     }
 
@@ -161,20 +173,28 @@ public class RestController {
     }
 
     public String createSprint(Request req, Response res) {
-        Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
-        if (sprint != null) {
+
+        String response = "OK";
+
+        try {
+            Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
             res.status(201);
-            res.header("Location", "/api/sprints/" + sprint.getId());
-        } else {
+            res.header(LOCATION, "/api/sprints/" + sprint.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
             res.status(500);
+            response = e.getMessage();
         }
-        return "";
+
+        return response;
     }
 
     public String updateSprintProperties(Request req, Response res, String id) {
         Sprint sprint = svcSprint.update(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
         res.status(201);
-        res.header("Location", "/api/sprints/" + sprint.getId());
+        res.header(LOCATION, "/api/sprints/" + sprint.getId());
         return "";
     }
 
@@ -183,7 +203,7 @@ public class RestController {
         if (sprint != null) {
             svcSprint.updateData(id, new ObjectMapper<SprintData>(SprintData.class).parse(req.body()));
             res.status(201);
-            res.header("Location", "/api/sprints/" + sprint.getId());
+            res.header(LOCATION, "/api/sprints/" + sprint.getId());
         }
         return "";
     }

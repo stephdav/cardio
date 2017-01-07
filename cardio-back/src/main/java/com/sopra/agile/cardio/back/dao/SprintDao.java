@@ -15,4 +15,6 @@ public interface SprintDao extends BaseDao<Sprint> {
 
     List<Sprint> allCompleted() throws CardioTechnicalException;
 
+    List<Sprint> overlaping(Sprint sprint) throws CardioTechnicalException;
+
 }

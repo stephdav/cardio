@@ -24,6 +24,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
+import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -103,7 +104,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testAddSprint() throws CardioTechnicalException {
+    public void testAddSprint() throws CardioTechnicalException, CardioFunctionalException {
         Sprint sprint = svc.add(new Sprint(null, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST", sprint.getName());

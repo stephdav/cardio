@@ -16,6 +16,7 @@ import org.junit.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import com.sopra.agile.cardio.back.dao.UserDao;
+import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.User;
 
@@ -65,7 +66,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testAddUser() {
+    public void testAddUser() throws CardioTechnicalException, CardioFunctionalException {
         User usr = svc.add(new User(null, "TST", "TST", "TST"));
         assertNotNull(usr);
         assertEquals("TST", usr.getLogin());

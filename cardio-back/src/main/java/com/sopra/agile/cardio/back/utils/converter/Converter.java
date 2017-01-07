@@ -1,7 +1,5 @@
 package com.sopra.agile.cardio.back.utils.converter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.model.DbSprint;
@@ -15,8 +13,6 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
 
 @Service
 public class Converter {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(Converter.class);
 
     private MapperFactory mapperFactory;
     private BoundMapperFacade<DbSprint, Sprint> mapSprint2Db;

@@ -367,6 +367,14 @@ body>.container, body>.container-fluid {
 }
 
 /*Forms*/
+.form-error {
+	display: none;
+}
+
+.form-error .alert {
+	margin-bottom: 0;
+}
+
 .form-group label {
 	color: #5f6468;
 }
