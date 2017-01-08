@@ -213,7 +213,7 @@ body>.container, body>.container-fluid {
 	margin: 0;
 }
 
-/*Panels*/
+/* Panels */
 .panel {
 	border: 0;
 }
@@ -226,16 +226,6 @@ body>.container, body>.container-fluid {
 	line-height: 30px;
 }
 
-.panel-default {
-	background: #edf3e1;
-}
-
-.panel-default .panel-heading {
-	background: #9bbb59;
-	border-bottom: 1px solid #000;
-	color: #fff;
-}
-
 .panel-footer {
 	background: #fff;
 	border-top: 1px solid #000;
@@ -244,6 +234,7 @@ body>.container, body>.container-fluid {
 .panel-widget {
 	padding: 0;
 	position: relative;
+	background: #9bbb59;
 }
 
 .panel-widget .panel-footer {
@@ -270,29 +261,26 @@ body>.container, body>.container-fluid {
 	text-decoration: none;
 }
 
-.panel-blue {
-	background: #9bbb59;
-	color: #fff;
+.panel-green {
+	background: #edf3e1;
 }
 
-.panel-blue .panel-body p {
+.panel-green .panel-heading {
+	background: #9bbb59;
+	color: #fff;
+	border-bottom: 0;
+}
+
+.panel-green .panel-body p {
 	color: #fff;
 	color: rgba(255, 255, 255, .8);
 }
 
-.panel-blue .panel-heading {
-	border-bottom: 1px solid rgba(255, 255, 255, .2);
-}
-
-.panel-blue .text-muted {
+.panel-green .text-muted {
 	color: rgba(255, 255, 255, .5);
 }
 
-.dark-overlay {
-	background: rgba(0, 0, 0, .05);
-	text-align: center;
-}
-
+/* Widgets */
 .widget-left {
 	height: 80px;
 	padding-top: 15px;
@@ -357,13 +345,9 @@ body>.container, body>.container-fluid {
 	color: #323e1a;
 }
 
-.panel-blue .widget-left {
+.panel-green .widget-left {
 	background: #9bbb59;
 	color: #fff;
-}
-
-.panel-widget {
-	background: #9bbb59;
 }
 
 /*Forms*/
@@ -435,4 +419,13 @@ body>.container, body>.container-fluid {
 
 .week-of-year {
 	margin-top: 20px;
+}
+
+/* Error page */
+.status-code {
+	font-size: 160px;
+}
+
+.status-message {
+	font-size: 40px;
 }

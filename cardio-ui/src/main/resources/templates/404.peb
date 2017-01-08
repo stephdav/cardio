@@ -1,7 +1,19 @@
 {% extends "templates/base.peb" %}
 
 {% block content %}
-  <div class="starter-template">
-    <p class="lead">Page not found</p>
+
+  <div class="row">
+    <div class="col-lg-offset-4 col-lg-4">
+      <div class="panel panel-green panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-warning fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="sprint-commitment">404</span></div>
+            <div class="text-muted">page not found</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
 {% endblock %}

@@ -21,7 +21,7 @@
     </div>
 
     <div class="col-lg-9">
-      <div class="panel panel-default">
+      <div class="panel panel-green">
         <div class="panel-heading">
           users
           <button id="sortByLogin" type="button" class="btn btn-default">login <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
