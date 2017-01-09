@@ -26,12 +26,10 @@ import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
-import com.sopra.agile.cardio.common.model.Chart;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.SprintDataDetails;
 import com.sopra.agile.cardio.common.model.SprintDay;
-import com.sopra.agile.cardio.common.model.VelocityData;
 
 public class SprintServiceTest {
 
@@ -184,30 +182,4 @@ public class SprintServiceTest {
         assertEquals(7, savedCaptor.getValue().getVelocity());
     }
 
-    @Test
-    public void testBurnup() {
-        Chart burnup = svc.burnup();
-        assertNotNull(burnup);
-        assertNotNull(burnup.getDays());
-        assertEquals(2, burnup.getDays().length);
-        assertNotNull(burnup.getSeries());
-        assertEquals(1, burnup.getSeries().size());
-        assertNotNull(burnup.getSeries().get(0).getData());
-        assertEquals(2, burnup.getSeries().get(0).getData().length);
-        assertEquals(50, burnup.getSeries().get(0).getData()[0], 0.01d);
-        assertEquals(200, burnup.getSeries().get(0).getData()[1], 0.01d);
-    }
-
-    @Test
-    public void testVelocity() {
-        VelocityData burnup = svc.velocity();
-        assertNotNull(burnup);
-        assertNotNull(burnup.getNames());
-        assertEquals(2, burnup.getNames().length);
-        assertNotNull(burnup.getData());
-        Integer[] data = burnup.getData();
-        assertEquals(2, data.length);
-        assertEquals(50, (int) data[0]);
-        assertEquals(150, (int) data[1]);
-    }
 }

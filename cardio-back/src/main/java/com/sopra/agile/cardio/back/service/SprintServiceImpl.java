@@ -1,13 +1,9 @@
 package com.sopra.agile.cardio.back.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 
 import org.joda.time.LocalDate;
 import org.slf4j.Logger;
@@ -20,23 +16,15 @@ import com.sopra.agile.cardio.back.dao.SprintDayDao;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
-import com.sopra.agile.cardio.common.model.Chart;
-import com.sopra.agile.cardio.common.model.Serie;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.SprintDataDetails;
 import com.sopra.agile.cardio.common.model.SprintDay;
-import com.sopra.agile.cardio.common.model.VelocityData;
 
 @Service
 public class SprintServiceImpl implements SprintService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
-
-    private int sample = 6;
-
-    @Autowired
-    private ConfigService configSvc;
 
     @Autowired
     private SprintDao sprintDao;
@@ -46,11 +34,6 @@ public class SprintServiceImpl implements SprintService {
 
     public SprintServiceImpl() {
         // Empty constructor
-    }
-
-    @PostConstruct
-    public void init() {
-        sample = configSvc.getIntProperty("statistic.sprints.sample");
     }
 
     @Override
@@ -183,107 +166,6 @@ public class SprintServiceImpl implements SprintService {
         }
         sprint.setVelocity(velocity);
         update(sprint);
-    }
-
-    @Override
-    public Chart burnup() {
-        Chart chart = new Chart();
-
-        List<Sprint> sprints = null;
-        try {
-            sprints = sprintDao.allCompleted();
-
-            int nbSprints = sprints.size();
-
-            String[] days = new String[nbSprints];
-            Double[] data = new Double[nbSprints];
-
-            int idx = 0;
-            for (Sprint s : sprints) {
-                days[idx] = s.getName();
-                data[idx] = Double.valueOf(s.getVelocity());
-                if (idx > 0) {
-                    data[idx] = data[idx] + data[idx - 1];
-                }
-                idx++;
-            }
-            chart.setSeries(Arrays.asList(new Serie("done", data)));
-
-            chart.setDays(days);
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return chart;
-    }
-
-    @Override
-    public VelocityData velocity() {
-        VelocityData response = new VelocityData();
-
-        try {
-            List<Sprint> tail = sprintDao.allCompleted();
-            // Keep only 10 last sprints
-            List<Sprint> sprints = tail.subList(Math.max(tail.size() - sample, 0), tail.size());
-
-            int nbSprints = sprints.size();
-
-            if (nbSprints > 0) {
-                String[] days = new String[nbSprints];
-                List<Integer> values = new ArrayList<Integer>();
-                Integer[] data = new Integer[nbSprints];
-
-                int idx = 0;
-                int average = 0;
-                int overCommit = 0;
-
-                for (Sprint s : sprints) {
-                    days[idx] = s.getName();
-                    data[idx] = Integer.valueOf(s.getVelocity());
-
-                    average += data[idx];
-                    values.add(data[idx]);
-                    if (data[idx] < Integer.valueOf(s.getCommitment())) {
-                        overCommit++;
-                    }
-
-                    idx++;
-                }
-
-                response.setNames(days);
-                response.setData(data);
-
-                // sort values
-                values.sort(Comparator.naturalOrder());
-
-                int nb = values.size() / 2;
-
-                List<Integer> worstList = values.subList(0, Math.min(values.size(), nb));
-                int worst = 0;
-                for (int x : worstList) {
-                    worst += x;
-                }
-                worst /= nb;
-
-                List<Integer> bestList = values.subList(Math.max(values.size() - nb, 0), values.size());
-                int best = 0;
-                for (int x : bestList) {
-                    best += x;
-                }
-                best /= nb;
-
-                response.setWorst(worst);
-                response.setAverage(average / idx);
-                response.setBest(best);
-                response.setOverCommit(100 * overCommit / idx);
-            }
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return response;
     }
 
     private SprintData getSprintDataDetails(Sprint sprint) {

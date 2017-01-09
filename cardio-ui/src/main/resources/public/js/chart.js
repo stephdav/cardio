@@ -30,21 +30,21 @@ function getBurndownChart(data) {
     return chart;
 }
 
-function getBurnupChart(burndown) {
+function getBurnupChart(data) {
 	chart =  {
         title: { text: '' },
         xAxis: {
         	title: { text: 'sprint' },
         	labels: { formatter: function () { return '#' + this.value; } },
-            categories: burndown.days
+            categories: data.sprints
         },
         yAxis: { title: { text: '' } },
         series: []
     };
-	
-	$.each(burndown.series, function(index, serie) {
-	  chart.series.push(serie);
-	});
+
+    var serieBurnup = { name: 'done', data: data.burnup};
+    chart.series.push(serieBurnup);
+
 	return chart;
 }
 
@@ -55,21 +55,21 @@ function getVelocitiesChart(data) {
         xAxis: {
         	title: { text: 'sprint' },
         	labels: { formatter: function () { return '#' + this.value; } },
-            categories: data.names
+            categories: data.sprintsSample
         },
         yAxis: { title: { text: '' } },
         plotOptions: {
             spline: { lineWidth: 4, states: { hover: { lineWidth: 5 } }, marker: { enabled: false } }
         },
-        series: [ { type: 'column', name: "velocity", data: data.data } ]
+        series: [ { type: 'column', name: "velocity", data: data.done } ]
     };
 	
 	var s1 = { type: 'spline', color: '#FF0000', name: "low", data: [] }
 	var s2 = { type: 'spline', color: '#0000FF', name: "average", data: [] }
 	var s3 = { type: 'spline', color: '#00FF00', name: "high", data: [] }
 
-	if (data.data != undefined) {
-		var nb = data.data.length;
+	if (data.done != undefined) {
+		var nb = data.done.length;
 		var idx = 0;
 		for ( ; idx<nb; idx++) {
 			s1.data.push(data.worst);

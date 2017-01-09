@@ -12,17 +12,17 @@ import org.springframework.stereotype.Controller;
 import com.sopra.agile.cardio.back.model.ObjectMapper;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.service.ConfigService;
+import com.sopra.agile.cardio.back.service.ProjectService;
 import com.sopra.agile.cardio.back.service.SprintService;
 import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
-import com.sopra.agile.cardio.common.model.Chart;
+import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.User;
-import com.sopra.agile.cardio.common.model.VelocityData;
 
 import spark.Request;
 import spark.Response;
@@ -39,6 +39,9 @@ public class RestController {
 
     @Autowired
     private UserService svcUser;
+
+    @Autowired
+    private ProjectService svcProject;
 
     @Autowired
     private SprintService svcSprint;
@@ -219,9 +222,9 @@ public class RestController {
         return sprint;
     }
 
-    public Chart getBurnup(Request req, Response res) {
+    public ProjectDataDetails getProjectData(Request req, Response res) {
         res.type("application/json");
-        Chart chart = svcSprint.burnup();
+        ProjectDataDetails chart = svcProject.projectData();
         if (chart != null) {
             res.status(200);
         } else {
@@ -230,14 +233,4 @@ public class RestController {
         return chart;
     }
 
-    public VelocityData getVelocity(Request req, Response res) {
-        res.type("application/json");
-        VelocityData chart = svcSprint.velocity();
-        if (chart != null) {
-            res.status(200);
-        } else {
-            res.status(204);
-        }
-        return chart;
-    }
 }

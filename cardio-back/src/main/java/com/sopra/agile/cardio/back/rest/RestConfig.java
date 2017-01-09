@@ -48,34 +48,32 @@ public class RestConfig {
     private void setupRoutes() {
 
         // PARAMETERS
-        get("/api/config/parameters/" + PARAM_KEY,
-                (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)), new JsonTransformer());
 
-        // CURRENT SPRINT
+        get("/api/config/parameters/:key", (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)),
+                new JsonTransformer());
 
-        get("/api/sprints/current/burnup", (req, res) -> controller.getBurnup(req, res), new JsonTransformer());
-        get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
-        get("/api/sprints/velocity", (req, res) -> controller.getVelocity(req, res), new JsonTransformer());
+        // PROJECT
+
+        get("/api/project/data", (req, res) -> controller.getProjectData(req, res), new JsonTransformer());
 
         // SPRINTS
 
-        get("/api/sprints/" + PARAM_ID + "/data",
-                (req, res) -> controller.getSprintData(req, res, req.params(PARAM_ID)), new JsonTransformer());
-        get("/api/sprints/" + PARAM_ID, (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),
+        get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
+        get("/api/sprints/:id/data", (req, res) -> controller.getSprintData(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
+        get("/api/sprints/:id", (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());
         get("/api/sprints", (req, res) -> controller.getAllSprints(req, res), new JsonTransformer());
 
-        post("/api/sprints/" + PARAM_ID + "/data",
-                (req, res) -> controller.updateSprintData(req, res, req.params(PARAM_ID)));
-        post("/api/sprints/" + PARAM_ID,
-                (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
+        post("/api/sprints/:id/data", (req, res) -> controller.updateSprintData(req, res, req.params(PARAM_ID)));
+        post("/api/sprints/:id", (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
         post("/api/sprints", (req, res) -> controller.createSprint(req, res));
 
         // USERS
+
         get("/api/users", (req, res) -> controller.getAllUsers(req, res), new JsonTransformer());
-        get("/api/users/" + PARAM_ID, (req, res) -> controller.getUser(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
+        get("/api/users/:id", (req, res) -> controller.getUser(req, res, req.params(PARAM_ID)), new JsonTransformer());
         post("/api/users", (req, res) -> controller.createUser(req, res));
-        delete("/api/users/" + PARAM_ID, (req, res) -> controller.deleteUser(req, res, req.params(PARAM_ID)));
+        delete("/api/users/:id", (req, res) -> controller.deleteUser(req, res, req.params(PARAM_ID)));
     }
 }

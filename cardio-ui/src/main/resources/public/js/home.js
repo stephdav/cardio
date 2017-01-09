@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 function initHome() {
 	getCurrentSprint(updateHomeView);
-	getBurnup(displayBurnup, 'burnup');
+	fnProjectGetDetails(updateBurnup);
 }
 
 function updateHomeView(sprint, hv) {
@@ -33,6 +33,10 @@ function updateBurndown(data, hv) {
 		displayBurndown('burndown', data);
 		$('#left-days').text(data.details.leftDays);
 	}
+}
+
+function updateBurnup(data, hv) {
+	displayBurnup('burnup', data);
 }
 
 function updateSprintDate(date, monthSelector, daySelector) {
