@@ -53,19 +53,19 @@ public class SprintDaoImpl implements SprintDao {
     public List<Sprint> all() throws CardioTechnicalException {
         LOGGER.info("[DAO] all ...");
 
-        List<DbSprint> dbsprints = null;
+        List<Sprint> sprints = new ArrayList<Sprint>();
+
         try {
-            dbsprints = jdbcTemplate.query(SQL_ALL, new DbSprintMapper());
+            List<DbSprint> dbsprints = jdbcTemplate.query(SQL_ALL, new DbSprintMapper());
+            if (dbsprints != null) {
+                for (DbSprint s : dbsprints) {
+                    sprints.add(mapper.map(s));
+                }
+            }
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
 
-        List<Sprint> sprints = new ArrayList<Sprint>();
-        if (dbsprints != null) {
-            for (DbSprint s : dbsprints) {
-                sprints.add(mapper.map(s));
-            }
-        }
         return sprints;
     }
 

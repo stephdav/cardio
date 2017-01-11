@@ -38,6 +38,11 @@ public class SprintDaoTest {
     }
 
     @Test
+    public void testConstructor() {
+        assertNotNull(dao);
+    }
+
+    @Test
     public void testAll() throws CardioTechnicalException {
         List<Sprint> sprints = dao.all();
         assertNotNull(sprints);
@@ -64,7 +69,7 @@ public class SprintDaoTest {
     @Test
     public void testAddSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
-        dao.add(new Sprint(null, "2016-02", "2016-02-01", "2016-02-29"));
+        dao.add(new Sprint(null, "2016-03", "2016-03-01", "2016-03-31"));
         assertEquals(count + 1, count(jdbc, SPRINTS));
     }
 
@@ -122,4 +127,73 @@ public class SprintDaoTest {
         // TODO : assert that sprints are sorted => impact on testAddSprint
     }
 
+    @Test
+    public void testFindSprintByDay() throws CardioTechnicalException {
+
+        List<Sprint> sprints = dao.findByDay("2016-01-15");
+
+        assertNotNull(sprints);
+        assertEquals(1, sprints.size());
+
+        Sprint sprint = sprints.get(0);
+        assertEquals("1", sprint.getName());
+    }
+
+    @Test
+    public void testFindSprintByDayNow() throws CardioTechnicalException {
+
+        List<Sprint> sprints = dao.findByDay("now");
+
+        assertNotNull(sprints);
+        assertEquals(1, sprints.size());
+
+        Sprint sprint = sprints.get(0);
+        assertEquals("current", sprint.getName());
+    }
+
+    @Test
+    public void testOverlaping() throws CardioTechnicalException {
+
+        // 0 : 2015-12-01 > 2015-12-31
+        // 1 : 2016-01-01 > 2016-01-31
+
+        Sprint sprint = new Sprint("id", "name", "2015-01-01", "2015-02-01");
+
+        // 2015-01-01 > 2015-02-01
+        assertOverlaping(sprint, 0);
+
+        // 2015-01-01 > 2015-12-01
+        sprint.setEndDate("2015-12-01");
+        assertOverlaping(sprint, 1);
+
+        // 2015-01-01 > 2015-12-15
+        sprint.setEndDate("2015-12-15");
+        assertOverlaping(sprint, 1);
+
+        // 2015-01-01 > 2016-01-01
+        sprint.setEndDate("2016-01-01");
+        assertOverlaping(sprint, 2);
+
+        // 2015-12-15 > 2016-01-01
+        sprint.setStartDate("2015-12-15");
+        assertOverlaping(sprint, 2);
+
+        // 2015-12-15 > 2016-01-31
+        sprint.setEndDate("2016-01-31");
+        assertOverlaping(sprint, 2);
+
+        // 2015-12-15 > 2016-02-15
+        sprint.setEndDate("2016-02-15");
+        assertOverlaping(sprint, 2);
+
+        // 2016-02-01 > 2016-02-15
+        sprint.setStartDate("2016-02-01");
+        assertOverlaping(sprint, 0);
+    }
+
+    private void assertOverlaping(Sprint sprint, int expected) throws CardioTechnicalException {
+        List<Sprint> sprints = dao.overlaping(sprint);
+        assertNotNull(sprints);
+        assertEquals(expected, sprints.size());
+    }
 }

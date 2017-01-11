@@ -33,6 +33,11 @@ public class UserDaoTest {
     }
 
     @Test
+    public void testConstructor() {
+        assertNotNull(dao);
+    }
+
+    @Test
     public void testAll() throws CardioTechnicalException {
         List<User> users = dao.all();
         assertNotNull(users);

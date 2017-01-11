@@ -36,6 +36,11 @@ public class SprintDayDaoTest {
     }
 
     @Test
+    public void testConstructor() {
+        assertNotNull(dao);
+    }
+
+    @Test
     public void testAll() throws CardioTechnicalException {
         List<SprintDay> days = dao.all();
         assertNotNull(days);
