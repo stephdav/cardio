@@ -100,6 +100,20 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
+    public List<Sprint> findByDay(String day) {
+        LOGGER.info("findByDay '{}' ...", day);
+
+        List<Sprint> response = null;
+        try {
+            response = sprintDao.findByDay(day);
+        } catch (CardioTechnicalException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    @Override
     public Sprint update(Sprint sprint) {
         LOGGER.info("update ...");
 

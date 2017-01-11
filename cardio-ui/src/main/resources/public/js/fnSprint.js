@@ -53,3 +53,17 @@ function fnSprintUpdateData(id, data, callback) {
 		}
 	});
 }
+
+function fnSprintFindByDay(day, callback) {
+	var filter = "";
+	if (day != undefined && day != '') {
+		filter += "?day=" + day;
+	}
+	ajaxGet("/api/sprints" + filter, function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 204) {
+			callback(data, hv);
+		} else {
+			log("Error getting sprints: " + errorThrown);
+		}
+	});
+}

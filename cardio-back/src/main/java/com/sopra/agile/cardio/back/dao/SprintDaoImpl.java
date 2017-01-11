@@ -33,6 +33,8 @@ public class SprintDaoImpl implements SprintDao {
     private static final String SQL_ALL_COMPLETED = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
     private static final String SQL_FIND_BY_ID = "select * from SPRINTS where id = ?";
     private static final String SQL_FIND_BY_NAME = "select * from SPRINTS where name = ?";
+    private static final String SQL_FIND_BY_DAY = "select * from SPRINTS where START_DATE <= DATE '%s' AND DATE '%s' <= END_DATE ORDER BY START_DATE ASC";
+    private static final String SQL_FIND_BY_DAY_NOW = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
     private static final String SQL_INSERT = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE, GOAL, COMMITMENT, VELOCITY) values (?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "update SPRINTS set NAME=?, START_DATE=?, END_DATE=?, GOAL=?, COMMITMENT=?, VELOCITY=?  where ID = ?";
     private static final String SQL_DELETE = "delete from SPRINTS where id = ?";
@@ -157,6 +159,32 @@ public class SprintDaoImpl implements SprintDao {
         }
 
         return sprint;
+    }
+
+    @Override
+    public List<Sprint> findByDay(String day) throws CardioTechnicalException {
+        LOGGER.info("[DAO] findByDay '{}' ...", day);
+
+        String sql = SQL_FIND_BY_DAY_NOW;
+        if (!"now".equals(day)) {
+            sql = String.format(SQL_FIND_BY_DAY, day, day);
+        }
+
+        List<DbSprint> dbsprints = null;
+        try {
+            dbsprints = jdbcTemplate.query(sql, new DbSprintMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+
+        List<Sprint> sprints = new ArrayList<Sprint>();
+        if (dbsprints != null) {
+            for (DbSprint s : dbsprints) {
+                sprints.add(mapper.map(s));
+            }
+        }
+
+        return sprints;
     }
 
     @Override

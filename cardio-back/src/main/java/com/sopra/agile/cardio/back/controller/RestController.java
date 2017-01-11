@@ -3,6 +3,7 @@ package com.sopra.agile.cardio.back.controller;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -125,7 +126,16 @@ public class RestController {
     public List<Sprint> getAllSprints(Request req, Response res) {
 
         res.type("application/json");
-        List<Sprint> response = svcSprint.all();
+
+        List<Sprint> response = null;
+
+        Set<String> params = req.queryParams();
+        if (params != null && params.contains("day")) {
+            LOGGER.debug("filter on day : {}", req.queryParams("day"));
+            response = svcSprint.findByDay(req.queryParams("day"));
+        } else {
+            response = svcSprint.all();
+        }
 
         // sort results
         if (req.queryParams("sort") != null) {

@@ -8,17 +8,17 @@
         <div class="panel-heading">
           <div class="col-lg-2">
             <div class="text-left">
-              <span id="to-day" class="font-XXL"></span> <span id="to-month" class="font-XL"></span>
+              <span id="from-day" class="font-XXL"></span> <span id="from-month" class="font-XL"></span>
             </div>
           </div>
           <div class="col-lg-8">
             <div class="text-center">
-              <span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL">no goal</span>
+              <span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL"></span>
             </div>
           </div>
           <div class="col-lg-2">
             <div class="text-right">
-              <span id="from-day" class="font-XXL"></span> <span id="from-month" class="font-XL"></span>
+              <span id="to-day" class="font-XXL"></span> <span id="to-month" class="font-XL"></span>
             </div>
           </div>
         </div>
@@ -79,7 +79,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/current.js"></script>
   <script src="/js/fnDate.js"></script>
   <script src="/js/fnProject.js"></script>
   <script src="/js/fnSprint.js"></script>

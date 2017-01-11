@@ -3,11 +3,11 @@ $(document).ready(function() {
 });
 
 function initHome() {
-	getCurrentSprint(updateHomeView);
+	fnSprintFindByDay('now', updateHomeView)
 	fnProjectGetDetails(updateBurnup);
 }
 
-function updateHomeView(sprint, hv) {
+function updateHomeView(sprints, hv) {
 	if (hv.status == 204) {
 		$('#from-day').text('');
 		$('#from-month').text('');
@@ -16,7 +16,8 @@ function updateHomeView(sprint, hv) {
 		$('#sprint-name').text('no pending sprint');
 		$('#sprint-goal').text('');
 		$('#sprint-commitment').text('-');
-	} else {
+	} else if (sprints != undefined && sprints[0] != undefined) {
+		var sprint = sprints[0];
 		updateSprintDate(sprint.startDate, '#from-month', '#from-day');
 		$('#sprint-name').text('[#' + sprint.name + ']');
 		$('#sprint-goal').text(sprint.goal);

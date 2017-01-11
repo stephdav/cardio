@@ -70,7 +70,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/current.js"></script>
   <script src="/js/fnDate.js"></script>
   <script src="/js/fnSprint.js"></script>
   <script src="/js/chart.js"></script>
