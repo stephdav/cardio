@@ -93,6 +93,10 @@ public class SprintDayDaoTest {
         SprintDay day = dao.findLastBetween("2016-01-01", "2016-01-10");
         assertNotNull(day);
         assertEquals(new LocalDate("2016-01-08"), day.getDay());
+
+        day = dao.findLastBetween("2010-01-01", "2010-12-31");
+        assertNull(day);
+
     }
 
     @Test
