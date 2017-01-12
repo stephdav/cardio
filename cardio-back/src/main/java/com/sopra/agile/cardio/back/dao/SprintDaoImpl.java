@@ -38,7 +38,6 @@ public class SprintDaoImpl implements SprintDao {
     private static final String SQL_INSERT = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE, GOAL, COMMITMENT, VELOCITY) values (?, ?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "update SPRINTS set NAME=?, START_DATE=?, END_DATE=?, GOAL=?, COMMITMENT=?, VELOCITY=?  where ID = ?";
     private static final String SQL_DELETE = "delete from SPRINTS where id = ?";
-    private static final String SQL_CURRENT = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
     private static final String SQL_OVERLAP = "select * from SPRINTS where (START_DATE <= DATE '%s' AND END_DATE >= DATE '%s') OR (START_DATE >= DATE '%s' AND START_DATE <= DATE '%s' AND END_DATE >= DATE '%s')";
 
     public SprintDaoImpl() {
@@ -140,25 +139,6 @@ public class SprintDaoImpl implements SprintDao {
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
-    }
-
-    @Override
-    public Sprint current() throws CardioTechnicalException {
-        LOGGER.info("[DAO] current ...");
-
-        List<DbSprint> dbsprints = null;
-        try {
-            dbsprints = jdbcTemplate.query(SQL_CURRENT, new DbSprintMapper());
-        } catch (Exception ex) {
-            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
-        }
-
-        Sprint sprint = null;
-        if (dbsprints != null && !dbsprints.isEmpty()) {
-            sprint = mapper.map(dbsprints.get(0));
-        }
-
-        return sprint;
     }
 
     @Override

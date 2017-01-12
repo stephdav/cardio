@@ -58,9 +58,6 @@ public class RestConfig {
 
         // SPRINTS
 
-        // TODO : redirect to /api/sprints?day=now
-        get("/api/sprints/current", (req, res) -> controller.getCurrentSprint(req, res), new JsonTransformer());
-
         get("/api/sprints/:id/data", (req, res) -> controller.getSprintData(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());
         get("/api/sprints/:id", (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),

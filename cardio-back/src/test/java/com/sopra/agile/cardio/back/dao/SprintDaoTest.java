@@ -108,18 +108,6 @@ public class SprintDaoTest {
     }
 
     @Test
-    public void testCurrentSprint() throws CardioTechnicalException {
-        // User must be found
-        Sprint sprint = dao.current();
-        assertNotNull(sprint);
-        assertEquals("SPR-2", sprint.getId());
-        assertEquals("current", sprint.getName());
-        assertEquals("sprint2 goal", sprint.getGoal());
-        assertEquals(44, sprint.getCommitment());
-        assertEquals(23, sprint.getVelocity());
-    }
-
-    @Test
     public void testAllCompleted() throws CardioTechnicalException {
         List<Sprint> sprints = dao.allCompleted();
         assertNotNull(sprints);

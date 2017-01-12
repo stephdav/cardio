@@ -13,8 +13,6 @@ public interface SprintDao extends BaseDao<Sprint> {
 
     Sprint update(Sprint sprint) throws CardioTechnicalException;
 
-    Sprint current() throws CardioTechnicalException;
-
     List<Sprint> allCompleted() throws CardioTechnicalException;
 
     List<Sprint> overlaping(Sprint sprint) throws CardioTechnicalException;

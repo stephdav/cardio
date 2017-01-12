@@ -62,7 +62,6 @@ public class SprintServiceTest {
         when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
         when(sprintDao.find("SPR-1")).thenReturn(aSprints[1]);
         when(sprintDao.find("UNK")).thenReturn(null);
-        when(sprintDao.current()).thenReturn(aSprints[1]);
         when(sprintDao.allCompleted()).thenReturn(Arrays.asList(aSprints[0], aSprints[1]));
 
         Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
@@ -116,13 +115,6 @@ public class SprintServiceTest {
         assertNotNull(sprint);
         assertEquals("TST2", sprint.getName());
         verify(sprintDao).update(any(Sprint.class));
-    }
-
-    @Test
-    public void testCurrentSprint() {
-        Sprint sprint = svc.currentSprint();
-        assertNotNull(sprint);
-        assertEquals("NAME1", sprint.getName());
     }
 
     @Test

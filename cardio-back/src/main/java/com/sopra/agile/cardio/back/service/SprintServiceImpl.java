@@ -128,20 +128,6 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Sprint currentSprint() {
-        LOGGER.info("currentSprint ...");
-
-        Sprint response = null;
-        try {
-            response = sprintDao.current();
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @Override
     public SprintData findData(String id) {
         return getSprintDataDetails(find(id));
     }
