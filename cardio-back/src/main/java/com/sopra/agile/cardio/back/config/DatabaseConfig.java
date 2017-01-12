@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -20,7 +21,7 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 
-import com.sopra.agile.cardio.common.utils.AppProfile;
+import com.sopra.agile.cardio.back.utils.DatabaseSetup;
 
 @Configuration
 @PropertySource("classpath:cardio.properties")
@@ -96,30 +97,24 @@ public class DatabaseConfig {
     private DatabasePopulator databasePopulator() {
         final ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
         populator.addScript(schemaScript);
-        if (isProfileActive(AppProfile.cleardb) || isProfileActive(AppProfile.populatedb)) {
+
+        if (DatabaseSetup.getScripts().contains("reset")) {
             populator.addScript(dataCleanScript);
         }
-        if (isProfileActive(AppProfile.populatedb)) {
-            populator.addScript(dataPopulateScript);
+        for (String s : DatabaseSetup.getScripts()) {
+            if (!"reset".equals(s)) {
+                populator.addScript(getResource(s));
+            }
         }
         return populator;
     }
 
-    private String getEnv(String param) {
-        return env.getRequiredProperty(param);
+    private Resource getResource(String script) {
+        return new ClassPathResource("db/sql/" + script);
     }
 
-    private boolean isProfileActive(AppProfile profile) {
-        boolean isActive = false;
-        if (profile != null && env.getActiveProfiles() != null) {
-            for (String p : env.getActiveProfiles()) {
-                if (profile.name().equals(p)) {
-                    isActive = true;
-                    break;
-                }
-            }
-        }
-        return isActive;
+    private String getEnv(String param) {
+        return env.getRequiredProperty(param);
     }
 
 }
