@@ -128,6 +128,33 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
+    public Sprint patch(Sprint sprint) {
+        LOGGER.info("patch ...");
+
+        Sprint original = find(sprint.getId());
+        if (sprint.getName() == null) {
+            sprint.setName(original.getName());
+        }
+        if (sprint.getGoal() == null) {
+            sprint.setGoal(original.getGoal());
+        }
+        if (sprint.getStartDate() == null) {
+            sprint.setStartDate(original.getStartDate());
+        }
+        if (sprint.getEndDate() == null) {
+            sprint.setEndDate(original.getEndDate());
+        }
+        if (sprint.getCommitment() == 0) {
+            sprint.setCommitment(original.getCommitment());
+        }
+        if (sprint.getVelocity() == 0) {
+            sprint.setVelocity(original.getVelocity());
+        }
+
+        return update(sprint);
+    }
+
+    @Override
     public SprintData findData(String id) {
         return getSprintDataDetails(find(id));
     }

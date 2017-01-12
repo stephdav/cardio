@@ -13,6 +13,8 @@ public interface SprintService extends BaseService<Sprint> {
 
     Sprint update(Sprint sprint);
 
+    Sprint patch(Sprint sprint);
+
     SprintData findData(String id);
 
     void updateData(String id, SprintData data);

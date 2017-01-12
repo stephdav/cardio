@@ -211,6 +211,13 @@ public class RestController {
         return "";
     }
 
+    public String patchSprintProperties(Request req, Response res, String id) {
+        Sprint sprint = svcSprint.update(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
+        res.status(201);
+        res.header(LOCATION, "/api/sprints/" + sprint.getId());
+        return "";
+    }
+
     public String updateSprintData(Request req, Response res, String id) {
         Sprint sprint = svcSprint.find(id);
         if (sprint != null) {

@@ -4,6 +4,7 @@ import static spark.Spark.before;
 import static spark.Spark.delete;
 import static spark.Spark.exception;
 import static spark.Spark.get;
+import static spark.Spark.patch;
 import static spark.Spark.post;
 
 import org.slf4j.Logger;
@@ -67,6 +68,8 @@ public class RestConfig {
         post("/api/sprints/:id/data", (req, res) -> controller.updateSprintData(req, res, req.params(PARAM_ID)));
         post("/api/sprints/:id", (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
         post("/api/sprints", (req, res) -> controller.createSprint(req, res));
+
+        patch("/api/sprints/:id", (req, res) -> controller.patchSprintProperties(req, res, req.params(PARAM_ID)));
 
         // USERS
 
