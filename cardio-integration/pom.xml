@@ -8,39 +8,17 @@
 		<version>0.2</version>
 	</parent>
 
-	<artifactId>agile.cardio-app</artifactId>
+	<artifactId>agile.cardio-integration</artifactId>
 
-	<name>cardio-app component</name>
+	<name>cardio-integration component</name>
 
 	<properties>
 	</properties>
 
 	<dependencies>
-		<!-- Spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
-
 		<dependency>
 			<groupId>com.sopra</groupId>
-			<artifactId>agile.cardio-common</artifactId>
-			<version>${cardio.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sopra</groupId>
-			<artifactId>agile.cardio-ui</artifactId>
-			<version>${cardio.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sopra</groupId>
-			<artifactId>agile.cardio-back</artifactId>
+			<artifactId>agile.cardio-app</artifactId>
 			<version>${cardio.version}</version>
 		</dependency>
 
@@ -49,6 +27,19 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.fluentlenium</groupId>
+			<artifactId>fluentlenium-junit</artifactId>
+			<version>3.1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chrome-driver</artifactId>
+			<version>3.0.1</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 

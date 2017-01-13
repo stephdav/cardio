@@ -23,8 +23,9 @@
 		<module>cardio-app</module>
 		<module>cardio-back</module>
 		<module>cardio-common</module>
-		<module>cardio-dist</module>
 		<module>cardio-ui</module>
+		<module>cardio-dist</module>
+		<module>cardio-integration</module>
 	</modules>
 
 	<properties>
