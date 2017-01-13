@@ -1,36 +1,17 @@
 package com.sopra.agile.cardio.app;
 
-import org.fluentlenium.adapter.junit.FluentTest;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 
-public class AppTest extends FluentTest {
-
-    @Override
-    public String getWebDriver() {
-        return "chrome";
-    }
-
-    @ClassRule
-    public static ServerRule server = new ServerRule();
-
-    @Rule
-    public ScreenshotTestRule screenshot = new ScreenshotTestRule(this);
+public class AppTest extends AbstractBaseTest {
 
     @Test
     public void rootTest() {
-        window().maximize();
-        goTo("http://localhost:4567/");
-        Assert.assertEquals("cardio", window().title());
-        Assert.assertEquals("SELENIUM", $("#project-name").text());
-    }
+        homePage.go();
+        await().atMost(5, TimeUnit.SECONDS).untilPage(homePage).isAt();
 
-    @Test
-    public void emptyDashboardTest() {
-        window().maximize();
-        goTo("http://localhost:4567/");
         Assert.assertEquals("no pending sprint", $("#sprint-name").text());
         Assert.assertEquals("", $("#sprint-goal").text());
         Assert.assertEquals("", $("#from-day").text());

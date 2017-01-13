@@ -1,9 +1,11 @@
-package com.sopra.agile.cardio.app;
+package com.sopra.agile.cardio.app.utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.rules.ExternalResource;
+
+import com.sopra.agile.cardio.app.App;
 
 import spark.Spark;
 

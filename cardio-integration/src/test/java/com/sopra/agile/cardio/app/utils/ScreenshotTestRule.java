@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app;
+package com.sopra.agile.cardio.app.utils;
 
 import org.fluentlenium.adapter.junit.FluentTest;
 import org.junit.rules.MethodRule;

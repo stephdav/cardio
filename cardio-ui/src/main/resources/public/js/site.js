@@ -1,12 +1,29 @@
 $(document).ready(function() {
+	initBackUrl();
 	initSite();
 });
+
+var BACK_URL = "http://localhost:4567";
+
+function initBackUrl() {
+	var hrefArray = window.location.href.split( '/' );
+	var url = "";
+	var idx = 0;
+	var pathLocation = hrefArray[idx]; 
+	while (pathLocation != 'ui' && idx < hrefArray.length) {
+		if (url != "") {
+			url += "/";
+		}
+		url += pathLocation;
+		idx++;
+		pathLocation = hrefArray[idx];
+	}
+	BACK_URL = url;
+}
 
 function initSite() {
 	getProjectName();
 }
-
-var BACK_URL = "http://localhost:4567";
 
 function getProjectName() {
 	ajaxGet("/api/config/parameters/project.name", function(data, hv, errorThrown) {
