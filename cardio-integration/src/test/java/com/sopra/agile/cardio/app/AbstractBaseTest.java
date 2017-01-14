@@ -7,6 +7,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 
 import com.sopra.agile.cardio.app.page.HomePage;
+import com.sopra.agile.cardio.app.page.SprintPage;
 import com.sopra.agile.cardio.app.page.SprintsPage;
 import com.sopra.agile.cardio.app.utils.ScreenshotTestRule;
 import com.sopra.agile.cardio.app.utils.ServerRule;
@@ -30,5 +31,8 @@ public class AbstractBaseTest extends FluentTest {
 
     @Page
     protected SprintsPage sprintsPage;
+
+    @Page
+    protected SprintPage sprintPage;
 
 }
