@@ -1,8 +1,14 @@
 package com.sopra.agile.cardio.app;
 
+import org.junit.ClassRule;
 import org.junit.Test;
 
-public class SprintTest extends AbstractBaseTest {
+import com.sopra.agile.cardio.app.utils.ServerRule;
+
+public class SprintsPageTest extends AbstractBaseTest {
+
+    @ClassRule
+    public static ServerRule server = new ServerRule();
 
     @Test
     public void sprintsTest() {

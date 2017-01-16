@@ -1,13 +1,18 @@
 package com.sopra.agile.cardio.app.page;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.fluentlenium.core.domain.FluentWebElement;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 
 public class SprintsPage extends BasePage {
+
     @Override
     public String getUrl() {
         return ROOT_URL + "sprints";
@@ -16,9 +21,9 @@ public class SprintsPage extends BasePage {
     @Override
     public void isAt() {
         super.isAt();
-        Assert.assertTrue($(".panel-heading", withText("sprints")).present());
-        Assert.assertTrue($(".panel-heading", withText("new sprint")).present());
-        Assert.assertEquals("add sprint", $("#addSprint").text());
+        assertTrue($(".panel-heading", withText("sprints")).present());
+        assertTrue($(".panel-heading", withText("new sprint")).present());
+        assertEquals("add sprint", $("#addSprint").text());
     }
 
     public void createSprint(String name, String startDate, String endDate) {
@@ -39,15 +44,47 @@ public class SprintsPage extends BasePage {
     }
 
     public void sprintListIsEmpty() {
-        Assert.assertEquals(1, $("#sprints-table>tbody>tr").size());
-        Assert.assertTrue($("#sprints-table>tbody>tr.no-records-found").present());
-        Assert.assertEquals("", $(".pagination-info").text());
+        assertEquals(1, $("#sprints-table>tbody>tr").size());
+        assertTrue($("#sprints-table>tbody>tr.no-records-found").present());
+        assertEquals("", $(".pagination-info").text());
     }
 
     public void sprintListContains(int page, int total) {
         Assert.assertEquals(page, $("#sprints-table>tbody>tr").size());
         Assert.assertFalse($("#sprints-table>tbody>tr.no-records-found").present());
         Assert.assertEquals("Showing 1 to " + page + " of " + total + " rows", $(".pagination-info").text());
+    }
+
+    public void sprintListContainsSprint(String from, String to, String name, String goal, String commitment,
+            String velocity) {
+
+        boolean found = false;
+        List<String> tds = null;
+        for (FluentWebElement elt : $("#sprints-table>tbody>tr")) {
+            tds = elt.$("td").texts();
+            if (from != null && !from.equals(tds.get(0))) {
+                continue;
+            }
+            if (to != null && !to.equals(tds.get(1))) {
+                continue;
+            }
+            if (name != null && !name.equals(tds.get(2))) {
+                continue;
+            }
+            if (goal != null && !goal.equals(tds.get(3))) {
+                continue;
+            }
+            if (commitment != null && !commitment.equals(tds.get(4))) {
+                continue;
+            }
+            if (velocity != null && !velocity.equals(tds.get(5))) {
+                continue;
+            }
+            found = true;
+            break;
+        }
+        Assert.assertTrue(found);
+
     }
 
     public void clickOnSprint(String name) {
