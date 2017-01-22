@@ -2,18 +2,14 @@ package com.sopra.agile.cardio.integration.step;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.concurrent.TimeUnit;
-
 import org.fluentlenium.adapter.cucumber.FluentCucumberTest;
 import org.fluentlenium.configuration.ConfigurationProperties;
 import org.fluentlenium.configuration.ConfigurationProperties.TriggerMode;
 import org.fluentlenium.configuration.FluentConfiguration;
-import org.fluentlenium.core.FluentPage;
 import org.fluentlenium.core.annotation.Page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import com.sopra.agile.cardio.integration.page.HomePage;
 import com.sopra.agile.cardio.integration.page.SprintPage;
 import com.sopra.agile.cardio.integration.page.SprintsPage;
 import com.sopra.agile.cardio.integration.utils.CustomWebDriver;
@@ -21,7 +17,6 @@ import com.sopra.agile.cardio.integration.utils.CustomWebDriver;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
-import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
@@ -29,13 +24,10 @@ import cucumber.api.java.en.When;
 public class Steps extends FluentCucumberTest {
 
     @Page
-    protected HomePage homePage;
+    private SprintsPage sprintsPage;
 
     @Page
-    protected SprintsPage sprintsPage;
-
-    @Page
-    protected SprintPage sprintPage;
+    private SprintPage sprintPage;
 
     @Override
     public WebDriver newWebDriver() {
@@ -51,39 +43,6 @@ public class Steps extends FluentCucumberTest {
     @After
     public void after(Scenario scenario) {
         super.after(scenario);
-    }
-
-    @Given("^empty database$")
-    public void empty_database() throws Throwable {
-        CustomWebDriver cwd = (CustomWebDriver) getDriver();
-        cwd.applyScript("data-clear.sql");
-    }
-
-    @Given("^database script '(.*)'$")
-    public void database_script(String script) throws Throwable {
-        CustomWebDriver cwd = (CustomWebDriver) getDriver();
-        cwd.applyScript(script);
-    }
-
-    @Given("^I am on the (.+) page$")
-    public void i_am_on_page(String pageName) throws Throwable {
-        // window().maximize();
-        FluentPage page = null;
-        if ("home".equals(pageName)) {
-            page = homePage;
-        } else if ("sprints".equals(pageName)) {
-            page = sprintsPage;
-        } else if ("sprint".equals(pageName)) {
-            page = sprintPage;
-        }
-        page.go();
-        await().atMost(3, TimeUnit.SECONDS).untilPage(page).isAt();
-    }
-
-    @When("^I go on sprints page$")
-    public void i_go_on_sprints_page() throws Throwable {
-        homePage.goToSprints();
-        await().atMost(3, TimeUnit.SECONDS).untilPage(sprintsPage).isAt();
     }
 
     @When("^I select sprint (.*)$")
