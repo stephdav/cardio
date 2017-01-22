@@ -18,5 +18,4 @@ public class DatabaseSetup {
     public static void addScript(String path) {
         scripts.add(path);
     }
-
 }

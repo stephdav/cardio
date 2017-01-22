@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.cucumber.page;
+package com.sopra.agile.cardio.integration.page;
 
 import org.junit.Assert;
 

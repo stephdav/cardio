@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.cucumber.page;
+package com.sopra.agile.cardio.integration.page;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.junit.Assert.assertEquals;
@@ -21,9 +21,6 @@ public class SprintPage extends BasePage {
 
     public void testSprintProperties(String from, String to, String name, String goal, String commitment) {
         if (from != null) {
-            // LOGGER.debug("#sprintStartDate text:{}, value:{}",
-            // $("#sprintStartDate").text(),
-            // $("#sprintStartDate").value());
             assertEquals(from, $("#sprintStartDate").value());
         }
         if (to != null) {

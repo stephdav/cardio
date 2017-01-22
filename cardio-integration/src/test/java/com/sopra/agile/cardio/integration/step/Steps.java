@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.cucumber.step;
+package com.sopra.agile.cardio.integration.step;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,14 +10,13 @@ import org.fluentlenium.configuration.ConfigurationProperties.TriggerMode;
 import org.fluentlenium.configuration.FluentConfiguration;
 import org.fluentlenium.core.FluentPage;
 import org.fluentlenium.core.annotation.Page;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import com.sopra.agile.cardio.app.cucumber.page.HomePage;
-import com.sopra.agile.cardio.app.cucumber.page.SprintPage;
-import com.sopra.agile.cardio.app.cucumber.page.SprintsPage;
-import com.sopra.agile.cardio.app.cucumber.utils.CustomWebDriver;
+import com.sopra.agile.cardio.integration.page.HomePage;
+import com.sopra.agile.cardio.integration.page.SprintPage;
+import com.sopra.agile.cardio.integration.page.SprintsPage;
+import com.sopra.agile.cardio.integration.utils.CustomWebDriver;
 
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
@@ -28,7 +27,6 @@ import cucumber.api.java.en.When;
 
 @FluentConfiguration(driverLifecycle = ConfigurationProperties.DriverLifecycle.JVM, screenshotMode = TriggerMode.AUTOMATIC_ON_FAIL, screenshotPath = "target/cucumber")
 public class Steps extends FluentCucumberTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Steps.class);
 
     @Page
     protected HomePage homePage;
@@ -47,25 +45,29 @@ public class Steps extends FluentCucumberTest {
 
     @Before
     public void before(Scenario scenario) {
-
-        LOGGER.debug("Before scenario '{}'", scenario.getName());
-
         super.before(scenario);
-
     }
 
     @After
     public void after(Scenario scenario) {
-
-        LOGGER.debug("After scenario '{}'", scenario.getName());
-
         super.after(scenario);
+    }
+
+    @Given("^empty database$")
+    public void empty_database() throws Throwable {
+        CustomWebDriver cwd = (CustomWebDriver) getDriver();
+        cwd.applyScript("data-clear.sql");
+    }
+
+    @Given("^database script '(.*)'$")
+    public void database_script(String script) throws Throwable {
+        CustomWebDriver cwd = (CustomWebDriver) getDriver();
+        cwd.applyScript(script);
     }
 
     @Given("^I am on the (.+) page$")
     public void i_am_on_page(String pageName) throws Throwable {
-        LOGGER.debug("====================================================GIVEN i_am_on_page {}", pageName);
-        window().maximize();
+        // window().maximize();
         FluentPage page = null;
         if ("home".equals(pageName)) {
             page = homePage;
@@ -84,6 +86,28 @@ public class Steps extends FluentCucumberTest {
         await().atMost(3, TimeUnit.SECONDS).untilPage(sprintsPage).isAt();
     }
 
+    @When("^I select sprint (.*)$")
+    public void i_select_sprint(String name) throws Throwable {
+        sprintsPage.clickOnSprint(name);
+        sprintPage.isAt();
+    }
+
+    @When("^I create a sprint with name '(.*)', startdate '(.*)' and enddate '(.*)'$")
+    public void i_create_a_sprint_with_name_startdate_and_enddate(String name, String startDate, String endDate)
+            throws Throwable {
+
+        if (name != null) {
+            $("#sprintName").fill().with(name);
+        }
+        if (startDate != null) {
+            getDriver().findElement(By.id("sprintStartDate")).sendKeys(startDate);
+        }
+        if (endDate != null) {
+            getDriver().findElement(By.id("sprintEndDate")).sendKeys(endDate);
+        }
+        $("#addSprint").click();
+    }
+
     @Then("^it should have no sprint information$")
     public void it_should_have_been_a_success() throws Throwable {
         assertEquals("no pending sprint", $("#sprint-name").text());
@@ -99,9 +123,30 @@ public class Steps extends FluentCucumberTest {
         sprintsPage.errorTextIs("");
     }
 
+    @Then("^there is an error '(.+)'$")
+    public void there_is_an_error(String msg) throws Throwable {
+        sprintsPage.errorTextIs(msg);
+    }
+
     @Then("^it should have no sprints$")
     public void it_should_have_no_sprints() throws Throwable {
         sprintsPage.sprintListIsEmpty();
     }
 
+    @Then("^there are (\\d+) sprints displayed over (\\d+)$")
+    public void there_are_sprint_displayed_over(int page, int total) throws Throwable {
+        sprintsPage.sprintListContains(page, total);
+    }
+
+    @Then("^there is a sprint with dates '(.*)' and '(.*)', name '(.*)', goal '(.*)', commitment '(.*)' and velocity '(.*)' in the list$")
+    public void there_is_a_sprint_with_dates_and_name_goal_sprint_commitment_and_velocity_in_the_list(String from,
+            String to, String name, String goal, String commitment, String velocity) throws Throwable {
+        sprintsPage.sprintListContainsSprint(from, to, name, goal, commitment, velocity);
+    }
+
+    @Then("^the sprint properties are dates '(.*)' and '(.*)', name '(.*)', goal '(.*)' and commitment '(.*)'$")
+    public void the_sprint_properties_are(String from, String to, String name, String goal, String commitment)
+            throws Throwable {
+        sprintPage.testSprintProperties(from, to, name, goal, commitment);
+    }
 }

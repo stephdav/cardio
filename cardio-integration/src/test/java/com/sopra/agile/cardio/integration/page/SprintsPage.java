@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.cucumber.page;
+package com.sopra.agile.cardio.integration.page;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.junit.Assert.assertEquals;
@@ -41,7 +41,12 @@ public class SprintsPage extends BasePage {
     }
 
     public void errorTextIs(String message) {
-        await().atMost(3, TimeUnit.SECONDS).until($("#errors", withText(message))).present();
+        if (message != null && !message.isEmpty()) {
+            await().atMost(3, TimeUnit.SECONDS).until($("#errors", withText(message))).displayed();
+        } else {
+            await().atMost(3, TimeUnit.SECONDS).until($("#errors", withText(message))).not().displayed();
+        }
+
     }
 
     public void sprintListIsEmpty() {
@@ -52,7 +57,8 @@ public class SprintsPage extends BasePage {
 
     public void sprintListContains(int page, int total) {
         Assert.assertEquals(page, $("#sprints-table>tbody>tr").size());
-        Assert.assertFalse($("#sprints-table>tbody>tr.no-records-found").present());
+        await().atMost(3, TimeUnit.SECONDS).until($("#sprints-table>tbody>tr.no-records-found")).not().present();
+        // Assert.assertFalse($("#sprints-table>tbody>tr.no-records-found").present());
         Assert.assertEquals("Showing 1 to " + page + " of " + total + " rows", $(".pagination-info").text());
     }
 
