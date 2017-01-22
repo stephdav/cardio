@@ -13,6 +13,8 @@
 	<name>cardio-integration component</name>
 
 	<properties>
+		<fluentlenium.version>3.1.1</fluentlenium.version>
+		<cucumber.version>1.2.4</cucumber.version>
 	</properties>
 
 	<dependencies>
@@ -20,6 +22,7 @@
 			<groupId>com.sopra</groupId>
 			<artifactId>agile.cardio-app</artifactId>
 			<version>${cardio.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- Log Dependencies (SLF4J, LogBack) -->
@@ -27,18 +30,20 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.19.3</version>
+			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>org.fluentlenium</groupId>
 			<artifactId>fluentlenium-junit</artifactId>
-			<version>3.1.0</version>
+			<version>${fluentlenium.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -50,20 +55,20 @@
 		<dependency>
 			<groupId>org.fluentlenium</groupId>
 			<artifactId>fluentlenium-cucumber</artifactId>
-			<version>3.1.0</version>
+			<version>${fluentlenium.version}</version>
 			<scope>test</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-java</artifactId>
-			<version>1.2.4</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-junit</artifactId>
-			<version>1.2.4</version>
+			<version>${cucumber.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -96,20 +101,6 @@
 				</excludes>
 			</resource>
 		</resources>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>com.sopra.agile.cardio.app.App</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
 
 	</build>
 </project>
