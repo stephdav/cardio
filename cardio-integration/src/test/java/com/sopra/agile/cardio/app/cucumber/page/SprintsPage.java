@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.page;
+package com.sopra.agile.cardio.app.cucumber.page;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.junit.Assert.assertEquals;
@@ -24,6 +24,7 @@ public class SprintsPage extends BasePage {
         assertTrue($(".panel-heading", withText("sprints")).present());
         assertTrue($(".panel-heading", withText("new sprint")).present());
         assertEquals("add sprint", $("#addSprint").text());
+        assertTrue($("#sprints-table>tbody").present());
     }
 
     public void createSprint(String name, String startDate, String endDate) {
@@ -40,7 +41,7 @@ public class SprintsPage extends BasePage {
     }
 
     public void errorTextIs(String message) {
-        await().atMost(5, TimeUnit.SECONDS).until($("#errors", withText(message))).present();
+        await().atMost(3, TimeUnit.SECONDS).until($("#errors", withText(message))).present();
     }
 
     public void sprintListIsEmpty() {

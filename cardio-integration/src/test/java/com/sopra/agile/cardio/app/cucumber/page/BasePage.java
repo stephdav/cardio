@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.page;
+package com.sopra.agile.cardio.app.cucumber.page;
 
 import org.fluentlenium.core.FluentPage;
 import org.junit.Assert;
@@ -10,5 +10,17 @@ public class BasePage extends FluentPage {
     @Override
     public void isAt() {
         Assert.assertEquals("cardio", window().title());
+    }
+
+    public void goToSprintPlanning() {
+        $("#menuSprintPlanning").click();
+    }
+
+    public void goToSprints() {
+        $("#menuSprints").click();
+    }
+
+    public void goToAbout() {
+        $("#menuAbout").click();
     }
 }

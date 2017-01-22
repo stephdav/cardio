@@ -19,6 +19,11 @@ public class ConfigServiceImpl implements ConfigService {
     private Environment env;
 
     @Override
+    public String getVersion() {
+        return "VERSION";
+    }
+
+    @Override
     public String getProperty(String key) {
         String value = DEFAULT_VALUE;
         try {

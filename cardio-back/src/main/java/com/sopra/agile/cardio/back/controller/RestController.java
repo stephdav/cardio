@@ -49,6 +49,17 @@ public class RestController {
 
     // === CONFIG ============================================================
 
+    public Parameter getVersion(Request req, Response res) {
+        res.type("application/json");
+        String value = svcConfig.getVersion();
+        if (value != null) {
+            res.status(200);
+        } else {
+            res.status(204);
+        }
+        return new Parameter("version", value);
+    }
+
     public Parameter getParameter(Request req, Response res, String key) {
         res.type("application/json");
         String value = svcConfig.getProperty(key);

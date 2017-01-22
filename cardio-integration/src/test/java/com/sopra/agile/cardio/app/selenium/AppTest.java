@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app;
+package com.sopra.agile.cardio.app.selenium;
 
 import java.util.concurrent.TimeUnit;
 

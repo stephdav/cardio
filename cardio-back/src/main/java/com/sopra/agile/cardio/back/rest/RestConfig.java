@@ -49,6 +49,7 @@ public class RestConfig {
     private void setupRoutes() {
 
         // PARAMETERS
+        get("/api/version", (req, res) -> controller.getVersion(req, res), new JsonTransformer());
 
         get("/api/config/parameters/:key", (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)),
                 new JsonTransformer());

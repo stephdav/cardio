@@ -1,4 +1,4 @@
-package com.sopra.agile.cardio.app.page;
+package com.sopra.agile.cardio.app.cucumber.page;
 
 import org.junit.Assert;
 
@@ -15,7 +15,4 @@ public class HomePage extends BasePage {
         Assert.assertEquals("SELENIUM", $("#project-name").text());
     }
 
-    public void goToSprints() {
-        $("#menuSprints").click();
-    }
 }

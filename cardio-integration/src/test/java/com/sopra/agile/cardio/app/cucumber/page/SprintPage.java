@@ -1,14 +1,10 @@
-package com.sopra.agile.cardio.app.page;
+package com.sopra.agile.cardio.app.cucumber.page;
 
 import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 public class SprintPage extends BasePage {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SprintPage.class);
 
     @Override
     public String getUrl() {
