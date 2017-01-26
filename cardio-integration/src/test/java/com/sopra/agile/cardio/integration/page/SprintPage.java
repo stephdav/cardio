@@ -4,6 +4,8 @@ import static org.fluentlenium.core.filter.FilterConstructor.withText;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.List;
+
 public class SprintPage extends BasePage {
 
     @Override
@@ -35,6 +37,31 @@ public class SprintPage extends BasePage {
         if (commitment != null) {
             assertEquals(commitment, $("#sprintCommitment").value());
         }
+    }
+
+    public void testSprintData(List<String> expectedValues) {
+        List<String> values = $("#measures input").values();
+        assertEquals(expectedValues.size(), values.size());
+        int idx = 0;
+        for (String val : expectedValues) {
+            assertEquals(val, values.get(idx++));
+        }
+    }
+
+    public void updateCommitment(String commitment) {
+        $("#sprintCommitment").fill().with(commitment);
+    }
+
+    public void validatePropertiesUpdate() {
+        $("#updateSprintProperties").click();
+    }
+
+    public void updateData(int day, String done) {
+        $("#measures input").get(day - 1).fill().with(done);
+    }
+
+    public void validateDataUpdate() {
+        $("#updateSprintData").click();
     }
 
 }

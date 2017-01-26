@@ -2,6 +2,8 @@ package com.sopra.agile.cardio.integration.step;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
 import org.fluentlenium.adapter.cucumber.FluentCucumberTest;
 import org.fluentlenium.configuration.ConfigurationProperties;
 import org.fluentlenium.configuration.ConfigurationProperties.TriggerMode;
@@ -45,7 +47,7 @@ public class Steps extends FluentCucumberTest {
         super.after(scenario);
     }
 
-    @When("^I select sprint (.*)$")
+    @When("^I select sprint '(.*)'$")
     public void i_select_sprint(String name) throws Throwable {
         sprintsPage.clickOnSprint(name);
         sprintPage.isAt();
@@ -65,6 +67,26 @@ public class Steps extends FluentCucumberTest {
             getDriver().findElement(By.id("sprintEndDate")).sendKeys(endDate);
         }
         $("#addSprint").click();
+    }
+
+    @When("^I change commitment to '(.*)'$")
+    public void i_change_commitment_to(String commitment) throws Throwable {
+        sprintPage.updateCommitment(commitment);
+    }
+
+    @When("^I validate properties$")
+    public void i_validate_properties() throws Throwable {
+        sprintPage.validatePropertiesUpdate();
+    }
+
+    @When("^I change data of day '(\\d+)' to '(.*)'$")
+    public void i_change_data_of_day_to(int day, String done) throws Throwable {
+        sprintPage.updateData(day, done);
+    }
+
+    @When("^I validate data$")
+    public void i_validate_data() throws Throwable {
+        sprintPage.validateDataUpdate();
     }
 
     @Then("^it should have no sprint information$")
@@ -107,5 +129,10 @@ public class Steps extends FluentCucumberTest {
     public void the_sprint_properties_are(String from, String to, String name, String goal, String commitment)
             throws Throwable {
         sprintPage.testSprintProperties(from, to, name, goal, commitment);
+    }
+
+    @Then("^the sprint data are: (.*)$")
+    public void the_sprint_data_are(List<String> values) throws Throwable {
+        sprintPage.testSprintData(values);
     }
 }
