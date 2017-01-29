@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.sopra.agile.cardio.integration.page.SprintPage;
+import com.sopra.agile.cardio.integration.page.SprintPlanningPage;
 import com.sopra.agile.cardio.integration.page.SprintsPage;
 import com.sopra.agile.cardio.integration.utils.CustomWebDriver;
 
@@ -30,6 +31,9 @@ public class Steps extends FluentCucumberTest {
 
     @Page
     private SprintPage sprintPage;
+
+    @Page
+    private SprintPlanningPage sprintPlanningPage;
 
     @Override
     public WebDriver newWebDriver() {
@@ -134,5 +138,10 @@ public class Steps extends FluentCucumberTest {
     @Then("^the sprint data are: (.*)$")
     public void the_sprint_data_are(List<String> values) throws Throwable {
         sprintPage.testSprintData(values);
+    }
+
+    @Then("^the trend values are '(.*)', '(.*)' and '(.*)'$")
+    public void the_trend_values_are_and(String worst, String average, String best) throws Throwable {
+        sprintPlanningPage.testTrendValues(worst, average, best);
     }
 }

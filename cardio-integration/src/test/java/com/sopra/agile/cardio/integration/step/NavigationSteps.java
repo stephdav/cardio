@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 
 import com.sopra.agile.cardio.integration.page.HomePage;
 import com.sopra.agile.cardio.integration.page.SprintPage;
+import com.sopra.agile.cardio.integration.page.SprintPlanningPage;
 import com.sopra.agile.cardio.integration.page.SprintsPage;
 import com.sopra.agile.cardio.integration.utils.CustomWebDriver;
 
@@ -32,6 +33,9 @@ public class NavigationSteps extends FluentCucumberTest {
 
     @Page
     private SprintPage sprintPage;
+
+    @Page
+    private SprintPlanningPage sprintPlanningPage;
 
     @Override
     public WebDriver newWebDriver() {
@@ -68,6 +72,12 @@ public class NavigationSteps extends FluentCucumberTest {
     public void i_go_on_sprints_page() throws Throwable {
         homePage.goToSprints();
         await().atMost(3, TimeUnit.SECONDS).untilPage(sprintsPage).isAt();
+    }
+
+    @When("^I go on sprint planning page$")
+    public void i_go_on_sprint_planning_page() throws Throwable {
+        homePage.goToSprintPlanning();
+        await().atMost(3, TimeUnit.SECONDS).untilPage(sprintPlanningPage).isAt();
     }
 
 }
