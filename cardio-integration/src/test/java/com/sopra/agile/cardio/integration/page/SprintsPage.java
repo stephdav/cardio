@@ -58,7 +58,6 @@ public class SprintsPage extends BasePage {
     public void sprintListContains(int page, int total) {
         Assert.assertEquals(page, $("#sprints-table>tbody>tr").size());
         await().atMost(3, TimeUnit.SECONDS).until($("#sprints-table>tbody>tr.no-records-found")).not().present();
-        // Assert.assertFalse($("#sprints-table>tbody>tr.no-records-found").present());
         Assert.assertEquals("Showing 1 to " + page + " of " + total + " rows", $(".pagination-info").text());
     }
 

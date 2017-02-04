@@ -99,7 +99,7 @@ function ajaxGet(url, fnHandle) {
 		fnHandle(data, hv);
 	}).fail(function(jqXHR, status, errorThrown) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle("", hv, errorThrown);
+		fnHandle(jqXHR.responseText, hv, errorThrown);
 	});
 }
 
@@ -113,7 +113,7 @@ function ajaxDelete(url, fnHandle) {
 		fnHandle(data, hv, "no error");
 	}).fail(function(jqXHR, status, errorThrown) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle("", hv, errorThrown);
+		fnHandle(jqXHR.responseText, hv, errorThrown);
 	});
 }
 
@@ -130,6 +130,6 @@ function ajaxPatch(url, payload, fnHandle) {
 		fnHandle(data, hv, "no error");
 	}).fail(function(jqXHR, status, errorThrown) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle("", hv, errorThrown);
+		fnHandle(jqXHR.responseText, hv, errorThrown);
 	});
 }

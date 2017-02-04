@@ -18,7 +18,21 @@ function initSprint() {
 }
 
 function updateSprint(id, name, startdate, enddate, goal, commitment) {
-	fnSprintUpdate(id, name, startdate, enddate, goal, commitment, getSprintData);
+	//fnSprintUpdate(id, name, startdate, enddate, goal, commitment, getSprintData);
+	
+	var payload = {id: id, name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment};
+	ajaxPatch("/api/sprints/"+id, payload, function(data, hv, errorThrown) {
+		if (hv.status == 201 || hv.status == 200) {
+			log("Sprint " + hv.location + " updated");
+			$('#errors').text('');
+			$('.form-error').hide();
+			getSprintData(data, hv);
+		} else {
+			log("Error updating sprint '" + id + "': " + errorThrown);
+			$('#errors').text(data);
+			$('.form-error').show();
+		}
+	});
 }
 
 function updateSprintData(id) {

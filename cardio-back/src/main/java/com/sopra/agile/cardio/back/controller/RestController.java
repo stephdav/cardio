@@ -197,9 +197,7 @@ public class RestController {
     }
 
     public String createSprint(Request req, Response res) {
-
         String response = "OK";
-
         try {
             Sprint sprint = svcSprint.add(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
             res.status(201);
@@ -216,27 +214,54 @@ public class RestController {
     }
 
     public String updateSprintProperties(Request req, Response res, String id) {
-        Sprint sprint = svcSprint.update(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
-        res.status(201);
-        res.header(LOCATION, "/api/sprints/" + sprint.getId());
-        return "";
+        String response = "OK";
+        try {
+            Sprint sprint = svcSprint.update(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/sprints/" + sprint.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
     }
 
     public String patchSprintProperties(Request req, Response res, String id) {
-        Sprint sprint = svcSprint.patch(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
-        res.status(201);
-        res.header(LOCATION, "/api/sprints/" + sprint.getId());
-        return "";
+        String response = "OK";
+        try {
+            Sprint sprint = svcSprint.patch(new ObjectMapper<Sprint>(Sprint.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/sprints/" + sprint.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
     }
 
     public String updateSprintData(Request req, Response res, String id) {
-        Sprint sprint = svcSprint.find(id);
-        if (sprint != null) {
-            svcSprint.updateData(id, new ObjectMapper<SprintData>(SprintData.class).parse(req.body()));
-            res.status(201);
-            res.header(LOCATION, "/api/sprints/" + sprint.getId());
+        String response = "OK";
+        try {
+            Sprint sprint = svcSprint.find(id);
+            if (sprint != null) {
+                svcSprint.updateData(id, new ObjectMapper<SprintData>(SprintData.class).parse(req.body()));
+                res.status(201);
+                res.header(LOCATION, "/api/sprints/" + sprint.getId());
+            }
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
         }
-        return "";
+        return response;
     }
 
     public ProjectDataDetails getProjectData(Request req, Response res) {

@@ -33,3 +33,13 @@ Scenario: Update sprint data
     And I validate data
     And I go on sprints page
   Then there is a sprint with dates '2016-01-18' and '2016-01-29', name '2', goal 'sprint 2', commitment '20' and velocity '20' in the list
+
+Scenario: Sprint update errors
+  When I select sprint '1'
+  Then the sprint properties are dates '2016-01-04' and '2016-01-15', name '1', goal 'sprint 1' and commitment '25'
+    And the sprint data are: 0, 1, 5, 8, 9, 9, 14, 16, 21, 22
+    And there is no error
+  When I change endDate to '20/01/2016'
+    And I validate properties
+  Then there is an error 'sprint overlapping'
+  

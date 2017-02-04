@@ -65,23 +65,9 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public Sprint add(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.info("add ...");
-
-        testSprintIsValid(sprint);
-
-        if (findByName(sprint.getName()) != null) {
-            LOGGER.error("A sprint '{}' already exists", sprint.getName());
-            throw new CardioFunctionalException("sprint with same name already exists");
-        }
-
-        List<Sprint> conflicts = sprintDao.overlaping(sprint);
-        if (conflicts != null && !conflicts.isEmpty()) {
-            LOGGER.error("{} sprints are overlaping sprint period", conflicts.size());
-            for (Sprint s : conflicts) {
-                LOGGER.debug("{} from {} to {}", s.getName(), s.getStartDate(), s.getEndDate());
-            }
-            throw new CardioFunctionalException("sprint overlapping");
-        }
-
+        checkSprintProperties(sprint);
+        checkSprintDuplicate(sprint);
+        checkSprintOverlapping(sprint);
         return sprintDao.add(sprint);
     }
 
@@ -114,21 +100,15 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Sprint update(Sprint sprint) {
+    public Sprint update(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.info("update ...");
-
-        Sprint response = null;
-        try {
-            response = sprintDao.update(sprint);
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return response;
+        checkSprintProperties(sprint);
+        checkSprintOverlapping(sprint);
+        return sprintDao.update(sprint);
     }
 
     @Override
-    public Sprint patch(Sprint sprint) {
+    public Sprint patch(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.info("patch ...");
 
         Sprint original = find(sprint.getId());
@@ -160,7 +140,7 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public void updateData(String id, SprintData days) {
+    public void updateData(String id, SprintData days) throws CardioTechnicalException, CardioFunctionalException {
         for (Map.Entry<String, String> e : days.getData().entrySet()) {
             LOGGER.info("{}: {}", e.getKey(), e.getValue());
 
@@ -180,7 +160,7 @@ public class SprintServiceImpl implements SprintService {
         updateVelocity(id);
     }
 
-    private void updateVelocity(String id) {
+    private void updateVelocity(String id) throws CardioTechnicalException, CardioFunctionalException {
         Sprint sprint = find(id);
         String from = sprint.getStartDate();
         String to = sprint.getEndDate();
@@ -271,7 +251,31 @@ public class SprintServiceImpl implements SprintService {
         }
     }
 
-    private void testSprintIsValid(Sprint sprint) throws CardioFunctionalException {
+    private void checkSprintDuplicate(Sprint sprint) throws CardioFunctionalException, CardioTechnicalException {
+        if (findByName(sprint.getName()) != null) {
+            LOGGER.error("A sprint '{}' already exists", sprint.getName());
+            throw new CardioFunctionalException("sprint with same name already exists");
+        }
+    }
+
+    private void checkSprintOverlapping(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
+        List<Sprint> conflicts = sprintDao.overlaping(sprint);
+        if (conflicts != null) {
+            // Remove current sprint from the list
+            if (sprint.getId() != null) {
+                conflicts.remove(sprint);
+            }
+            if (!conflicts.isEmpty()) {
+                LOGGER.error("{} sprints are overlaping sprint period", conflicts.size());
+                for (Sprint s : conflicts) {
+                    LOGGER.debug("{} from {} to {}", s.getName(), s.getStartDate(), s.getEndDate());
+                }
+                throw new CardioFunctionalException("sprint overlapping");
+            }
+        }
+    }
+
+    private void checkSprintProperties(Sprint sprint) throws CardioFunctionalException {
         if (sprint == null) {
             LOGGER.error("sprint can't be null");
             throw new CardioFunctionalException("sprint can't be null");

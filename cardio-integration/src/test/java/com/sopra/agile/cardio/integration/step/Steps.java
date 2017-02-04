@@ -78,6 +78,11 @@ public class Steps extends FluentCucumberTest {
         sprintPage.updateCommitment(commitment);
     }
 
+    @When("^I change endDate to '(.*)'$")
+    public void i_change_enddate_to(String date) throws Throwable {
+        getDriver().findElement(By.id("sprintEndDate")).sendKeys(date);
+    }
+
     @When("^I validate properties$")
     public void i_validate_properties() throws Throwable {
         sprintPage.validatePropertiesUpdate();

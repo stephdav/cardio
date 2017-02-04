@@ -110,7 +110,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateSprint() throws CardioTechnicalException {
+    public void testUpdateSprint() throws CardioTechnicalException, CardioFunctionalException {
         Sprint sprint = svc.update(new Sprint(null, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST2", sprint.getName());
@@ -140,7 +140,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateData_data_nullVelocity() throws CardioTechnicalException {
+    public void testUpdateData_data_nullVelocity() throws CardioTechnicalException, CardioFunctionalException {
         Map<String, String> data = new HashMap<String, String>();
         data.put("2016-07-14", "7");
         data.put("2016-08-15", "");
@@ -159,7 +159,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testUpdateData_velocityNotNull() throws CardioTechnicalException {
+    public void testUpdateData_velocityNotNull() throws CardioTechnicalException, CardioFunctionalException {
         SprintData sprintData = new SprintData();
         sprintData.setData(new HashMap<String, String>());
 
