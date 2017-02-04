@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,8 @@ import com.sopra.agile.cardio.common.model.Sprint;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProjectServiceImpl.class);
 
     @Autowired
     private ConfigService configSvc;
@@ -31,7 +35,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @PostConstruct
     public void init() {
-        sample = configSvc.getIntProperty("statistic.sprints.sample");
+        int val = configSvc.getIntProperty("statistic.sprints.sample");
+        if (val == 0) {
+            LOGGER.info("Set default value '{}' for statistic.sprints.sample", sample);
+        } else {
+            sample = val;
+        }
     }
 
     @Override
@@ -40,6 +49,7 @@ public class ProjectServiceImpl implements ProjectService {
 
         try {
             List<Sprint> sprints = sprintDao.allCompleted();
+
             computeBurnup(sprints, details);
             computeVelocity(sprints, details);
         } catch (CardioTechnicalException e) {
@@ -51,6 +61,7 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     private void computeBurnup(List<Sprint> sprints, ProjectDataDetails details) {
+
         List<String> days = details.getSprints();
         List<Integer> burnup = details.getBurnup();
 

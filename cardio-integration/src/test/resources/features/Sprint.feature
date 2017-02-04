@@ -24,7 +24,7 @@ Scenario: Update sprint properties
     And I validate properties
     And I go on sprints page
   Then there is a sprint with dates '2016-01-04' and '2016-01-15', name '1', goal 'sprint 1', commitment '21' and velocity '22' in the list
-  
+
 Scenario: Update sprint data
   When I select sprint '2'
   Then the sprint properties are dates '2016-01-18' and '2016-01-29', name '2', goal 'sprint 2' and commitment '20'
