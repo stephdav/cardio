@@ -14,6 +14,19 @@ Other settings:
 * `project.name` : project name
 * `statistic.sprints.sample` : number of sprints collected to compute statistics
 
+## Install and run application
+
+### installing application
+
+1. Generate application
+```sh
+mvn clean package -DskipTests
+```
+A ZIP archive is generated in directory cardio-dist\target.
+
+2. Unzip 'agile.cardio-dist-<version>-bin.zip' file in the directory of your choice
+3. Create a 'cardio.properties' file in order to ovveride default configuration.
+
 ## running application
 
 ### command line
@@ -24,10 +37,13 @@ java -classpath ".;lib/*" com.sopra.agile.cardio.app.App
 
 ### command line parameters
 
-If "cleardb" is present as argument, database is cleared at startup.
-If "populatedb" is present, database is cleared at startup and a sample dataset is imported.
+If "reset" is present as argument, database is cleared at startup.
+If "<sql file>" is present, <sqll file> is executed at startup.
 
 ## changelog
+
+### 0.3
+* Application bundle
 
 ### 0.2
 * sprint controls during creation and update
