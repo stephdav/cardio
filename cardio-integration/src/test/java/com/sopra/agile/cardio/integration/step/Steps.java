@@ -73,9 +73,19 @@ public class Steps extends FluentCucumberTest {
         $("#addSprint").click();
     }
 
+    @When("^I change name to '(.*)'$")
+    public void i_change_name_to(String name) throws Throwable {
+        sprintPage.updateName(name);
+    }
+
     @When("^I change commitment to '(.*)'$")
     public void i_change_commitment_to(String commitment) throws Throwable {
         sprintPage.updateCommitment(commitment);
+    }
+
+    @When("^I change startDate to '(.*)'$")
+    public void i_change_startdate_to(String date) throws Throwable {
+        getDriver().findElement(By.id("sprintStartDate")).sendKeys(date);
     }
 
     @When("^I change endDate to '(.*)'$")

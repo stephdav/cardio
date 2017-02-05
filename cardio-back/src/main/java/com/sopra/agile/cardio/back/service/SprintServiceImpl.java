@@ -103,6 +103,7 @@ public class SprintServiceImpl implements SprintService {
     public Sprint update(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.info("update ...");
         checkSprintProperties(sprint);
+        checkSprintDuplicate(sprint);
         checkSprintOverlapping(sprint);
         return sprintDao.update(sprint);
     }
@@ -252,7 +253,10 @@ public class SprintServiceImpl implements SprintService {
     }
 
     private void checkSprintDuplicate(Sprint sprint) throws CardioFunctionalException, CardioTechnicalException {
-        if (findByName(sprint.getName()) != null) {
+        // Looking for a sprint with same name
+        Sprint found = findByName(sprint.getName());
+
+        if (found != null && (sprint.getId() == null || !sprint.getId().equals(found.getId()))) {
             LOGGER.error("A sprint '{}' already exists", sprint.getName());
             throw new CardioFunctionalException("sprint with same name already exists");
         }

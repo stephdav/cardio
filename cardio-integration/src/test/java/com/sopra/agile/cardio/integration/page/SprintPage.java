@@ -48,6 +48,10 @@ public class SprintPage extends BasePage {
         }
     }
 
+    public void updateName(String name) {
+        $("#sprintName").fill().with(name);
+    }
+
     public void updateCommitment(String commitment) {
         $("#sprintCommitment").fill().with(commitment);
     }

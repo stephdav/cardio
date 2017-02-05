@@ -16,8 +16,6 @@ Scenario: Sprint form errors
     Then there is no error
     And there are 1 sprints displayed over 1
     And there is a sprint with dates '2015-01-01' and '2015-12-31', name '1', goal '-', commitment '0' and velocity '0' in the list
-  When I select sprint 1
-    And I go on sprints page
 
 Scenario: Sprint creation errors
   Given database script 'sprints-afterScen1.sql'

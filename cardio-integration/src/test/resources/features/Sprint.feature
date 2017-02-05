@@ -42,4 +42,7 @@ Scenario: Sprint update errors
   When I change endDate to '20/01/2016'
     And I validate properties
   Then there is an error 'sprint overlapping'
-  
+  When I change endDate to '15/01/2016'
+    And I change name to '2'
+    And I validate properties
+  Then there is an error 'sprint with same name already exists'
