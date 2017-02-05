@@ -30,8 +30,8 @@ If "populatedb" is present, database is cleared at startup and a sample dataset 
 ## changelog
 
 ### 0.2
-* sprint controls during creation
-* selenium tests
+* sprint controls during creation and update
+* BDD integration tests
 
 ### 0.1
 * sprints
