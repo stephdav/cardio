@@ -16,8 +16,8 @@ function initSprintsTable() {
 		pagination: true,
 		sidePagination: 'server',
 	    columns: [
-	      { field: 'startDate', title: 'from', align: 'center' },
-	      { field: 'endDate', title: 'to', align: 'center' },
+	      { field: 'startDate', title: 'from', align: 'center', formatter: 'dateFormatter' },
+	      { field: 'endDate', title: 'to', align: 'center', formatter: 'dateFormatter' },
 	      { field: 'name', title: '#', align: 'center' },
 	      { field: 'goal', title: 'sprint goal' },
 	      { field: 'commitment', title: 'commitment', align: 'center' },
@@ -31,6 +31,10 @@ function initSprintsTable() {
 	$('#sprints-table').on('page-change.bs.table', function (e, number, size) {
 		getSprints(number, size);
 	});
+}
+
+function dateFormatter(value, row) {
+	return convertToDDMMYYYY(value);
 }
 
 function getSprints(page, limit) {

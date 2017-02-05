@@ -68,5 +68,6 @@
 
 {% block scripts %}
   <script src="/js/ext/bootstrap-table.min.js"></script>
+  <script src="/js/fnDate.js"></script>
   <script src="/js/sprints.js"></script>
 {% endblock %}

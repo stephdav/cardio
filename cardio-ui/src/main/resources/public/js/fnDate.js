@@ -7,8 +7,7 @@ Date.prototype.getWeek = function() {
   // January 4 is always in week 1.
   var week1 = new Date(date.getFullYear(), 0, 4);
   // Adjust to Thursday in week 1 and count number of weeks from date to week1.
-  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000
-                        - 3 + (week1.getDay() + 6) % 7) / 7);
+  return 1 + Math.round(((date.getTime() - week1.getTime()) / 86400000 - 3 + (week1.getDay() + 6) % 7) / 7);
 }
 
 function getDay(yyyyMMdd) {
@@ -22,4 +21,9 @@ function getWeek(yyyyMMdd) {
 function getMonthAsShortString(value) {
 	months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
 	return months[value-1];
+}
+
+function convertToDDMMYYYY(yyyyMMdd) {
+	var pattern = /(\d{4})-(\d{2})-(\d{2})/;
+	return yyyyMMdd.replace(pattern, '$3/$2/$1');
 }

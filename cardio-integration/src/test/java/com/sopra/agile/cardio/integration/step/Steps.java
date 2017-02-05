@@ -147,7 +147,7 @@ public class Steps extends FluentCucumberTest {
     @Then("^the sprint properties are dates '(.*)' and '(.*)', name '(.*)', goal '(.*)' and commitment '(.*)'$")
     public void the_sprint_properties_are(String from, String to, String name, String goal, String commitment)
             throws Throwable {
-        sprintPage.testSprintProperties(from, to, name, goal, commitment);
+        sprintPage.testSprintProperties(convertToYYYYMMDD(from), convertToYYYYMMDD(to), name, goal, commitment);
     }
 
     @Then("^the sprint data are: (.*)$")
@@ -158,5 +158,9 @@ public class Steps extends FluentCucumberTest {
     @Then("^the trend values are '(.*)', '(.*)' and '(.*)'$")
     public void the_trend_values_are_and(String worst, String average, String best) throws Throwable {
         sprintPlanningPage.testTrendValues(worst, average, best);
+    }
+
+    private String convertToYYYYMMDD(String ddMMyyyy) {
+        return ddMMyyyy.replaceAll("([0-9]{2})/([0-9]{2})/([0-9]{4})", "$3-$2-$1");
     }
 }
