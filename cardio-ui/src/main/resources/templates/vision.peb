@@ -1,0 +1,12 @@
+{% extends "templates/base.peb" %}
+
+{% block content %}
+  <div class="vision">
+    <div class="vision-header">project vision <button id="editVision" type="button" class="btn btn-transparent btn-xs"><i class="fa fa-edit"></i></button></div>
+    <div class="vision-body"></div>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/vision.js"></script>
+{% endblock %}

@@ -57,6 +57,7 @@ public class RestConfig {
         // PROJECT
 
         get("/api/project/data", (req, res) -> controller.getProjectData(req, res), new JsonTransformer());
+        get("/api/project/vision", (req, res) -> controller.getProjectVision(req, res), new JsonTransformer());
 
         // SPRINTS
 

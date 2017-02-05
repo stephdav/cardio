@@ -11,6 +11,7 @@ public class Path {
         public static final String SPRINT = BASE + "sprint/*";
         public static final String SPRINTS = BASE + "sprints/";
         public static final String USERS = BASE + "users/";
+        public static final String VISION = BASE + "vision/";
     }
 
     public static class Template {
@@ -20,6 +21,7 @@ public class Path {
         public static final String SPRINT = "templates/sprint.peb";
         public static final String SPRINTS = "templates/sprints.peb";
         public static final String USERS = "templates/users.peb";
+        public static final String VISION = "templates/vision.peb";
 
         public static final String NOT_FOUND = "templates/404.peb";
     }
