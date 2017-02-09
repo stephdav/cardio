@@ -27,8 +27,6 @@ public class SprintDaoImpl implements SprintDao {
     @Autowired
     private Converter mapper;
 
-    private static final String DATABASE_FAILURE = "Failure when accessing database";
-
     private static final String SQL_ALL = "select * from SPRINTS";
     private static final String SQL_ALL_COMPLETED = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
     private static final String SQL_FIND_BY_ID = "select * from SPRINTS where id = ?";

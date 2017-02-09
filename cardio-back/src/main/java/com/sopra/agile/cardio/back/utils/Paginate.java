@@ -19,7 +19,7 @@ public class Paginate<T> {
     private static final String LIMIT = "limit";
 
     private static final int DEFAULT_PAGE = 1;
-    private static final int DEFAULT_LIMIT = 20;
+    private static final int DEFAULT_LIMIT = 10;
 
     private final Class<T> clazz;
 

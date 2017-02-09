@@ -73,6 +73,13 @@ public class RestConfig {
 
         patch("/api/sprints/:id", (req, res) -> controller.patchSprintProperties(req, res, req.params(PARAM_ID)));
 
+        // ACTIVITIES
+
+        get("/api/activities/bootstrap-table", (req, res) -> controller.getAllActivitiesForBootstrapTable(req, res),
+                new JsonTransformer());
+        get("/api/activities", (req, res) -> controller.getAllActivities(req, res), new JsonTransformer());
+        post("/api/activities", (req, res) -> controller.createActivity(req, res));
+
         // USERS
 
         get("/api/users", (req, res) -> controller.getAllUsers(req, res), new JsonTransformer());

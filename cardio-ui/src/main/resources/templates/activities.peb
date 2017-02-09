@@ -1,0 +1,89 @@
+{% extends "templates/base.peb" %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+
+    <div class="col-lg-3">
+      <div class="panel panel-blue panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-server fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="activities-count">-</span></div>
+            <div class="text-muted">activités</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-green">
+        <div class="panel-heading">new activity</div>
+        <div class="panel-body">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="activityName">#</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="activityName" placeholder="#"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="activityDesc">description</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="activityDesc"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="activityStatus">status</label>
+              <div class="col-sm-9"><select class="form-control" id="activityStatus">
+                <option>DRAFT</option>
+                <option selected>READY</option>
+                <option>PENDING</option>
+                <option>DONE</option>
+              </select></div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button id="addActivity" type="button" class="btn btn-default pull-right">add activity</button>
+              </div>
+            </div>
+            <div class="form-group form-error">
+              <div class="col-sm-12">
+                <div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i> <span id="errors"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-lg-9">
+
+      <div class="panel panel-green">
+        <div class="panel-heading">activities</div>
+        <div class="panel-body">
+          <div class="form-inline">
+            <div class="form-group">
+              <label class="control-label" for="activityStatus">status filter</label>
+              <select class="form-control" id="activityStatus">
+                <option></option>
+                <option>DRAFT</option>
+                <option>READY</option>
+                <option>PENDING</option>
+                <option>DONE</option>
+              </select>
+            </div>
+          </div>
+          <table id="activities-table"></table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/ext/bootstrap-table.min.js"></script>
+  <script src="/js/activities.js"></script>
+{% endblock %}

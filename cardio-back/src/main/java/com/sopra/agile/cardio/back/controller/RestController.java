@@ -10,8 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import com.sopra.agile.cardio.back.model.BootstrapTableActivities;
 import com.sopra.agile.cardio.back.model.ObjectMapper;
 import com.sopra.agile.cardio.back.model.Parameter;
+import com.sopra.agile.cardio.back.service.ActivityService;
 import com.sopra.agile.cardio.back.service.ConfigService;
 import com.sopra.agile.cardio.back.service.ProjectService;
 import com.sopra.agile.cardio.back.service.SprintService;
@@ -20,6 +22,7 @@ import com.sopra.agile.cardio.back.service.UserServiceImpl;
 import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Activity;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.ProjectVision;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -47,6 +50,9 @@ public class RestController {
 
     @Autowired
     private SprintService svcSprint;
+
+    @Autowired
+    private ActivityService svcActivity;
 
     // === CONFIG ============================================================
 
@@ -287,4 +293,85 @@ public class RestController {
         return vision;
     }
 
+    // === ACTIVITIES ========================================================
+
+    public BootstrapTableActivities getAllActivitiesForBootstrapTable(Request req, Response res) {
+
+        res.type("application/json");
+
+        BootstrapTableActivities bta = new BootstrapTableActivities();
+
+        List<Activity> response = svcActivity.all();
+
+        // sort results
+        if (req.queryParams("sortName") != null) {
+            String key = req.queryParams("sortName");
+            LOGGER.debug("sortName=" + key);
+            if ("status".equals(key)) {
+                response.sort(Comparator.comparing(Activity::getStatus));
+                Collections.reverse(response);
+            } else if ("description".equals(key)) {
+                response.sort(Comparator.comparing(Activity::getDescription));
+            } else {
+                LOGGER.debug("unknown sorting key {}", key);
+                response.sort(Comparator.comparing(Activity::getId));
+            }
+            if (req.queryParams("sortOrder") != null && "desc".equals(req.queryParams("sortOrder"))) {
+                LOGGER.debug("reverse order");
+                Collections.reverse(response);
+            }
+        }
+
+        bta.setTotal(response.size());
+
+        // paginate results
+        List<Activity> response2 = new Paginate<Activity>(Activity.class).paginate(req, res, response);
+
+        bta.setRows(response2);
+        return bta;
+    }
+
+    public List<Activity> getAllActivities(Request req, Response res) {
+
+        res.type("application/json");
+
+        List<Activity> response = svcActivity.all();
+
+        // sort results
+        if (req.queryParams("sort") != null) {
+            String key = req.queryParams("sort");
+            LOGGER.debug("sort=" + key);
+            if ("name".equals(key)) {
+                response.sort(Comparator.comparing(Activity::getName));
+            } else {
+                LOGGER.debug("unknown sorting key {}", key);
+                response.sort(Comparator.comparing(Activity::getId));
+            }
+            if (req.queryParams("desc") != null) {
+                LOGGER.debug("reverse order");
+                Collections.reverse(response);
+            }
+        }
+
+        // paginate results
+        List<Activity> response2 = new Paginate<Activity>(Activity.class).paginate(req, res, response);
+
+        return response2;
+    }
+
+    public String createActivity(Request req, Response res) {
+        String response = "OK";
+        try {
+            Activity activity = svcActivity.add(new ObjectMapper<Activity>(Activity.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/activities/" + activity.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
+    }
 }

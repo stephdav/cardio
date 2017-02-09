@@ -7,6 +7,7 @@ import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
 import com.sopra.agile.cardio.ui.controller.AboutController;
+import com.sopra.agile.cardio.ui.controller.ActivitiesController;
 import com.sopra.agile.cardio.ui.controller.IndexController;
 import com.sopra.agile.cardio.ui.controller.PlanningController;
 import com.sopra.agile.cardio.ui.controller.SprintController;
@@ -38,6 +39,7 @@ public class UIConfig {
         get(Path.Web.PLANNING, PlanningController.PLANNING);
         get(Path.Web.SPRINT, SprintController.SPRINT);
         get(Path.Web.VISION, VisionController.VISION);
+        get(Path.Web.ACTIVITIES, ActivitiesController.ACTIVITIES);
         get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
         // Set up after-filters (called after each get/post)
