@@ -75,8 +75,6 @@ public class RestConfig {
 
         // ACTIVITIES
 
-        get("/api/activities/bootstrap-table", (req, res) -> controller.getAllActivitiesForBootstrapTable(req, res),
-                new JsonTransformer());
         get("/api/activities", (req, res) -> controller.getAllActivities(req, res), new JsonTransformer());
         post("/api/activities", (req, res) -> controller.createActivity(req, res));
 

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +24,7 @@ import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Activity;
+import com.sopra.agile.cardio.common.model.ActivityStatus;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.ProjectVision;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -295,13 +297,21 @@ public class RestController {
 
     // === ACTIVITIES ========================================================
 
-    public BootstrapTableActivities getAllActivitiesForBootstrapTable(Request req, Response res) {
+    public BootstrapTableActivities getAllActivities(Request req, Response res) {
 
         res.type("application/json");
 
         BootstrapTableActivities bta = new BootstrapTableActivities();
 
         List<Activity> response = svcActivity.all();
+
+        // filter results
+        if (req.queryParams("status") != null) {
+            String filter = req.queryParams("status");
+            LOGGER.debug("status=" + filter);
+            ActivityStatus status = ActivityStatus.valueOf(filter);
+            response = response.stream().filter(line -> line.getStatus() == status).collect(Collectors.toList());
+        }
 
         // sort results
         if (req.queryParams("sortName") != null) {
@@ -329,34 +339,6 @@ public class RestController {
 
         bta.setRows(response2);
         return bta;
-    }
-
-    public List<Activity> getAllActivities(Request req, Response res) {
-
-        res.type("application/json");
-
-        List<Activity> response = svcActivity.all();
-
-        // sort results
-        if (req.queryParams("sort") != null) {
-            String key = req.queryParams("sort");
-            LOGGER.debug("sort=" + key);
-            if ("name".equals(key)) {
-                response.sort(Comparator.comparing(Activity::getName));
-            } else {
-                LOGGER.debug("unknown sorting key {}", key);
-                response.sort(Comparator.comparing(Activity::getId));
-            }
-            if (req.queryParams("desc") != null) {
-                LOGGER.debug("reverse order");
-                Collections.reverse(response);
-            }
-        }
-
-        // paginate results
-        List<Activity> response2 = new Paginate<Activity>(Activity.class).paginate(req, res, response);
-
-        return response2;
     }
 
     public String createActivity(Request req, Response res) {

@@ -479,3 +479,10 @@ body>.container, body>.container-fluid {
 	background-color: transparent;
 	border-color: #9bbb59;
 }
+
+.table-filters {
+	margin-bottom: 10px;
+	color: #333;
+	height: 34px;
+	vertical-align: middle;
+}

@@ -61,18 +61,22 @@
       <div class="panel panel-green">
         <div class="panel-heading">activities</div>
         <div class="panel-body">
-          <div class="form-inline">
-            <div class="form-group">
-              <label class="control-label" for="activityStatus">status filter</label>
-              <select class="form-control" id="activityStatus">
-                <option></option>
-                <option>DRAFT</option>
-                <option>READY</option>
-                <option>PENDING</option>
-                <option>DONE</option>
-              </select>
+
+          <div class="table-filters">
+            <div class="form-inline pull-right">
+              <div class="form-group">
+                <label class="control-label" for="activityStatus">status</label>
+                <select class="form-control" id="activityFilter">
+                  <option></option>
+                  <option>DRAFT</option>
+                  <option>READY</option>
+                  <option>PENDING</option>
+                  <option>DONE</option>
+                </select>
+              </div>
             </div>
           </div>
+
           <table id="activities-table"></table>
         </div>
       </div>

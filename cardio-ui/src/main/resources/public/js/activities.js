@@ -7,13 +7,14 @@ function initActivities() {
 		e.stopPropagation();
 		createActivity($('#activityName').val(), $('#activityDesc').val(), $('#activityStatus').val());
 	});
+
 	initActivitiesTable();
 }
 
 function initActivitiesTable() {
 	$('#activities-table').bootstrapTable({
 		pagination: true,
-		url: '/api/activities/bootstrap-table',
+		url: '/api/activities',
 		sidePagination: 'server',
 		queryParamsType: 'page',
 		queryParams: 'queryParams',
@@ -27,6 +28,11 @@ function initActivitiesTable() {
 	
 	$('#activities-table').on('load-success.bs.table', function (e, data) {
 		$('#activities-count').text(data.total);
+	});
+	
+	$('#activityFilter').on('change', function(e) {
+		e.stopPropagation();
+		refresh();
 	});
 
 }
@@ -59,13 +65,17 @@ function createActivity(name, description, status) {
 
 function queryParams() {
 	var options = $('#activities-table').bootstrapTable('getOptions');
-	log('OPTIONS: ' + JSON.stringify(options));
 	
 	var params = {};
 	params['page'] = options.pageNumber;
 	params['limit'] = options.pageSize;
 	params['sortName'] = options.sortName;
 	params['sortOrder'] = options.sortOrder;
+	
+	var status = $('#activityFilter').val();
+	if ( status != undefined && status != '') {
+		params['status'] = status;
+	}
 	return params;
 }
 
