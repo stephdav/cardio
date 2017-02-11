@@ -5,7 +5,7 @@ $(document).ready(function() {
 function initActivities() {
 	$('#addActivity').on('click', function(e) {
 		e.stopPropagation();
-		createActivity($('#activityName').val(), $('#activityDesc').val(), $('#activityStatus').val());
+		createActivity($('#activityType').val(), $('#activityName').val(), $('#activityDesc').val(), $('#activityStatus').val());
 	});
 
 	initActivitiesTable();
@@ -21,8 +21,9 @@ function initActivitiesTable() {
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
 	      { field: 'name', title: '#', align: 'center' },
-	      { field: 'status', title: 'status', sortable: true, searchable: true },
-	      { field: 'description', title: 'description', sortable: true, searchable: true }
+	      { field: 'type', title: 'type', sortable: true, searchable: true },
+	      { field: 'description', title: 'description' },
+	      { field: 'status', title: 'status', sortable: true, searchable: true }
 	    ]
 	});
 	
@@ -30,7 +31,11 @@ function initActivitiesTable() {
 		$('#activities-count').text(data.total);
 	});
 	
-	$('#activityFilter').on('change', function(e) {
+	$('#typeFilter').on('change', function(e) {
+		e.stopPropagation();
+		refresh();
+	});
+	$('#statusFilter').on('change', function(e) {
 		e.stopPropagation();
 		refresh();
 	});
@@ -42,12 +47,13 @@ function refresh() {
 	$('#activities-table').bootstrapTable('refresh');
 }
 
-function createActivity(name, description, status) {
-	var payload = {name: name, description: description, status: status};
+function createActivity(type, name, description, status) {
+	var payload = {type: type, name: name, description: description, status: status};
 	ajaxPost("/api/activities", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("Activity " + hv.location + " created");
 			// reset form
+			$('#activityType').val('US');
 			$('#activityName').val('');
 			$('#activityDesc').val('');
 			$('#activityStatus').val('READY');
@@ -72,7 +78,11 @@ function queryParams() {
 	params['sortName'] = options.sortName;
 	params['sortOrder'] = options.sortOrder;
 	
-	var status = $('#activityFilter').val();
+	var type = $('#typeFilter').val();
+	if ( type != undefined && type != '') {
+		params['type'] = type;
+	}
+	var status = $('#statusFilter').val();
 	if ( status != undefined && status != '') {
 		params['status'] = status;
 	}

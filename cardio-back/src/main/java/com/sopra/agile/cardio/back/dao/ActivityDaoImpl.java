@@ -19,7 +19,8 @@ public class ActivityDaoImpl implements ActivityDao {
 
     private static final String SQL_ALL = "select * from ACTIVITIES";
     private static final String SQL_FIND_BY_ID = "select * from ACTIVITIES where id = ?";
-    private static final String SQL_INSERT = "insert into ACTIVITIES(ID, NAME, DESCRIPTION, STATUS) values (?, ?, ?, ?)";
+    private static final String SQL_FIND_BY_NAME = "select * from ACTIVITIES where name = ?";
+    private static final String SQL_INSERT = "insert into ACTIVITIES(ID, CATEGORY, NAME, DESCRIPTION, STATUS) values (?, ?, ?, ?, ?)";
     private static final String SQL_DELETE = "delete from ACTIVITIES where id = ?";
 
     @Autowired
@@ -60,12 +61,26 @@ public class ActivityDaoImpl implements ActivityDao {
     }
 
     @Override
+    public Activity findByName(String name) throws CardioTechnicalException {
+        LOGGER.info("[DAO] findByName '{}' ...", name);
+        Activity activity = null;
+        try {
+            activity = jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, new Object[] { name }, new ActivityMapper());
+        } catch (EmptyResultDataAccessException notFound) {
+            LOGGER.info("No result found with name '{}'", name);
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return activity;
+    }
+
+    @Override
     public Activity add(Activity activity) throws CardioTechnicalException {
         LOGGER.info("[DAO] add ...");
         activity.setId(UIDGenerator.getUniqueId("ACT"));
         try {
-            jdbcTemplate.update(SQL_INSERT, activity.getId(), activity.getName(), activity.getDescription(),
-                    activity.getStatus().toString());
+            jdbcTemplate.update(SQL_INSERT, activity.getId(), activity.getType().toString(), activity.getName(),
+                    activity.getDescription(), activity.getStatus().toString());
         } catch (Exception ex) {
             ex.printStackTrace();
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);

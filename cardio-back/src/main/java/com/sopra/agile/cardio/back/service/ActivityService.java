@@ -4,4 +4,6 @@ import com.sopra.agile.cardio.common.model.Activity;
 
 public interface ActivityService extends BaseService<Activity> {
 
+    Activity findByName(String name);
+
 }

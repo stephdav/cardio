@@ -2,6 +2,7 @@ package com.sopra.agile.cardio.common.model;
 
 public class Activity extends Base {
 
+    private ActivityType type;
     private String name;
     private String description;
     private ActivityStatus status;
@@ -14,6 +15,14 @@ public class Activity extends Base {
         super(id);
         this.name = name;
         this.description = description;
+    }
+
+    public ActivityType getType() {
+        return type;
+    }
+
+    public void setType(ActivityType type) {
+        this.type = type;
     }
 
     public String getName() {

@@ -25,6 +25,7 @@ import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Activity;
 import com.sopra.agile.cardio.common.model.ActivityStatus;
+import com.sopra.agile.cardio.common.model.ActivityType;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.ProjectVision;
 import com.sopra.agile.cardio.common.model.Sprint;
@@ -312,12 +313,21 @@ public class RestController {
             ActivityStatus status = ActivityStatus.valueOf(filter);
             response = response.stream().filter(line -> line.getStatus() == status).collect(Collectors.toList());
         }
+        if (req.queryParams("type") != null) {
+            String filter = req.queryParams("type");
+            LOGGER.debug("type=" + filter);
+            ActivityType type = ActivityType.valueOf(filter);
+            response = response.stream().filter(line -> line.getType() == type).collect(Collectors.toList());
+        }
 
         // sort results
         if (req.queryParams("sortName") != null) {
             String key = req.queryParams("sortName");
             LOGGER.debug("sortName=" + key);
-            if ("status".equals(key)) {
+            if ("type".equals(key)) {
+                response.sort(Comparator.comparing(Activity::getType));
+                Collections.reverse(response);
+            } else if ("status".equals(key)) {
                 response.sort(Comparator.comparing(Activity::getStatus));
                 Collections.reverse(response);
             } else if ("description".equals(key)) {

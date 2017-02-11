@@ -10,25 +10,33 @@ public class ActivityTest {
     @Test
     public void testDefaultConstructor() {
         Activity activity = new Activity();
-        assertObject(activity, null, null, null);
+        assertObject(activity, null, null, null, null, null);
     }
 
     @Test
     public void testConstructor() {
         Activity activity = new Activity("id", "name", "description");
-        assertObject(activity, "id", "name", "description");
+        assertObject(activity, null, "id", "name", "description", null);
     }
 
     @Test
     public void testFields() {
         Activity activity = new Activity();
+        activity.setType(ActivityType.US);
         activity.setId("id");
         activity.setName("name");
         activity.setDescription("description");
-        assertObject(activity, "id", "name", "description");
+        activity.setStatus(ActivityStatus.DRAFT);
+        assertObject(activity, ActivityType.US, "id", "name", "description", ActivityStatus.DRAFT);
     }
 
-    private void assertObject(Activity activity, final String id, final String name, final String description) {
+    private void assertObject(Activity activity, ActivityType type, final String id, final String name,
+            final String description, ActivityStatus status) {
+        if (type == null) {
+            assertNull(activity.getType());
+        } else {
+            assertEquals(type, activity.getType());
+        }
         if (id == null) {
             assertNull(activity.getId());
         } else {
@@ -43,6 +51,11 @@ public class ActivityTest {
             assertNull(activity.getDescription());
         } else {
             assertEquals(description, activity.getDescription());
+        }
+        if (status == null) {
+            assertNull(activity.getStatus());
+        } else {
+            assertEquals(status, activity.getStatus());
         }
     }
 
