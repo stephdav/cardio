@@ -12,62 +12,62 @@ function initUsers() {
 		e.stopPropagation();
 		deleteUser($(this).closest('li').attr('id'));
 	});
-	$('#sortByLogin').on('click', function(e) {
-		e.stopPropagation();
-		getUsersSorted("login");
-	});
-	$('#sortByFirstname').on('click', function(e) {
-		e.stopPropagation();
-		getUsersSorted("firstname");
-	});
-	$('#sortByLastname').on('click', function(e) {
-		e.stopPropagation();
-		getUsersSorted("lastname");
-	});
+
 	initUsersTable();
-	getUsers();
 }
 
 function initUsersTable() {
 	$('#users-table').bootstrapTable({
-	    columns: [{
-	        field: 'login', title: 'login'
-	    }, {
-	        field: 'firstname', title: 'first name'
-	    }, {
-	        field: 'lastname', title: 'last name'
-	    }]
+		pagination: true,
+		url: '/api/users',
+		sidePagination: 'server',
+		queryParamsType: 'page',
+		queryParams: 'queryParams',
+		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
+	    columns: [
+	      { field: 'login', title: 'login', align: 'center', sortable: true },
+	      { field: 'firstname', title: 'first name', sortable: true },
+	      { field: 'lastname', title: 'last name', sortable: true }
+	    ]
+	});
+	
+	$('#users-table').on('load-success.bs.table', function (e, data) {
+		$('#users-count').text(data.total);
 	});
 }
 
-function getUsers() {
-	ajaxGet("/api/users?limit=10", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 206) {
-			updateUsers(data, hv);
-		} else {
-			log("Error getting users : " + errorThrown);
-		}
-	});
+function refreshUsers() {
+	$('#users-table').bootstrapTable('refresh');
 }
 
-function getUsersSorted(key) {
-	ajaxGet("/api/users?limit=10&sort=" + key, function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 206) {
-			updateUsers(data, hv);
-		} else {
-			log("Error getting users : " + errorThrown);
-		}
-	});
+
+function queryParams() {
+	var options = $('#users-table').bootstrapTable('getOptions');
+	var params = {};
+	params['page'] = options.pageNumber;
+	params['limit'] = options.pageSize;
+	params['sortName'] = options.sortName;
+	params['sortOrder'] = options.sortOrder;
+	return params;
 }
 
 function createUser(login, firstname, lasstname) {
 	var payload = {login: login, firstname: firstname, lastname: lasstname};
 	ajaxPost("/api/users", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
-			log("User " + hv.location + " created");
-			getUsers();	
+			log("Users " + hv.location + " created");
+			// reset form
+			$('#userLogin').val('');
+			$('#userFirstname').val('');
+			$('#userLastname').val('');
+			$('#errors').text('');
+			$('.form-error').hide();
+			// reload list
+			refreshUsers();	
 		} else {
 			log("Error creating user : " + errorThrown);
+			$('#errors').text(data);
+			$('.form-error').show();
 		}
 	});
 }
@@ -81,13 +81,4 @@ function deleteUser(taskId) {
 			log("Error deleting user : " + errorThrown);
 		}
 	});
-}
-
-function updateUsers(data, hv) {
-	
-	$('#userlist').empty();
-	if (hv.status == 200 || hv.status == 206) {
-		$('#users-table').bootstrapTable('load', data);
-		$('#users-count').text(hv.contentRange.split(/\//)[1]);
-	}
 }

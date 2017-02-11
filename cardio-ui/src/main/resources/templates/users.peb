@@ -18,33 +18,44 @@
           </div>
         </div>
       </div>
+
+      <div class="panel panel-green">
+        <div class="panel-heading">new user</div>
+        <div class="panel-body">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userLogin">login</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userLogin"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userFirstname">firstName</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userFirstname"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userLastname">lastName</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userLastname"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-12">
+                <button id="addUser" type="button" class="btn btn-default pull-right">add user</button>
+              </div>
+            </div>
+            <div class="form-group form-error">
+              <div class="col-sm-12">
+                <div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i> <span id="errors"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <div class="col-lg-9">
       <div class="panel panel-green">
-        <div class="panel-heading">
-          users
-          <button id="sortByLogin" type="button" class="btn btn-default">login <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-          <button id="sortByFirstname" type="button" class="btn btn-default">firstname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-          <button id="sortByLastname" type="button" class="btn btn-default">lastname <span class="glyphicon glyphicon-sort-by-alphabet"></span></button>
-        </div>
+        <div class="panel-heading">users</div>
         <div class="panel-body">
-
           <table id="users-table"></table>
-          
-          <div class="block form-inline">
-            <div class="form-group">
-              <input type="text" class="form-control" id="userLogin" placeholder="JDO">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="userFirstname" placeholder="John">
-            </div>
-            <div class="form-group">
-              <input type="text" class="form-control" id="userLastname" placeholder="Doe">
-            </div>
-            <button id="addUser" type="button" class="btn btn-default">add user</button>
-          </div>
-          
         </div>
       </div>
     </div>

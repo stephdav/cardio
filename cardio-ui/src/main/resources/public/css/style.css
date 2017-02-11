@@ -481,8 +481,8 @@ body>.container, body>.container-fluid {
 }
 
 .table-filters {
-	margin-bottom: 10px;
-	color: #333;
-	height: 34px;
+	display: inline-block;
+	font-size: 14px; color : #333;
 	vertical-align: middle;
+	color: #333;
 }

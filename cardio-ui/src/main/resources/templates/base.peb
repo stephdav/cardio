@@ -50,6 +50,7 @@
           <li class="{{ menuSprints }}"><a id="menuSprints" href="/ui/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
           <li class="{{ menuActivities }}"><a id="menuActivities" href="/ui/activities"><i class="fa fa-fw fa-server fa-2x"></i></a></li>
           <li class="{{ menuSprintPlanning }}"><a id="menuSprintPlanning" href="/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
+          <li class="{{ menuUsers }}"><a id="menuUsers" href="/ui/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
           <li class="{{ menuAbout }}"><a id="menuAbout" href="/ui/about"><span class="fa-stack fa-lg"><i class="fa fa-fw fa-circle-thin fa-stack-2x"></i><i class="fa fa-fw fa-info fa-stack-1x"></i></span></i></a></li>
         </ul>
       </div>

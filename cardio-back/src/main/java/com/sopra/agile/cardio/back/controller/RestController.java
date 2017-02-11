@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.sopra.agile.cardio.back.model.BootstrapTableActivities;
+import com.sopra.agile.cardio.back.model.BootstrapTableList;
 import com.sopra.agile.cardio.back.model.ObjectMapper;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.service.ActivityService;
@@ -83,14 +83,17 @@ public class RestController {
 
     // === USERS =============================================================
 
-    public List<User> getAllUsers(Request req, Response res) {
+    public BootstrapTableList<User> getAllUsers(Request req, Response res) {
 
         res.type("application/json");
+
+        BootstrapTableList<User> bta = new BootstrapTableList<User>();
+
         List<User> response = svcUser.all();
 
         // sort results
-        if (req.queryParams("sort") != null) {
-            String key = req.queryParams("sort");
+        if (req.queryParams("sortName") != null) {
+            String key = req.queryParams("sortName");
             LOGGER.debug("sort=" + key);
             if ("login".equals(key)) {
                 response.sort(Comparator.comparing(User::getLogin));
@@ -102,12 +105,19 @@ public class RestController {
                 LOGGER.debug("unknown sorting key {}", key);
                 response.sort(Comparator.comparing(User::getId));
             }
+            if (req.queryParams("sortOrder") != null && "desc".equals(req.queryParams("sortOrder"))) {
+                LOGGER.debug("reverse order");
+                Collections.reverse(response);
+            }
         }
+
+        bta.setTotal(response.size());
 
         // paginate results
         List<User> response2 = new Paginate<User>(User.class).paginate(req, res, response);
 
-        return response2;
+        bta.setRows(response2);
+        return bta;
     }
 
     public User getUser(Request req, Response res, String id) {
@@ -298,11 +308,11 @@ public class RestController {
 
     // === ACTIVITIES ========================================================
 
-    public BootstrapTableActivities getAllActivities(Request req, Response res) {
+    public BootstrapTableList<Activity> getAllActivities(Request req, Response res) {
 
         res.type("application/json");
 
-        BootstrapTableActivities bta = new BootstrapTableActivities();
+        BootstrapTableList<Activity> bta = new BootstrapTableList<Activity>();
 
         List<Activity> response = svcActivity.all();
 

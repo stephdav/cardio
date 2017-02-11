@@ -21,9 +21,9 @@ function initActivitiesTable() {
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
 	      { field: 'name', title: '#', align: 'center' },
-	      { field: 'type', title: 'type', sortable: true, searchable: true },
+	      { field: 'type', title: 'type', align: 'center', sortable: true, searchable: true },
 	      { field: 'description', title: 'description' },
-	      { field: 'status', title: 'status', sortable: true, searchable: true }
+	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true }
 	    ]
 	});
 	
