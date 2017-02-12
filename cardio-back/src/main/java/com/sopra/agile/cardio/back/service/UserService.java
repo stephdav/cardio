@@ -4,6 +4,8 @@ import com.sopra.agile.cardio.common.model.User;
 
 public interface UserService extends BaseService<User> {
 
-	String remove(String userId);
+    User findByLogin(String name);
+
+    String remove(String userId);
 
 }

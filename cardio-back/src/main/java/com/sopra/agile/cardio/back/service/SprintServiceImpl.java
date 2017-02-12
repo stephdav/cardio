@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.SprintDayDao;
+import com.sopra.agile.cardio.back.utils.Fields;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
@@ -284,10 +285,7 @@ public class SprintServiceImpl implements SprintService {
             LOGGER.error("sprint can't be null");
             throw new CardioFunctionalException("sprint can't be null");
         }
-        if (sprint.getName() == null || sprint.getName().isEmpty()) {
-            LOGGER.error("name is mandatory");
-            throw new CardioFunctionalException("name is mandatory");
-        }
+        Fields.isMandatory("name", sprint.getName());
         if (sprint.getStartDate() == null || sprint.getStartDate().isEmpty()) {
             LOGGER.error("start date is mandatory");
             throw new CardioFunctionalException("start date is mandatory");

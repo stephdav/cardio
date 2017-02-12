@@ -48,10 +48,8 @@ public class SprintDaoImpl implements SprintDao {
 
     @Override
     public List<Sprint> all() throws CardioTechnicalException {
-        LOGGER.info("[DAO] all ...");
-
+        LOGGER.debug("[DAO] all sprints ...");
         List<Sprint> sprints = new ArrayList<Sprint>();
-
         try {
             List<DbSprint> dbsprints = jdbcTemplate.query(SQL_ALL, new DbSprintMapper());
             if (dbsprints != null) {
@@ -62,14 +60,12 @@ public class SprintDaoImpl implements SprintDao {
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
-
         return sprints;
     }
 
     @Override
     public Sprint find(String id) throws CardioTechnicalException {
-        LOGGER.info("[DAO] find '{}' ...", id);
-
+        LOGGER.debug("[DAO] find sprint '{}' ...", id);
         DbSprint sprint = null;
         try {
             sprint = jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[] { id }, new DbSprintMapper());
@@ -82,8 +78,22 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
+    public Sprint findByName(String name) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] find sprint with name '{}' ...", name);
+        DbSprint sprint = null;
+        try {
+            sprint = jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, new Object[] { name }, new DbSprintMapper());
+        } catch (EmptyResultDataAccessException notFound) {
+            LOGGER.info("No result found with name '{}'", name);
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return mapper.map(sprint);
+    }
+
+    @Override
     public Sprint add(Sprint sprint) throws CardioTechnicalException {
-        LOGGER.info("[DAO] add ...");
+        LOGGER.debug("[DAO] add new sprint ...");
 
         sprint.setId(UIDGenerator.getUniqueId("SPR"));
         DbSprint dbsprint = mapper.map(sprint);
@@ -100,23 +110,8 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public Sprint findByName(String name) throws CardioTechnicalException {
-        LOGGER.info("[DAO] findByName '{}' ...", name);
-
-        DbSprint sprint = null;
-        try {
-            sprint = jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, new Object[] { name }, new DbSprintMapper());
-        } catch (EmptyResultDataAccessException notFound) {
-            LOGGER.info("No result found with name '{}'", name);
-        } catch (Exception ex) {
-            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
-        }
-        return mapper.map(sprint);
-    }
-
-    @Override
     public Sprint update(Sprint sprint) throws CardioTechnicalException {
-        LOGGER.info("[DAO] update ...");
+        LOGGER.debug("[DAO] update sprint ...");
 
         DbSprint dbsprint = mapper.map(sprint);
         try {
@@ -131,7 +126,7 @@ public class SprintDaoImpl implements SprintDao {
 
     @Override
     public void remove(String id) throws CardioTechnicalException {
-        LOGGER.info("[DAO] remove '{}' ...", id);
+        LOGGER.debug("[DAO] remove sprint '{}' ...", id);
         try {
             jdbcTemplate.update(SQL_DELETE, id);
         } catch (Exception ex) {

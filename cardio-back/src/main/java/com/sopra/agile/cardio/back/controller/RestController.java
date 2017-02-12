@@ -132,18 +132,19 @@ public class RestController {
     }
 
     public String createUser(Request req, Response res) {
-
+        String response = "OK";
         try {
             User usr = svcUser.add(new ObjectMapper<User>(User.class).parse(req.body()));
             res.status(201);
-            res.header(LOCATION, "/api/users/" + usr.getId());
+            res.header(LOCATION, "/api/activities/" + usr.getId());
         } catch (CardioFunctionalException e) {
             res.status(400);
+            response = e.getMessage();
         } catch (CardioTechnicalException e) {
             res.status(500);
+            response = e.getMessage();
         }
-
-        return "";
+        return response;
     }
 
     public String deleteUser(Request req, Response res, String id) {

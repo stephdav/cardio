@@ -36,7 +36,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public List<Activity> all() throws CardioTechnicalException {
-        LOGGER.info("[DAO] all ...");
+        LOGGER.debug("[DAO] all activities ...");
         List<Activity> sprints = null;
         try {
             sprints = jdbcTemplate.query(SQL_ALL, new ActivityMapper());
@@ -48,7 +48,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public Activity find(String id) throws CardioTechnicalException {
-        LOGGER.info("[DAO] find '{}' ...", id);
+        LOGGER.debug("[DAO] find activity '{}' ...", id);
         Activity activity = null;
         try {
             activity = jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[] { id }, new ActivityMapper());
@@ -62,7 +62,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public Activity findByName(String name) throws CardioTechnicalException {
-        LOGGER.info("[DAO] findByName '{}' ...", name);
+        LOGGER.debug("[DAO] find activity with name '{}' ...", name);
         Activity activity = null;
         try {
             activity = jdbcTemplate.queryForObject(SQL_FIND_BY_NAME, new Object[] { name }, new ActivityMapper());
@@ -76,7 +76,7 @@ public class ActivityDaoImpl implements ActivityDao {
 
     @Override
     public Activity add(Activity activity) throws CardioTechnicalException {
-        LOGGER.info("[DAO] add ...");
+        LOGGER.debug("[DAO] add new activity ...");
         activity.setId(UIDGenerator.getUniqueId("ACT"));
         try {
             jdbcTemplate.update(SQL_INSERT, activity.getId(), activity.getType().toString(), activity.getName(),

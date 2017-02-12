@@ -22,6 +22,8 @@ public class UserDaoTest {
 
     private UserDao dao;
 
+    private static final String USERS = "USERS";
+
     @BeforeClass
     public static void classSetUp() throws Exception {
         jdbc = initDbConnexion("insert-dataTest.sql");
@@ -41,15 +43,17 @@ public class UserDaoTest {
     public void testAll() throws CardioTechnicalException {
         List<User> users = dao.all();
         assertNotNull(users);
-        assertEquals(count(jdbc, "USERS"), users.size());
+        assertEquals(count(jdbc, USERS), users.size());
     }
 
     @Test
     public void testFindUser() throws CardioTechnicalException {
         // User must be found
-        User usr01 = dao.find("01");
-        assertNotNull(usr01);
-        assertEquals("SDD", usr01.getLogin());
+        User usr = dao.find("USR-1");
+        assertNotNull(usr);
+        assertEquals("SDD", usr.getLogin());
+        assertEquals("Stephane", usr.getFirstname());
+        assertEquals("David", usr.getLastname());
 
         // User not found
         User usrUNK = dao.find("UNK");
@@ -58,16 +62,30 @@ public class UserDaoTest {
 
     @Test
     public void testAddUser() throws CardioTechnicalException {
-        int count = count(jdbc, "USERS");
+        int count = count(jdbc, USERS);
         dao.add(new User(null, "TST", "TST", "TST"));
-        assertEquals(count + 1, count(jdbc, "USERS"));
+        assertEquals(count + 1, count(jdbc, USERS));
+    }
+
+    @Test
+    public void testFindByLogin() throws CardioTechnicalException {
+        // User must be found
+        User usr = dao.findByLogin("TBO");
+        assertNotNull(usr);
+        assertEquals("TBO", usr.getLogin());
+        assertEquals("Tristan", usr.getFirstname());
+        assertEquals("Bouju", usr.getLastname());
+
+        // User not found
+        User usrUNK = dao.findByLogin("UNK");
+        assertNull(usrUNK);
     }
 
     @Test
     public void testRemoveUser() throws CardioTechnicalException {
-        int count = count(jdbc, "USERS");
+        int count = count(jdbc, USERS);
         dao.remove("TO_BE_DELETED");
-        assertEquals(count - 1, count(jdbc, "USERS"));
+        assertEquals(count - 1, count(jdbc, USERS));
     }
 
 }

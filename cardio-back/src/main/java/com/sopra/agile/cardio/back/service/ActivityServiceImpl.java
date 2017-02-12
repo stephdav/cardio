@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.ActivityDao;
+import com.sopra.agile.cardio.back.utils.Fields;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Activity;
@@ -73,6 +74,7 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     private void checkActivityProperties(Activity activity) throws CardioFunctionalException {
+
         if (activity == null) {
             LOGGER.error("activity can't be null");
             throw new CardioFunctionalException("activity can't be null");
@@ -81,14 +83,12 @@ public class ActivityServiceImpl implements ActivityService {
             LOGGER.error("type is mandatory");
             throw new CardioFunctionalException("type is mandatory");
         }
-        if (activity.getName() == null || activity.getName().isEmpty()) {
-            LOGGER.error("name is mandatory");
-            throw new CardioFunctionalException("name is mandatory");
-        }
+        Fields.checkField("name", activity.getName(), 1, 64);
         if (activity.getStatus() == null) {
             LOGGER.error("status is mandatory");
             throw new CardioFunctionalException("status is mandatory");
         }
+        Fields.checkField("description", activity.getDescription(), 0, 256);
     }
 
     private void checkActivityDuplicate(Activity activity) throws CardioFunctionalException, CardioTechnicalException {
