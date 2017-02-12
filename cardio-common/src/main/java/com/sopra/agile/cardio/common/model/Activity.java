@@ -11,10 +11,13 @@ public class Activity extends Base {
         super();
     }
 
-    public Activity(final String id, final String name, final String description) {
+    public Activity(final String id, ActivityType type, final String name, final String description,
+            ActivityStatus status) {
         super(id);
+        this.type = type;
         this.name = name;
         this.description = description;
+        this.status = status;
     }
 
     public ActivityType getType() {

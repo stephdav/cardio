@@ -15,8 +15,8 @@ public class ActivityTest {
 
     @Test
     public void testConstructor() {
-        Activity activity = new Activity("id", "name", "description");
-        assertObject(activity, null, "id", "name", "description", null);
+        Activity activity = new Activity("id", ActivityType.US, "name", "description", ActivityStatus.DRAFT);
+        assertObject(activity, "id", ActivityType.US, "name", "description", ActivityStatus.DRAFT);
     }
 
     @Test
@@ -27,10 +27,10 @@ public class ActivityTest {
         activity.setName("name");
         activity.setDescription("description");
         activity.setStatus(ActivityStatus.DRAFT);
-        assertObject(activity, ActivityType.US, "id", "name", "description", ActivityStatus.DRAFT);
+        assertObject(activity, "id", ActivityType.US, "name", "description", ActivityStatus.DRAFT);
     }
 
-    private void assertObject(Activity activity, ActivityType type, final String id, final String name,
+    private void assertObject(Activity activity, final String id, ActivityType type, final String name,
             final String description, ActivityStatus status) {
         if (type == null) {
             assertNull(activity.getType());

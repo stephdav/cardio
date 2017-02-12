@@ -67,9 +67,7 @@ public class ActivityDaoTest {
     @Test
     public void testAddActivity() throws CardioTechnicalException {
         int count = count(jdbc, ACTIVITIES);
-        Activity activity = new Activity(null, "TST", "TST");
-        activity.setType(ActivityType.US);
-        activity.setStatus(ActivityStatus.DRAFT);
+        Activity activity = new Activity(null, ActivityType.US, "TST", "TST", ActivityStatus.DRAFT);
         dao.add(activity);
         assertEquals(count + 1, count(jdbc, ACTIVITIES));
     }
