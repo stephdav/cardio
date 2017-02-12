@@ -27,7 +27,6 @@ import com.sopra.agile.cardio.common.model.Activity;
 import com.sopra.agile.cardio.common.model.ActivityStatus;
 import com.sopra.agile.cardio.common.model.ActivityType;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
-import com.sopra.agile.cardio.common.model.ProjectVision;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.User;
@@ -294,17 +293,6 @@ public class RestController {
             res.status(204);
         }
         return chart;
-    }
-
-    public ProjectVision getProjectVision(Request req, Response res) {
-        res.type("application/json");
-        ProjectVision vision = svcProject.getProjectVision();
-        if (vision != null) {
-            res.status(200);
-        } else {
-            res.status(204);
-        }
-        return vision;
     }
 
     // === ACTIVITIES ========================================================

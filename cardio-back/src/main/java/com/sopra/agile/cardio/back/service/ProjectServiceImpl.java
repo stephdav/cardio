@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
-import com.sopra.agile.cardio.common.model.ProjectVision;
 import com.sopra.agile.cardio.common.model.Sprint;
 
 @Service
@@ -133,17 +132,5 @@ public class ProjectServiceImpl implements ProjectService {
             details.setBest(best);
             details.setOverCommit(100 * overCommit / idx);
         }
-    }
-
-    public ProjectVision getProjectVision() {
-        ProjectVision vision = new ProjectVision();
-        List<String> lines = vision.getLines();
-        lines.add(
-                "Pour les <em>dentistes et leurs assistants</em> qui doivent programmer efficacement des rendez-vous, la <strong>clinique dentaire 2.0</strong> est un logiciel de <strong>gestion de planning</strong>, accessible en <em>local et en web</em>.");
-        lines.add(
-                "Il permet de consulter et de mettre a jour les rendez-vous au bureau comme depuis un autre endroit grâce à l’accès à distance synchronisé.");
-        lines.add(
-                "A la différence de tous les concurrents la <strong>clinique dentaire 2.0</strong> est intuitif et utilisable sans formation particulière.");
-        return vision;
     }
 }
