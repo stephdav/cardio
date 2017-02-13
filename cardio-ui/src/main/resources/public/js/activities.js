@@ -23,7 +23,7 @@ function initActivitiesTable() {
 	      { field: 'name', title: '#', align: 'center' },
 	      { field: 'type', title: 'type', align: 'center', sortable: true, searchable: true },
 	      { field: 'description', title: 'description' },
-	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true }
+	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' }
 	    ]
 	});
 	
@@ -42,6 +42,32 @@ function initActivitiesTable() {
 
 }
 
+function selectFormatter(value, row) {
+  content = '<div class="form-group-sm">'
+  content += '<select class="form-control">';
+  if (value=='DRAFT'){
+	  content += '<option selected>DRAFT</option>';	  
+  } else {
+	  content += '<option>DRAFT</option>';
+  }
+  if (value=='READY'){
+	  content += '<option selected>READY</option>';
+  } else {
+	  content += '<option>READY</option>';
+  }
+  if (value=='PENDING'){
+	  content += '<option selected>PENDING</option>';
+  } else {
+	  content += '<option>PENDING</option>';
+  }
+  if (value=='DONE'){
+	  content += '<option selected>DONE</option>';
+  } else {
+	  content += '<option>DONE</option>';
+  }
+  content += '</select></div>';
+  return content;
+}
 
 function refresh() {
 	$('#activities-table').bootstrapTable('refresh');
