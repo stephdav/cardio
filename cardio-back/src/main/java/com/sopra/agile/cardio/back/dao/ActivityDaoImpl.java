@@ -21,6 +21,7 @@ public class ActivityDaoImpl implements ActivityDao {
     private static final String SQL_FIND_BY_ID = "select * from ACTIVITIES where id = ?";
     private static final String SQL_FIND_BY_NAME = "select * from ACTIVITIES where name = ?";
     private static final String SQL_INSERT = "insert into ACTIVITIES(ID, CATEGORY, NAME, DESCRIPTION, STATUS) values (?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "update ACTIVITIES set CATEGORY=?, NAME=?, DESCRIPTION=?, STATUS=? where ID = ?";
     private static final String SQL_DELETE = "delete from ACTIVITIES where id = ?";
 
     @Autowired
@@ -82,7 +83,18 @@ public class ActivityDaoImpl implements ActivityDao {
             jdbcTemplate.update(SQL_INSERT, activity.getId(), activity.getType().toString(), activity.getName(),
                     activity.getDescription(), activity.getStatus().toString());
         } catch (Exception ex) {
-            ex.printStackTrace();
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return activity;
+    }
+
+    @Override
+    public Activity update(Activity activity) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] update activity ...");
+        try {
+            jdbcTemplate.update(SQL_UPDATE, activity.getType().toString(), activity.getName(),
+                    activity.getDescription(), activity.getStatus().toString(), activity.getId());
+        } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
         return activity;

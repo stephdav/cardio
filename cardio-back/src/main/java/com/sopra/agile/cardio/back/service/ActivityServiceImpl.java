@@ -73,6 +73,35 @@ public class ActivityServiceImpl implements ActivityService {
         return activityDao.add(activity);
     }
 
+    @Override
+    public Activity update(Activity activity) throws CardioTechnicalException, CardioFunctionalException {
+        LOGGER.info("update ...");
+        checkActivityProperties(activity);
+        checkActivityDuplicate(activity);
+        return activityDao.update(activity);
+    }
+
+    @Override
+    public Activity patch(Activity activity) throws CardioTechnicalException, CardioFunctionalException {
+        LOGGER.info("patch ...");
+
+        Activity original = find(activity.getId());
+        if (activity.getType() == null) {
+            activity.setType(original.getType());
+        }
+        if (activity.getName() == null) {
+            activity.setName(original.getName());
+        }
+        if (activity.getDescription() == null) {
+            activity.setDescription(original.getDescription());
+        }
+        if (activity.getStatus() == null) {
+            activity.setStatus(original.getStatus());
+        }
+
+        return update(activity);
+    }
+
     private void checkActivityProperties(Activity activity) throws CardioFunctionalException {
 
         if (activity == null) {

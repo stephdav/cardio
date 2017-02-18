@@ -31,6 +31,10 @@ function initActivitiesTable() {
 		$('#activities-count').text(data.total);
 	});
 	
+	$('#activities-table').on('change', 'select',function (e) {
+		patchActivityStatus($(this).data("id"), this.value);
+	});
+
 	$('#typeFilter').on('change', function(e) {
 		e.stopPropagation();
 		refresh();
@@ -44,7 +48,7 @@ function initActivitiesTable() {
 
 function selectFormatter(value, row) {
   content = '<div class="form-group-sm">'
-  content += '<select class="form-control">';
+  content += '<select data-id="' + row.id + '" class="form-control">';
   if (value=='DRAFT'){
 	  content += '<option selected>DRAFT</option>';	  
   } else {
@@ -91,6 +95,19 @@ function createActivity(type, name, description, status) {
 			log("Error creating activity : " + errorThrown);
 			$('#errors').text(data);
 			$('.form-error').show();
+		}
+	});
+}
+
+function patchActivityStatus(id, status) {
+	var payload = {id: id, status: status};
+	ajaxPatch("/api/activities/" + id, payload, function(data, hv, errorThrown) {
+		if (hv.status == 201 || hv.status == 200) {
+			log("Activity " + hv.location + " updated");
+			// reload list
+			refresh();	
+		} else {
+			log("Error updating activity : " + errorThrown);
 		}
 	});
 }

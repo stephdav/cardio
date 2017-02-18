@@ -75,7 +75,11 @@ public class RestConfig {
         // ACTIVITIES
 
         get("/api/activities", (req, res) -> controller.getAllActivities(req, res), new JsonTransformer());
+
+        post("/api/activities/:id", (req, res) -> controller.updateActivity(req, res, req.params(PARAM_ID)));
         post("/api/activities", (req, res) -> controller.createActivity(req, res));
+
+        patch("/api/activities/:id", (req, res) -> controller.patchActivity(req, res, req.params(PARAM_ID)));
 
         // USERS
 

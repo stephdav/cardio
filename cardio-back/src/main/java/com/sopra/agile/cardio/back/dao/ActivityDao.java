@@ -7,4 +7,5 @@ public interface ActivityDao extends BaseDao<Activity> {
 
     Activity findByName(String name) throws CardioTechnicalException;
 
+    Activity update(Activity activity) throws CardioTechnicalException;
 }

@@ -365,4 +365,36 @@ public class RestController {
         }
         return response;
     }
+
+    public String updateActivity(Request req, Response res, String id) {
+        String response = "OK";
+        try {
+            Activity activity = svcActivity.update(new ObjectMapper<Activity>(Activity.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/activities/" + activity.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
+    }
+
+    public String patchActivity(Request req, Response res, String id) {
+        String response = "OK";
+        try {
+            Activity activity = svcActivity.patch(new ObjectMapper<Activity>(Activity.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/activities/" + activity.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
+    }
 }
