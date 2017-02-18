@@ -20,7 +20,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_ALL = "select * from USERS";
     private static final String SQL_FIND_BY_ID = "select * from USERS where id = ?";
     private static final String SQL_FIND_BY_LOGIN = "select * from USERS where login = ?";
-    private static final String SQL_INSERT = "insert into USERS(ID, LOGIN, FIRSTNAME, LASTNAME) values (?, ?, ?, ?)";
+    private static final String SQL_INSERT = "insert into USERS(LOGIN, FIRSTNAME, LASTNAME) values (?, ?, ?)";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -46,7 +46,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User find(String id) throws CardioTechnicalException {
+    public User find(long id) throws CardioTechnicalException {
         LOGGER.debug("[DAO] find user '{}' ...", id);
         User user = null;
         try {
@@ -76,18 +76,16 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) throws CardioTechnicalException {
         LOGGER.debug("[DAO] add new user ...");
-        user.setId(UIDGenerator.getUniqueId("USR"));
         try {
-            jdbcTemplate.update(SQL_INSERT, user.getId(), user.getLogin(), user.getFirstname(), user.getLastname());
+            jdbcTemplate.update(SQL_INSERT, user.getLogin(), user.getFirstname(), user.getLastname());
         } catch (Exception ex) {
-            ex.printStackTrace();
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
         return user;
     }
 
     @Override
-    public void remove(String id) {
+    public void remove(long id) {
         LOGGER.info("remove '{}' ...", id);
         String SQL = "delete from USERS where id = ?";
         jdbcTemplate.update(SQL, id);

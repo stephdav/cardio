@@ -1,47 +1,52 @@
 package com.sopra.agile.cardio.common.model;
 
-public class User extends Base {
+public class User {
 
-	private String login;
-	private String firstname;
-	private String lastname;
+    private long id;
+    private String login;
+    private String firstname;
+    private String lastname;
 
-	public User() {
-		super();
-	}
+    public User() {
+        super();
+    }
 
-	public User(final String id, final String login) {
-		super(id);
-		this.login = login;
-	}
+    public User(long id, final String login, final String firstname, final String lastname) {
+        this.id = id;
+        this.login = login;
+        this.firstname = firstname;
+        this.lastname = lastname;
+    }
 
-	public User(final String id, final String login, final String firstname, final String lastname) {
-		this(id, login);
-		this.firstname = firstname;
-		this.lastname = lastname;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String getLogin() {
-		return login;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public String getFirstname() {
-		return firstname;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+    public String getFirstname() {
+        return firstname;
+    }
 
-	public String getLastname() {
-		return lastname;
-	}
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
 }

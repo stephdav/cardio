@@ -49,21 +49,21 @@ public class UserDaoTest {
     @Test
     public void testFindUser() throws CardioTechnicalException {
         // User must be found
-        User usr = dao.find("USR-1");
+        User usr = dao.find(1);
         assertNotNull(usr);
         assertEquals("SDD", usr.getLogin());
         assertEquals("Stephane", usr.getFirstname());
         assertEquals("David", usr.getLastname());
 
         // User not found
-        User usrUNK = dao.find("UNK");
+        User usrUNK = dao.find(0);
         assertNull(usrUNK);
     }
 
     @Test
     public void testAddUser() throws CardioTechnicalException {
         int count = count(jdbc, USERS);
-        dao.add(new User(null, "TST", "TST", "TST"));
+        dao.add(new User(999, "TST", "TST", "TST"));
         assertEquals(count + 1, count(jdbc, USERS));
     }
 
@@ -84,7 +84,7 @@ public class UserDaoTest {
     @Test
     public void testRemoveUser() throws CardioTechnicalException {
         int count = count(jdbc, USERS);
-        dao.remove("TO_BE_DELETED");
+        dao.remove(666);
         assertEquals(count - 1, count(jdbc, USERS));
     }
 

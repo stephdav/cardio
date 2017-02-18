@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         LOGGER.info("find '{}' ...", id);
         User response = null;
         try {
-            response = userDao.find(id);
+            response = userDao.find(Long.parseLong(id));
         } catch (CardioTechnicalException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService {
         User usr = find(id);
         if (usr != null) {
             try {
-                userDao.remove(id);
+                userDao.remove(Long.parseLong(id));
             } catch (CardioTechnicalException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -103,10 +103,9 @@ public class UserServiceImpl implements UserService {
     private void checkUserDuplicate(User user) throws CardioFunctionalException, CardioTechnicalException {
         // Looking for an activity with same name
         User found = findByLogin(user.getLogin());
-        if (found != null && (user.getId() == null || !user.getId().equals(found.getId()))) {
+        if (found != null && user.getId() == found.getId()) {
             LOGGER.error("A user '{}' already exists", user.getLogin());
             throw new CardioFunctionalException("user with same login already exists");
         }
     }
-
 }

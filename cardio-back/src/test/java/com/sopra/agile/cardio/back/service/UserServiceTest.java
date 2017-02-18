@@ -33,15 +33,15 @@ public class UserServiceTest {
         ReflectionTestUtils.setField(svc, "userDao", dao);
 
         User[] aUsers = new User[3];
-        for (int idx = 0; idx < 3; idx++) {
-            aUsers[idx] = new User("USR-" + idx, "LOGIN" + idx, "FIRSTNAME" + idx, "LASTNAME" + idx);
+        for (int idx = 1; idx <= 3; idx++) {
+            aUsers[idx - 1] = new User(idx, "LOGIN" + idx, "FIRSTNAME" + idx, "LASTNAME" + idx);
         }
         List<User> users = Arrays.asList(aUsers);
         when(dao.all()).thenReturn(users);
-        when(dao.find("USR-0")).thenReturn(aUsers[0]);
-        when(dao.find("UNK")).thenReturn(null);
+        when(dao.find(1)).thenReturn(aUsers[0]);
+        when(dao.find(0)).thenReturn(null);
 
-        User newUser = new User("TST", "TST", "TST", "TST");
+        User newUser = new User(999, "TST", "TST", "TST");
         when(dao.add(any(User.class))).thenReturn(newUser);
 
     }
@@ -56,26 +56,26 @@ public class UserServiceTest {
     @Test
     public void testFindUser() {
         // User must be found
-        User usr01 = svc.find("USR-0");
+        User usr01 = svc.find("1");
         assertNotNull(usr01);
-        assertEquals("LOGIN0", usr01.getLogin());
+        assertEquals("LOGIN1", usr01.getLogin());
 
         // User not found
-        User usrUNK = svc.find("UNK");
+        User usrUNK = svc.find("0");
         assertNull(usrUNK);
     }
 
     @Test
     public void testAddUser() throws CardioTechnicalException, CardioFunctionalException {
-        User usr = svc.add(new User(null, "TST", "TST", "TST"));
+        User usr = svc.add(new User(0, "TST", "TST", "TST"));
         assertNotNull(usr);
         assertEquals("TST", usr.getLogin());
     }
 
     @Test
     public void testRemoveUser() throws CardioTechnicalException {
-        svc.remove("USR-0");
-        verify(dao).remove("USR-0");
+        svc.remove("2");
+        verify(dao).remove(0);
     }
 
 }
