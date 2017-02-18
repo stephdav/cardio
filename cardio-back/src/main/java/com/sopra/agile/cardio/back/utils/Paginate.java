@@ -20,6 +20,7 @@ public class Paginate<T> {
 
     private static final int DEFAULT_PAGE = 1;
     private static final int DEFAULT_LIMIT = 10;
+    private static final int MAX_LIMIT = 50;
 
     private final Class<T> clazz;
 
@@ -46,9 +47,8 @@ public class Paginate<T> {
         // === Status code ===
 
         int httpCode = 206;
-        if (limit > DEFAULT_LIMIT) {
-            limit = DEFAULT_LIMIT;
-            res.status(400);
+        if (limit > MAX_LIMIT) {
+            httpCode = 406;
         } else if (total < limit) {
             httpCode = 200;
         }
@@ -66,7 +66,7 @@ public class Paginate<T> {
 
         // === Response header ===
 
-        String acceptRange = String.format("%s %d", clazz.getSimpleName().toLowerCase(), DEFAULT_LIMIT);
+        String acceptRange = String.format("%s %d", clazz.getSimpleName().toLowerCase(), MAX_LIMIT);
         LOGGER.debug("{}: {}", ACCEPT_RANGE, acceptRange);
         res.header(ACCEPT_RANGE, acceptRange);
 

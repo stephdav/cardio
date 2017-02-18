@@ -1,6 +1,7 @@
-INSERT INTO USERS VALUES ('01', 'SDD', 'Stephane', 'David');
-INSERT INTO USERS VALUES ('02', 'BBB', 'Babane', '');
-INSERT INTO USERS VALUES ('03', 'TBO', 'Tristan', 'Bouju');
+INSERT INTO USERS VALUES ('USR-1', 'SDD', 'Stephane', 'David');
+INSERT INTO USERS VALUES ('USR-2', 'TBO', 'Tristan', 'Bouju');
+INSERT INTO USERS VALUES ('USR-3', 'DRO', 'Daniel', 'Roina');
+INSERT INTO USERS VALUES ('USR-4', 'JBA', 'Jennifer', 'Bassard');
 
 INSERT INTO SPRINTS VALUES ('SPR-1', '1', DATE '2016-09-19', DATE '2016-09-29', 'sprint 1', 30, 30);
 INSERT INTO SPRINTS VALUES ('SPR-2', '2', DATE '2016-10-03', DATE '2016-10-13', 'sprint 2', 35, 35);

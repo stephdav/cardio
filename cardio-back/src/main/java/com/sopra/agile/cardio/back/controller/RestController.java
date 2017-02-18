@@ -102,12 +102,15 @@ public class RestController {
                 response.sort(Comparator.comparing(User::getLastname));
             } else {
                 LOGGER.debug("unknown sorting key {}", key);
-                response.sort(Comparator.comparing(User::getId));
+                response.sort(Comparator.comparing(User::getLogin));
             }
-            if (req.queryParams("sortOrder") != null && "desc".equals(req.queryParams("sortOrder"))) {
-                LOGGER.debug("reverse order");
-                Collections.reverse(response);
-            }
+        } else {
+            // default sorting
+            response.sort(Comparator.comparing(User::getLogin));
+        }
+        if (req.queryParams("sortOrder") != null && "desc".equals(req.queryParams("sortOrder"))) {
+            LOGGER.debug("reverse order");
+            Collections.reverse(response);
         }
 
         bta.setTotal(response.size());
