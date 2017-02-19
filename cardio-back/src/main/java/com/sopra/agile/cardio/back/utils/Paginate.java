@@ -13,7 +13,7 @@ public class Paginate<T> {
     private static final Logger LOGGER = LoggerFactory.getLogger(Paginate.class);
 
     private static final String ACCEPT_RANGE = "Accept-Range";
-    private static final String CONTENT_RANGE = "Content-Range";
+    public static final String CONTENT_RANGE = "Content-Range";
 
     private static final String PAGE = "page";
     private static final String LIMIT = "limit";

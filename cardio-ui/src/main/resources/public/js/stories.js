@@ -3,35 +3,34 @@ $(document).ready(function() {
 });
 
 function initActivities() {
-	$('#addActivity').on('click', function(e) {
+	$('#addStory').on('click', function(e) {
 		e.stopPropagation();
-		createActivity($('#activityType').val(), $('#activityName').val(), $('#activityDesc').val(), $('#activityStatus').val());
+		createStory($('#storyDesc').val(), $('#storyStatus').val());
 	});
 
 	initActivitiesTable();
 }
 
 function initActivitiesTable() {
-	$('#activities-table').bootstrapTable({
+	$('#stories-table').bootstrapTable({
 		pagination: true,
-		url: '/api/activities',
+		url: '/api/stories?bootstrap',
 		sidePagination: 'server',
 		queryParamsType: 'page',
 		queryParams: 'queryParams',
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
-	      { field: 'name', title: '#', align: 'center' },
-	      { field: 'type', title: 'type', align: 'center', sortable: true, searchable: true },
+	      { field: 'id', title: '#', align: 'center' },
 	      { field: 'description', title: 'description' },
 	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' }
 	    ]
 	});
 	
-	$('#activities-table').on('load-success.bs.table', function (e, data) {
-		$('#activities-count').text(data.total);
+	$('#stories-table').on('load-success.bs.table', function (e, data) {
+		$('#stories-count').text(data.total);
 	});
 	
-	$('#activities-table').on('change', 'select',function (e) {
+	$('#stories-table').on('change', 'select',function (e) {
 		patchActivityStatus($(this).data("id"), this.value);
 	});
 
@@ -74,25 +73,23 @@ function selectFormatter(value, row) {
 }
 
 function refresh() {
-	$('#activities-table').bootstrapTable('refresh');
+	$('#stories-table').bootstrapTable('refresh');
 }
 
-function createActivity(type, name, description, status) {
-	var payload = {type: type, name: name, description: description, status: status};
-	ajaxPost("/api/activities", payload, function(data, hv, errorThrown) {
+function createStory(description, status) {
+	var payload = {description: description, status: status};
+	ajaxPost("/api/stories", payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
-			log("Activity " + hv.location + " created");
+			log("Story " + hv.location + " created");
 			// reset form
-			$('#activityType').val('US');
-			$('#activityName').val('');
-			$('#activityDesc').val('');
-			$('#activityStatus').val('READY');
+			$('#storyDesc').val('');
+			$('#storyStatus').val('READY');
 			$('#errors').text('');
 			$('.form-error').hide();
 			// reload list
 			refresh();	
 		} else {
-			log("Error creating activity : " + errorThrown);
+			log("Error creating story : " + errorThrown);
 			$('#errors').text(data);
 			$('.form-error').show();
 		}
@@ -101,19 +98,18 @@ function createActivity(type, name, description, status) {
 
 function patchActivityStatus(id, status) {
 	var payload = {id: id, status: status};
-	ajaxPatch("/api/activities/" + id, payload, function(data, hv, errorThrown) {
+	ajaxPatch("/api/stories/" + id, payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
-			log("Activity " + hv.location + " updated");
-			// reload list
+			log("Story " + hv.location + " updated");
 			refresh();	
 		} else {
-			log("Error updating activity : " + errorThrown);
+			log("Error updating story : " + errorThrown);
 		}
 	});
 }
 
 function queryParams() {
-	var options = $('#activities-table').bootstrapTable('getOptions');
+	var options = $('#stories-table').bootstrapTable('getOptions');
 	
 	var params = {};
 	params['page'] = options.pageNumber;
@@ -121,10 +117,6 @@ function queryParams() {
 	params['sortName'] = options.sortName;
 	params['sortOrder'] = options.sortOrder;
 	
-	var type = $('#typeFilter').val();
-	if ( type != undefined && type != '') {
-		params['type'] = type;
-	}
 	var status = $('#statusFilter').val();
 	if ( status != undefined && status != '') {
 		params['status'] = status;

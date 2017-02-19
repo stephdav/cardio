@@ -13,34 +13,23 @@
         <div class="row no-padding">
           <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-server fa-3x"></i></div>
           <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="activities-count">-</span></div>
-            <div class="text-muted">activités</div>
+            <div class="large"><span id="stories-count">-</span></div>
+            <div class="text-muted">stories</div>
           </div>
         </div>
       </div>
 
       <div class="panel panel-green">
-        <div class="panel-heading">new activity</div>
+        <div class="panel-heading">new story</div>
         <div class="panel-body">
           <div class="form-horizontal">
             <div class="form-group">
-              <label class="col-sm-3 control-label" for="activityType">type</label>
-              <div class="col-sm-9"><select class="form-control" id="activityType">
-                <option selected>US</option>
-                <option>TASK</option>
-              </select></div>
+              <label class="col-sm-3 control-label" for="storyDesc">description</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="storyDesc"></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-3 control-label" for="activityName">#</label>
-              <div class="col-sm-9"><input type="text" class="form-control" id="activityName" placeholder="#"></div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="activityDesc">description</label>
-              <div class="col-sm-9"><input type="text" class="form-control" id="activityDesc"></div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-3 control-label" for="activityStatus">status</label>
-              <div class="col-sm-9"><select class="form-control" id="activityStatus">
+              <label class="col-sm-3 control-label" for="storyStatus">status</label>
+              <div class="col-sm-9"><select class="form-control" id="storyStatus">
                 <option>DRAFT</option>
                 <option selected>READY</option>
                 <option>PENDING</option>
@@ -49,7 +38,7 @@
             </div>
             <div class="form-group">
               <div class="col-sm-12">
-                <button id="addActivity" type="button" class="btn btn-default pull-right">add activity</button>
+                <button id="addStory" type="button" class="btn btn-default pull-right">add story</button>
               </div>
             </div>
             <div class="form-group form-error">
@@ -67,17 +56,9 @@
 
       <div class="panel panel-green">
         <div class="panel-heading">
-        activities
+        stories
           <div class="table-filters pull-right">
             <div class="form-inline">
-              <div class="form-group form-group-sm">
-                <label class="control-label" for="typeFilter">type</label>
-                <select class="form-control" id="typeFilter">
-                  <option></option>
-                  <option>US</option>
-                  <option>TASK</option>
-                </select>
-              </div>
               <div class="form-group form-group-sm">
                 <label class="control-label" for="statusFilter">status</label>
                 <select class="form-control" id="statusFilter">
@@ -92,7 +73,7 @@
           </div>
         </div>
         <div class="panel-body">
-          <table id="activities-table"></table>
+          <table id="stories-table"></table>
         </div>
       </div>
 
@@ -104,5 +85,5 @@
 
 {% block scripts %}
   <script src="/js/ext/bootstrap-table.min.js"></script>
-  <script src="/js/activities.js"></script>
+  <script src="/js/stories.js"></script>
 {% endblock %}

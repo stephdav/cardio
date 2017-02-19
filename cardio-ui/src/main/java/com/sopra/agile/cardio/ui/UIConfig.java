@@ -7,11 +7,11 @@ import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
 import com.sopra.agile.cardio.ui.controller.AboutController;
-import com.sopra.agile.cardio.ui.controller.ActivitiesController;
 import com.sopra.agile.cardio.ui.controller.IndexController;
 import com.sopra.agile.cardio.ui.controller.PlanningController;
 import com.sopra.agile.cardio.ui.controller.SprintController;
 import com.sopra.agile.cardio.ui.controller.SprintsController;
+import com.sopra.agile.cardio.ui.controller.StoriesController;
 import com.sopra.agile.cardio.ui.controller.UsersController;
 import com.sopra.agile.cardio.ui.utils.Filters;
 import com.sopra.agile.cardio.ui.utils.Path;
@@ -37,7 +37,7 @@ public class UIConfig {
         get(Path.Web.SPRINTS, SprintsController.SPRINTS);
         get(Path.Web.PLANNING, PlanningController.PLANNING);
         get(Path.Web.SPRINT, SprintController.SPRINT);
-        get(Path.Web.ACTIVITIES, ActivitiesController.ACTIVITIES);
+        get(Path.Web.STORIES, StoriesController.STORIES);
         get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
         // Set up after-filters (called after each get/post)

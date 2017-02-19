@@ -79,14 +79,14 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws CardioTechnicalException, CardioFunctionalException {
         List<Sprint> sprints = svc.all();
         assertNotNull(sprints);
         assertEquals(3, sprints.size());
     }
 
     @Test
-    public void testFindSprint() {
+    public void testFindSprint() throws CardioTechnicalException, CardioFunctionalException {
         // Sprint must be found
         Sprint sprint = svc.find("SPR-0");
         assertNotNull(sprint);

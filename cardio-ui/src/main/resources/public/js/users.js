@@ -19,7 +19,7 @@ function initUsers() {
 function initUsersTable() {
 	$('#users-table').bootstrapTable({
 		pagination: true,
-		url: '/api/users',
+		url: '/api/users?bootstrap',
 		sidePagination: 'server',
 		queryParamsType: 'page',
 		queryParams: 'queryParams',

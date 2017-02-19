@@ -47,14 +47,14 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testAll() {
+    public void testAll() throws CardioTechnicalException, CardioFunctionalException {
         List<User> users = svc.all();
         assertNotNull(users);
         assertEquals(3, users.size());
     }
 
     @Test
-    public void testFindUser() {
+    public void testFindUser() throws CardioTechnicalException, CardioFunctionalException {
         // User must be found
         User usr01 = svc.find("1");
         assertNotNull(usr01);

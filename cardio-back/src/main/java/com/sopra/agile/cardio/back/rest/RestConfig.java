@@ -7,11 +7,20 @@ import static spark.Spark.get;
 import static spark.Spark.patch;
 import static spark.Spark.post;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sopra.agile.cardio.back.controller.RestController;
+import com.sopra.agile.cardio.back.controller.ProjectController;
+import com.sopra.agile.cardio.back.controller.SprintController;
+import com.sopra.agile.cardio.back.controller.StoryController;
+import com.sopra.agile.cardio.back.controller.UserController;
+import com.sopra.agile.cardio.back.utils.BootstrapTable;
 import com.sopra.agile.cardio.back.utils.JsonTransformer;
+import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.model.Story;
+import com.sopra.agile.cardio.common.model.User;
 
 public class RestConfig {
 
@@ -20,10 +29,19 @@ public class RestConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RestConfig.class);
 
-    private RestController controller;
+    private ProjectController projectController;
+    private UserController userController;
+    private SprintController sprintController;
+    private StoryController storyController;
 
-    public RestConfig(RestController controller) {
-        this.controller = controller;
+    public RestConfig(ProjectController projectController, UserController userController,
+            SprintController sprintController, StoryController storyController) {
+
+        this.projectController = projectController;
+        this.userController = userController;
+        this.sprintController = sprintController;
+        this.storyController = storyController;
+
         setupFilters();
         setupRoutes();
         exception(Exception.class, (exception, request, response) -> {
@@ -48,44 +66,67 @@ public class RestConfig {
 
     private void setupRoutes() {
 
-        // PARAMETERS
-        get("/api/version", (req, res) -> controller.getVersion(req, res), new JsonTransformer());
-
-        get("/api/config/parameters/:key", (req, res) -> controller.getParameter(req, res, req.params(PARAM_KEY)),
-                new JsonTransformer());
-
         // PROJECT
 
-        get("/api/project/data", (req, res) -> controller.getProjectData(req, res), new JsonTransformer());
+        get("/api/version", (req, res) -> projectController.getVersion(req, res), new JsonTransformer());
 
-        // SPRINTS
+        get("/api/config/parameters/:key",
+                (req, res) -> projectController.getParameter(req, res, req.params(PARAM_KEY)), new JsonTransformer());
 
-        get("/api/sprints/:id/data", (req, res) -> controller.getSprintData(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
-        get("/api/sprints/:id", (req, res) -> controller.getSprint(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
-        get("/api/sprints", (req, res) -> controller.getAllSprints(req, res), new JsonTransformer());
-
-        post("/api/sprints/:id/data", (req, res) -> controller.updateSprintData(req, res, req.params(PARAM_ID)));
-        post("/api/sprints/:id", (req, res) -> controller.updateSprintProperties(req, res, req.params(PARAM_ID)));
-        post("/api/sprints", (req, res) -> controller.createSprint(req, res));
-
-        patch("/api/sprints/:id", (req, res) -> controller.patchSprintProperties(req, res, req.params(PARAM_ID)));
-
-        // ACTIVITIES
-
-        get("/api/activities", (req, res) -> controller.getAllActivities(req, res), new JsonTransformer());
-
-        post("/api/activities/:id", (req, res) -> controller.updateActivity(req, res, req.params(PARAM_ID)));
-        post("/api/activities", (req, res) -> controller.createActivity(req, res));
-
-        patch("/api/activities/:id", (req, res) -> controller.patchActivity(req, res, req.params(PARAM_ID)));
+        get("/api/project/data", (req, res) -> projectController.getProjectData(req, res), new JsonTransformer());
 
         // USERS
 
-        get("/api/users", (req, res) -> controller.getAllUsers(req, res), new JsonTransformer());
-        get("/api/users/:id", (req, res) -> controller.getUser(req, res, req.params(PARAM_ID)), new JsonTransformer());
-        post("/api/users", (req, res) -> controller.createUser(req, res));
-        delete("/api/users/:id", (req, res) -> controller.deleteUser(req, res, req.params(PARAM_ID)));
+        get("/api/users", (req, res) -> {
+            List<User> list = userController.getAllUsers(req, res);
+            if (req.queryParams("bootstrap") == null) {
+                return list;
+            } else {
+                return new BootstrapTable<User>().convert(list, res);
+            }
+        } , new JsonTransformer());
+
+        get("/api/users/:id", (req, res) -> userController.getUser(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
+        post("/api/users", (req, res) -> userController.createUser(req, res));
+        delete("/api/users/:id", (req, res) -> userController.deleteUser(req, res, req.params(PARAM_ID)));
+
+        // SPRINTS
+
+        get("/api/sprints/:id/data", (req, res) -> sprintController.getSprintData(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
+        get("/api/sprints/:id", (req, res) -> sprintController.getSprint(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
+
+        get("/api/sprints", (req, res) -> {
+            List<Sprint> list = sprintController.getAllSprints(req, res);
+            if (req.queryParams("bootstrap") == null) {
+                return list;
+            } else {
+                return new BootstrapTable<Sprint>().convert(list, res);
+            }
+        } , new JsonTransformer());
+
+        post("/api/sprints/:id/data", (req, res) -> sprintController.updateSprintData(req, res, req.params(PARAM_ID)));
+        post("/api/sprints/:id", (req, res) -> sprintController.updateSprintProperties(req, res, req.params(PARAM_ID)));
+        post("/api/sprints", (req, res) -> sprintController.createSprint(req, res));
+
+        patch("/api/sprints/:id", (req, res) -> sprintController.patchSprintProperties(req, res, req.params(PARAM_ID)));
+
+        // STORIES
+
+        get("/api/stories", (req, res) -> {
+            List<Story> list = storyController.getAllStorys(req, res);
+            if (req.queryParams("bootstrap") == null) {
+                return list;
+            } else {
+                return new BootstrapTable<Story>().convert(list, res);
+            }
+        } , new JsonTransformer());
+
+        post("/api/stories/:id", (req, res) -> storyController.updateStory(req, res, req.params(PARAM_ID)));
+        post("/api/stories", (req, res) -> storyController.createStory(req, res));
+
+        patch("/api/stories/:id", (req, res) -> storyController.patchStory(req, res, req.params(PARAM_ID)));
     }
 }

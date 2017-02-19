@@ -6,7 +6,10 @@ import static spark.Spark.threadPool;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.sopra.agile.cardio.back.config.CardioBack;
-import com.sopra.agile.cardio.back.controller.RestController;
+import com.sopra.agile.cardio.back.controller.ProjectController;
+import com.sopra.agile.cardio.back.controller.SprintController;
+import com.sopra.agile.cardio.back.controller.StoryController;
+import com.sopra.agile.cardio.back.controller.UserController;
 import com.sopra.agile.cardio.back.rest.RestConfig;
 import com.sopra.agile.cardio.back.service.ConfigService;
 import com.sopra.agile.cardio.back.utils.DatabaseScripts;
@@ -42,8 +45,8 @@ public class App {
         new UIConfig();
 
         // Setup REST
-        new RestConfig(ctx.getBean(RestController.class));
-
+        new RestConfig(ctx.getBean(ProjectController.class), ctx.getBean(UserController.class),
+                ctx.getBean(SprintController.class), ctx.getBean(StoryController.class));
     }
 
     public void registerStop() {

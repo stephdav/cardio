@@ -7,10 +7,10 @@ import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 
 public interface BaseService<T> {
 
-    List<T> all();
+    List<T> all() throws CardioTechnicalException, CardioFunctionalException;
 
-    T find(String id);
+    T find(String id) throws CardioTechnicalException, CardioFunctionalException;
 
-    T add(T task) throws CardioTechnicalException, CardioFunctionalException;
+    T add(T entity) throws CardioTechnicalException, CardioFunctionalException;
 
 }
