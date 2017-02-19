@@ -114,12 +114,20 @@ public class SprintController {
 
     public SprintData getSprintData(Request req, Response res, String id) {
         res.type("application/json");
-        SprintData data = svcSprint.findData(id);
-        if (data != null) {
-            res.status(200);
-        } else {
-            res.status(204);
+        SprintData data = null;
+        try {
+            data = svcSprint.findData(id);
+            if (data != null) {
+                res.status(200);
+            } else {
+                res.status(204);
+            }
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
         }
+
         return data;
     }
 

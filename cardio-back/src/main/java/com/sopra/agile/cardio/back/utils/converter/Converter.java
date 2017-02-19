@@ -31,20 +31,24 @@ public class Converter {
 
     public Sprint map(DbSprint sprint) throws CardioTechnicalException {
         Sprint response = null;
-        try {
-            response = mapSprint2Db.map(sprint);
-        } catch (Exception ex) {
-            throw new CardioTechnicalException("Failure when converting Sprint into DbSprint", ex);
+        if (sprint != null) {
+            try {
+                response = mapSprint2Db.map(sprint);
+            } catch (Exception ex) {
+                throw new CardioTechnicalException("Failure when converting Sprint into DbSprint", ex);
+            }
         }
         return response;
     }
 
     public DbSprint map(Sprint sprint) throws CardioTechnicalException {
         DbSprint response = null;
-        try {
-            response = mapDb2Sprint.map(sprint);
-        } catch (Exception ex) {
-            throw new CardioTechnicalException("Failure when converting DbSprint into Sprint", ex);
+        if (sprint != null) {
+            try {
+                response = mapDb2Sprint.map(sprint);
+            } catch (Exception ex) {
+                throw new CardioTechnicalException("Failure when converting DbSprint into Sprint", ex);
+            }
         }
         return response;
     }

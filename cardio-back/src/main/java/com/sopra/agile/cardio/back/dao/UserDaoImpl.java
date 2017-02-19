@@ -18,9 +18,10 @@ public class UserDaoImpl implements UserDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
 
     private static final String SQL_ALL = "select * from USERS";
-    private static final String SQL_FIND_BY_ID = "select * from USERS where id = ?";
-    private static final String SQL_FIND_BY_LOGIN = "select * from USERS where login = ?";
+    private static final String SQL_FIND_BY_ID = "select * from USERS where id=?";
+    private static final String SQL_FIND_BY_LOGIN = "select * from USERS where login=?";
     private static final String SQL_INSERT = "insert into USERS(LOGIN, FIRSTNAME, LASTNAME) values (?, ?, ?)";
+    private static final String SQL_DELETE = "delete from USERS where id=?";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -35,7 +36,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> all() throws CardioTechnicalException {
-        LOGGER.info("[DAO] all users ...");
+        LOGGER.debug("[DAO] all users ...");
         List<User> users = null;
         try {
             users = jdbcTemplate.query(SQL_ALL, new UserMapper());
@@ -85,10 +86,13 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void remove(long id) {
-        LOGGER.info("remove '{}' ...", id);
-        String SQL = "delete from USERS where id = ?";
-        jdbcTemplate.update(SQL, id);
+    public void remove(long id) throws CardioTechnicalException {
+        LOGGER.info("[DAO] remove '{}' ...", id);
+        try {
+            jdbcTemplate.update(SQL_DELETE, id);
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
     }
 
 }

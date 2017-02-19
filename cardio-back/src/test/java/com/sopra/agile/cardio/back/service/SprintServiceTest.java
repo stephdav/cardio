@@ -118,7 +118,7 @@ public class SprintServiceTest {
     }
 
     @Test
-    public void testFindData() {
+    public void testFindData() throws CardioTechnicalException, CardioFunctionalException {
         SprintData data = svc.findData("SPR-1");
         assertNotNull(data);
 

@@ -33,7 +33,7 @@ public class StoryServiceTest {
         storyDao = mock(StoryDao.class);
         ReflectionTestUtils.setField(svc, "storyDao", storyDao);
 
-        Story[] aStorys = new Story[3];
+        Story[] aStorys = new Story[4];
 
         aStorys[0] = new Story(1, "us 1", StoryStatus.DRAFT, 1, 1);
         aStorys[1] = new Story(2, "us 2", StoryStatus.READY, 2, 2);
@@ -56,7 +56,7 @@ public class StoryServiceTest {
     public void testAll() throws CardioTechnicalException, CardioFunctionalException {
         List<Story> activities = svc.all();
         assertNotNull(activities);
-        assertEquals(3, activities.size());
+        assertEquals(4, activities.size());
     }
 
     @Test

@@ -68,7 +68,7 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testUpdateSprintDay() {
+    public void testUpdateSprintDay() throws CardioTechnicalException {
         int count = count(jdbc, SPRINT_DAYS);
         dao.insertOrUpdate(new SprintDay(new LocalDate("2016-07-14"), 789));
         assertEquals(count, count(jdbc, SPRINT_DAYS));
@@ -82,14 +82,14 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testFindBetween() {
+    public void testFindBetween() throws CardioTechnicalException {
         List<SprintDay> days = dao.findBetween("2016-01-01", "2016-01-31");
         assertNotNull(days);
         assertEquals(6, days.size());
     }
 
     @Test
-    public void testFindLastBetween() {
+    public void testFindLastBetween() throws CardioTechnicalException {
         SprintDay day = dao.findLastBetween("2016-01-01", "2016-01-10");
         assertNotNull(day);
         assertEquals(new LocalDate("2016-01-08"), day.getDay());
@@ -100,7 +100,7 @@ public class SprintDayDaoTest {
     }
 
     @Test
-    public void testFindLastBetween_noResult() {
+    public void testFindLastBetween_noResult() throws CardioTechnicalException {
         SprintDay day = dao.findLastBetween("2016-03-01", "2016-03-10");
         assertNull(day);
     }

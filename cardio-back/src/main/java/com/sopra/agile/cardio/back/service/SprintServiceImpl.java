@@ -137,7 +137,7 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public SprintData findData(String id) {
+    public SprintData findData(String id) throws CardioTechnicalException {
         return getSprintDataDetails(find(id));
     }
 
@@ -177,7 +177,7 @@ public class SprintServiceImpl implements SprintService {
         update(sprint);
     }
 
-    private SprintData getSprintDataDetails(Sprint sprint) {
+    private SprintData getSprintDataDetails(Sprint sprint) throws CardioTechnicalException {
         SprintData sprintData = new SprintData();
 
         SprintDataDetails details = new SprintDataDetails();
@@ -215,7 +215,7 @@ public class SprintServiceImpl implements SprintService {
         return data;
     }
 
-    private Map<String, String> getDataMap(Sprint sprint) {
+    private Map<String, String> getDataMap(Sprint sprint) throws CardioTechnicalException {
         Map<String, String> values = new HashMap<String, String>();
 
         if (sprint != null) {

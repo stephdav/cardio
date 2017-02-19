@@ -17,7 +17,7 @@ public interface SprintService extends BaseService<Sprint> {
 
     Sprint patch(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException;
 
-    SprintData findData(String id);
+    SprintData findData(String id) throws CardioTechnicalException, CardioFunctionalException;
 
     void updateData(String id, SprintData data) throws CardioTechnicalException, CardioFunctionalException;
 }

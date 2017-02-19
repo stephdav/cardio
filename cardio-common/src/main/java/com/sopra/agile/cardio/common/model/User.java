@@ -1,8 +1,7 @@
 package com.sopra.agile.cardio.common.model;
 
-public class User {
+public class User extends BaseLong {
 
-    private long id;
     private String login;
     private String firstname;
     private String lastname;
@@ -12,18 +11,10 @@ public class User {
     }
 
     public User(long id, final String login, final String firstname, final String lastname) {
-        this.id = id;
+        super(id);
         this.login = login;
         this.firstname = firstname;
         this.lastname = lastname;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getLogin() {

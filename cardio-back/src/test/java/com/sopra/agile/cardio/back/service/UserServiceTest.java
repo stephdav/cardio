@@ -39,6 +39,7 @@ public class UserServiceTest {
         List<User> users = Arrays.asList(aUsers);
         when(dao.all()).thenReturn(users);
         when(dao.find(1)).thenReturn(aUsers[0]);
+        when(dao.find(2)).thenReturn(aUsers[1]);
         when(dao.find(0)).thenReturn(null);
 
         User newUser = new User(999, "TST", "TST", "TST");
@@ -75,7 +76,7 @@ public class UserServiceTest {
     @Test
     public void testRemoveUser() throws CardioTechnicalException {
         svc.remove("2");
-        verify(dao).remove(0);
+        verify(dao).remove(2);
     }
 
 }
