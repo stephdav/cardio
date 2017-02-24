@@ -75,6 +75,8 @@ public class RestConfig {
 
         get("/api/project/data", (req, res) -> projectController.getProjectData(req, res), new JsonTransformer());
 
+        get("/api/project/kanban", (req, res) -> projectController.getKanban(req, res), new JsonTransformer());
+
         // USERS
 
         get("/api/users", (req, res) -> {

@@ -1,0 +1,50 @@
+{% extends "templates/base.peb" %}
+
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-lg-4">
+      <div class="panel panel-green panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-empty fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="story-to-do">-</span></div>
+            <div class="text-muted">to do</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel panel-green panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-half fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="story-pending">-</span></div>
+            <div class="text-muted">pending</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="panel panel-green panel-widget ">
+        <div class="row no-padding">
+          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-full fa-3x"></i></div>
+          <div class="col-sm-9 col-lg-9 widget-right">
+            <div class="large"><span id="story-done">-</span></div>
+            <div class="text-muted">done</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/fnProject.js"></script>
+  <script src="/js/kanban.js"></script>
+{% endblock %}

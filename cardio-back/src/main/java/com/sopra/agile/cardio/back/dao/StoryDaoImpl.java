@@ -18,7 +18,8 @@ public class StoryDaoImpl implements StoryDao {
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryDaoImpl.class);
 
     private static final String SQL_ALL = "select * from STORIES";
-    private static final String SQL_FIND_BY_ID = "select * from STORIES where id=?";
+    private static final String SQL_FIND_BY_ID = "select * from STORIES where ID=?";
+    private static final String SQL_FIND_BY_STATUS = "select * from STORIES where STATUS='%s'";
     private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, LAST_UPDATE, CONTRIBUTION, ESTIMATE) values (?, ?, SYSDATE, ?, ?)";
     private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=? where ID=?";
     private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=SYSDATE, CONTRIBUTION=?, ESTIMATE=? where ID=?";
@@ -59,6 +60,19 @@ public class StoryDaoImpl implements StoryDao {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
         return story;
+    }
+
+    @Override
+    public List<Story> findByStatus(String status) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] find with status '{}' ...", status);
+        String sql = String.format(SQL_FIND_BY_STATUS, status);
+        List<Story> stories = null;
+        try {
+            stories = jdbcTemplate.query(sql, new StoryMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return stories;
     }
 
     @Override

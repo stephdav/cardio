@@ -12,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
+import com.sopra.agile.cardio.back.dao.StoryDao;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Kanban;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.Sprint;
+import com.sopra.agile.cardio.common.model.Story;
+import com.sopra.agile.cardio.common.model.StoryStatus;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -26,6 +30,9 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Autowired
     private SprintDao sprintDao;
+
+    @Autowired
+    private StoryDao storyDao;
 
     private int sample = 6;
 
@@ -132,5 +139,21 @@ public class ProjectServiceImpl implements ProjectService {
             details.setBest(best);
             details.setOverCommit(100 * overCommit / idx);
         }
+    }
+
+    @Override
+    public Kanban getScrumBoard() throws CardioTechnicalException {
+        Kanban k = new Kanban();
+
+        k.getTodo().addAll(storyDao.findByStatus(StoryStatus.READY.toString()));
+        k.getTodo().sort(Comparator.comparing(Story::getLastUpdate));
+
+        k.getPending().addAll(storyDao.findByStatus(StoryStatus.PENDING.toString()));
+        k.getPending().sort(Comparator.comparing(Story::getLastUpdate));
+
+        k.getDone().addAll(storyDao.findByStatus(StoryStatus.DONE.toString()));
+        k.getDone().sort(Comparator.comparing(Story::getLastUpdate));
+
+        return k;
     }
 }

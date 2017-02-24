@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.service.ConfigService;
 import com.sopra.agile.cardio.back.service.ProjectService;
+import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Kanban;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 
 import spark.Request;
@@ -61,4 +63,20 @@ public class ProjectController {
         return chart;
     }
 
+    // === KANBAN ===========================================================
+
+    public Kanban getKanban(Request req, Response res) {
+        res.type("application/json");
+        Kanban kanban = null;
+        try {
+            kanban = svcProject.getScrumBoard();
+            // } catch (CardioFunctionalException e) {
+            // res.status(400);
+        } catch (CardioTechnicalException e) {
+            e.printStackTrace();
+            res.status(500);
+        }
+
+        return kanban;
+    }
 }
