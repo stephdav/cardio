@@ -7,12 +7,14 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.sopra.agile.cardio.common.model.Story;
 import com.sopra.agile.cardio.common.model.StoryStatus;
+import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 
 public class StoryMapper implements RowMapper<Story> {
 
     public static final String COL_ID = "ID";
     public static final String COL_DESC = "DESCRIPTION";
     public static final String COL_STATUS = "STATUS";
+    public static final String COL_LASTUPD = "LAST_UPDATE";
     public static final String COL_CONTRIB = "CONTRIBUTION";
     public static final String COL_ESTIMATE = "ESTIMATE";
 
@@ -25,6 +27,7 @@ public class StoryMapper implements RowMapper<Story> {
         } else {
             story.setStatus(StoryStatus.valueOf(rs.getString(COL_STATUS)));
         }
+        story.setLastUpdate(LocalDateUtils.convertToLocalDateTime(rs.getDate(COL_LASTUPD)));
         story.setContribution(rs.getInt(COL_CONTRIB));
         story.setEstimate(rs.getInt(COL_ESTIMATE));
         return story;

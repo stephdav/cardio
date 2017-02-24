@@ -5,6 +5,6 @@ import com.sopra.agile.cardio.common.model.Story;
 
 public interface StoryDao extends BaseLongDao<Story> {
 
-    Story update(Story story) throws CardioTechnicalException;
+    Story update(Story story, boolean updateTimestamp) throws CardioTechnicalException;
 
 }

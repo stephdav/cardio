@@ -1,9 +1,12 @@
 package com.sopra.agile.cardio.common.model;
 
+import org.joda.time.LocalDateTime;
+
 public class Story extends BaseLong {
 
     private String description;
     private StoryStatus status;
+    private LocalDateTime lastUpdate;
     private int contribution;
     private int estimate;
 
@@ -33,6 +36,14 @@ public class Story extends BaseLong {
 
     public void setStatus(StoryStatus status) {
         this.status = status;
+    }
+
+    public LocalDateTime getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(LocalDateTime lastUpdate) {
+        this.lastUpdate = lastUpdate;
     }
 
     public int getContribution() {

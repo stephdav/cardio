@@ -57,13 +57,14 @@ public class StoryServiceImpl implements StoryService {
     @Override
     public Story update(Story story) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.debug("[SVC] update story ...");
-        checkStoryProperties(story);
-        return storyDao.update(story);
+        return update(story, true);
     }
 
     @Override
     public Story patch(Story story) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.debug("[SVC] patch story ...");
+
+        boolean updateTimestamp = false;
 
         Story original = find(story.getId());
         if (story.getDescription() == null) {
@@ -71,6 +72,10 @@ public class StoryServiceImpl implements StoryService {
         }
         if (story.getStatus() == null) {
             story.setStatus(original.getStatus());
+        } else {
+            if (story.getStatus().equals(original.getStatus())) {
+                updateTimestamp = true;
+            }
         }
         if (story.getContribution() == -1) {
             story.setContribution(original.getContribution());
@@ -79,7 +84,13 @@ public class StoryServiceImpl implements StoryService {
             story.setEstimate(original.getEstimate());
         }
 
-        return update(story);
+        return update(story, updateTimestamp);
+    }
+
+    private Story update(Story story, boolean updateTimestamp)
+            throws CardioTechnicalException, CardioFunctionalException {
+        checkStoryProperties(story);
+        return storyDao.update(story, updateTimestamp);
     }
 
     private void checkStoryProperties(Story story) throws CardioFunctionalException {

@@ -19,8 +19,9 @@ public class StoryDaoImpl implements StoryDao {
 
     private static final String SQL_ALL = "select * from STORIES";
     private static final String SQL_FIND_BY_ID = "select * from STORIES where id=?";
-    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, CONTRIBUTION, ESTIMATE) values (?, ?, ?, ?)";
+    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, LAST_UPDATE, CONTRIBUTION, ESTIMATE) values (?, ?, SYSDATE, ?, ?)";
     private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=? where ID=?";
+    private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=SYSDATE, CONTRIBUTION=?, ESTIMATE=? where ID=?";
     private static final String SQL_DELETE = "delete from STORIES where id=?";
 
     @Autowired
@@ -73,11 +74,15 @@ public class StoryDaoImpl implements StoryDao {
     }
 
     @Override
-    public Story update(Story story) throws CardioTechnicalException {
+    public Story update(Story story, boolean updateTimestamp) throws CardioTechnicalException {
         LOGGER.debug("[DAO] update story ...");
+        String sql = SQL_UPDATE;
+        if (updateTimestamp) {
+            sql = SQL_UPDATE_TIMESTAMP;
+        }
         try {
-            jdbcTemplate.update(SQL_UPDATE, story.getDescription(), story.getStatus().toString(),
-                    story.getContribution(), story.getEstimate(), story.getId());
+            jdbcTemplate.update(sql, story.getDescription(), story.getStatus().toString(), story.getContribution(),
+                    story.getEstimate(), story.getId());
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }

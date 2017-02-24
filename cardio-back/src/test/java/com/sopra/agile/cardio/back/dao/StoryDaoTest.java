@@ -79,7 +79,7 @@ public class StoryDaoTest {
         story.setDescription("updated");
         story.setContribution(77);
         story.setEstimate(99);
-        Story updated = dao.update(story);
+        Story updated = dao.update(story, true);
 
         assertEquals(count, count(jdbc, STORIES));
         assertNotNull(updated);

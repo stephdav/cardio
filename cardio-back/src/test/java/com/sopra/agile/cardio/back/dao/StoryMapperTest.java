@@ -34,22 +34,36 @@ public class StoryMapperTest {
         for (String col : Arrays.asList(INT_COLUMNS)) {
             when(rs.getInt(col)).thenReturn(INT_VALUE);
         }
-        for (String col : Arrays.asList(STRING_COLUMNS)) {
-            when(rs.getString(col)).thenReturn(col);
-        }
         for (String col : Arrays.asList(LONG_COLUMNS)) {
             when(rs.getLong(col)).thenReturn(LONG_VALUE);
         }
-        when(rs.getString(StoryMapper.COL_STATUS)).thenReturn(StoryStatus.DRAFT.toString());
     }
 
     @Test
     public void testMapRow() throws SQLException {
+
+        for (String col : Arrays.asList(STRING_COLUMNS)) {
+            when(rs.getString(col)).thenReturn(col);
+        }
+        when(rs.getString(StoryMapper.COL_STATUS)).thenReturn(StoryStatus.PENDING.toString());
+
         Story usr = mapper.mapRow(rs, 0);
         assertEquals(SHOULD_BE_EQUALS, LONG_VALUE, usr.getId());
         assertEquals(SHOULD_BE_EQUALS, StoryMapper.COL_DESC, usr.getDescription());
-        assertEquals(SHOULD_BE_EQUALS, StoryStatus.DRAFT.toString(), usr.getStatus().toString());
+        assertEquals(SHOULD_BE_EQUALS, StoryStatus.PENDING.toString(), usr.getStatus().toString());
         assertEquals(SHOULD_BE_EQUALS, INT_VALUE, usr.getContribution());
         assertEquals(SHOULD_BE_EQUALS, INT_VALUE, usr.getEstimate());
+    }
+
+    @Test
+    public void testMapRowWithNulls() throws SQLException {
+        for (String col : Arrays.asList(STRING_COLUMNS)) {
+            when(rs.getString(col)).thenReturn(null);
+        }
+        when(rs.getString(StoryMapper.COL_STATUS)).thenReturn(null);
+
+        Story usr = mapper.mapRow(rs, 0);
+        assertEquals(SHOULD_BE_EQUALS, null, usr.getDescription());
+        assertEquals(SHOULD_BE_EQUALS, StoryStatus.DRAFT.toString(), usr.getStatus().toString());
     }
 }
