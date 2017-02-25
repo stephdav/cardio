@@ -145,14 +145,17 @@ public class ProjectServiceImpl implements ProjectService {
     public Kanban getScrumBoard() throws CardioTechnicalException {
         Kanban k = new Kanban();
 
-        k.getTodo().addAll(storyDao.findByStatus(StoryStatus.READY.toString()));
-        k.getTodo().sort(Comparator.comparing(Story::getLastUpdate));
+        List<Story> ready = storyDao.findByStatus(StoryStatus.READY.toString());
+        ready.sort(Comparator.comparing(Story::getLastUpdate));
+        k.setTodo(ready);
 
-        k.getPending().addAll(storyDao.findByStatus(StoryStatus.PENDING.toString()));
-        k.getPending().sort(Comparator.comparing(Story::getLastUpdate));
+        List<Story> pending = storyDao.findByStatus(StoryStatus.PENDING.toString());
+        pending.sort(Comparator.comparing(Story::getLastUpdate));
+        k.setPending(pending);
 
-        k.getDone().addAll(storyDao.findByStatus(StoryStatus.DONE.toString()));
-        k.getDone().sort(Comparator.comparing(Story::getLastUpdate));
+        List<Story> done = storyDao.findByStatus(StoryStatus.DONE.toString());
+        done.sort(Comparator.comparing(Story::getLastUpdate));
+        k.setDone(done);
 
         return k;
     }
