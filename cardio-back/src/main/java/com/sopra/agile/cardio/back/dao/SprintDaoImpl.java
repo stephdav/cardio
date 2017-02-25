@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.back.model.DbSprint;
 import com.sopra.agile.cardio.back.utils.converter.Converter;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.utils.LocalDateUtils;
 
@@ -27,6 +28,8 @@ public class SprintDaoImpl implements SprintDao {
     @Autowired
     private Converter mapper;
 
+    private static final String SQL_COUNT = "select 'SPRINTS', count(0) from SPRINTS";
+    private static final String SQL_COUNT_COMPLETED = "select 'SPRINTS_COMPLETED', count(0) from SPRINTS where END_DATE <= SYSDATE";
     private static final String SQL_ALL = "select * from SPRINTS";
     private static final String SQL_ALL_COMPLETED = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
     private static final String SQL_FIND_BY_ID = "select * from SPRINTS where id = ?";
@@ -44,6 +47,30 @@ public class SprintDaoImpl implements SprintDao {
 
     public SprintDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Parameter count() throws CardioTechnicalException {
+        LOGGER.debug("[DAO] count sprints ...");
+        Parameter count = null;
+        try {
+            count = jdbcTemplate.queryForObject(SQL_COUNT, new ParameterMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return count;
+    }
+
+    @Override
+    public Parameter countCompleted() throws CardioTechnicalException {
+        LOGGER.debug("[DAO] count sprints completed...");
+        Parameter count = null;
+        try {
+            count = jdbcTemplate.queryForObject(SQL_COUNT_COMPLETED, new ParameterMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return count;
     }
 
     @Override

@@ -1,3 +1,15 @@
+function fnSprintCount(callback) {
+	ajaxGet("/api/sprints/count", function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 204) {
+			if (callback != undefined) {
+				callback(data, hv);
+			}
+		} else {
+			log("Error: " + errorThrown);
+		}
+	});
+}
+
 function fnSprintGet(id, callback) {
 	ajaxGet("/api/sprints/" + id, function(data, hv, errorThrown) {
 		if (hv.status == 200 || hv.status == 204) {

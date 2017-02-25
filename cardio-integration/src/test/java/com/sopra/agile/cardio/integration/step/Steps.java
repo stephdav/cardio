@@ -112,10 +112,6 @@ public class Steps extends FluentCucumberTest {
     public void it_should_have_been_a_success() throws Throwable {
         assertEquals("no pending sprint", $("#sprint-name").text());
         assertEquals("", $("#sprint-goal").text());
-        assertEquals("", $("#from-day").text());
-        assertEquals("", $("#from-month").text());
-        assertEquals("", $("#to-day").text());
-        assertEquals("", $("#to-month").text());
     }
 
     @Then("^there is no error$")

@@ -15,6 +15,7 @@ import com.sopra.agile.cardio.back.service.SprintService;
 import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 
@@ -36,6 +37,20 @@ public class SprintController {
     }
 
     // === SPRINTS ===========================================================
+
+    public List<Parameter> getCount(Request req, Response res) {
+        res.type("application/json");
+        List<Parameter> response = null;
+
+        try {
+            response = svcSprint.count();
+            res.status(200);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+        }
+
+        return response;
+    }
 
     public List<Sprint> getAllSprints(Request req, Response res) {
 

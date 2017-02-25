@@ -11,6 +11,7 @@ import com.sopra.agile.cardio.back.dao.StoryDao;
 import com.sopra.agile.cardio.back.utils.Fields;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Story;
 
 @Service
@@ -23,6 +24,22 @@ public class StoryServiceImpl implements StoryService {
 
     public StoryServiceImpl() {
         // Empty constructor
+    }
+
+    @Override
+    public Parameter count() throws CardioTechnicalException {
+        LOGGER.debug("[SVC] count ...");
+        Parameter param = storyDao.count();
+        if (param == null) {
+            param = new Parameter("STORIES", "0");
+        }
+        return param;
+    }
+
+    @Override
+    public List<Parameter> countByStatus() throws CardioTechnicalException {
+        LOGGER.debug("[SVC] count by status ...");
+        return storyDao.countByStatus();
     }
 
     @Override

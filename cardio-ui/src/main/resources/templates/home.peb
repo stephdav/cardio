@@ -3,32 +3,80 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-lg-12">
-      <div class="panel panel-green">
-        <div class="panel-heading">
-          <div class="col-lg-2">
-            <div class="text-left">
-              <span id="from-day" class="font-XXL"></span> <span id="from-month" class="font-XL"></span>
+
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-green panel-widget ">
+            <div class="row no-padding">
+              <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-repeat fa-3x"></i></div>
+              <div class="col-sm-9 col-lg-9 widget-right">
+                <div class="large"><span id="sprints-done">-</span></div>
+                <div class="text-muted">sprints done</div>
+              </div>
             </div>
           </div>
-          <div class="col-lg-8">
-            <div class="text-center">
-              <span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL"></span>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <div class="text-right">
-              <span id="to-day" class="font-XXL"></span> <span id="to-month" class="font-XL"></span>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-green panel-widget ">
+            <div class="row no-padding">
+              <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-users fa-3x"></i></div>
+              <div class="col-sm-9 col-lg-9 widget-right">
+                <div class="large"><span id="team-members">-</span></div>
+                <div class="text-muted">team members</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="panel panel-green panel-widget ">
+            <div class="row no-padding">
+              <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-id-card-o fa-3x"></i></div>
+              <div class="col-sm-9 col-lg-9 widget-right">
+                <div class="large"><span id="stories-done">-</span></div>
+                <div class="text-muted">stories done</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="panel panel-green panel-widget ">
+            <div class="row no-padding">
+              <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-id-card fa-3x"></i></div>
+              <div class="col-sm-9 col-lg-9 widget-right">
+                <div class="large"><span id="stories-left">-</span></div>
+                <div class="text-muted">stories left</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-green">
+            <div class="panel-heading">project burnup</div>
+            <div class="panel-body"><div id="burnup" style="width:100%; height:400px;"></div></div>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-
-  <div class="row">
 
     <div class="col-lg-6">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="panel panel-green panel-widget ">
+            <div class="row no-padding">
+              <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-hand-o-right fa-3x"></i></div>
+              <div class="col-sm-9 col-lg-9 widget-right">
+                <div class="large"><span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL"></span></div>
+                <div class="text-muted">sprint goal</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="row">
         <div class="col-lg-6">
           <div class="panel panel-green panel-widget ">
@@ -63,25 +111,16 @@
       </div>
     </div>
 
-    <div class="col-lg-6">
-      <div class="row">
-        <div class="col-lg-12">
-          <div class="panel panel-green">
-            <div class="panel-heading">project burnup</div>
-            <div class="panel-body"><div id="burnup" style="width:100%; height:500px;"></div></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
 {% endblock %}
 
 {% block scripts %}
   <script src="/js/fnDate.js"></script>
+  <script src="/js/fnUser.js"></script>
   <script src="/js/fnProject.js"></script>
   <script src="/js/fnSprint.js"></script>
+  <script src="/js/fnStory.js"></script>
   <script src="/js/chart.js"></script>
   <script src="/js/ext/highcharts.js"></script>
   <script src="/js/ext/dark-unica.js"></script>

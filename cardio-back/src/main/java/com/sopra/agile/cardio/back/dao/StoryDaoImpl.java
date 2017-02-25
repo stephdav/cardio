@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Story;
 
 @Service
@@ -17,6 +18,8 @@ public class StoryDaoImpl implements StoryDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryDaoImpl.class);
 
+    private static final String SQL_COUNT = "select 'STORIES', count(0) from STORIES";
+    private static final String SQL_COUNT_BY_STATUS = "select STATUS, count(0) from STORIES group by STATUS";
     private static final String SQL_ALL = "select * from STORIES";
     private static final String SQL_FIND_BY_ID = "select * from STORIES where ID=?";
     private static final String SQL_FIND_BY_STATUS = "select * from STORIES where STATUS='%s'";
@@ -34,6 +37,30 @@ public class StoryDaoImpl implements StoryDao {
 
     public StoryDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Parameter count() throws CardioTechnicalException {
+        LOGGER.debug("[DAO] count stories ...");
+        Parameter count = null;
+        try {
+            count = jdbcTemplate.queryForObject(SQL_COUNT, new ParameterMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return count;
+    }
+
+    @Override
+    public List<Parameter> countByStatus() throws CardioTechnicalException {
+        LOGGER.debug("[DAO] count stories ...");
+        List<Parameter> count = null;
+        try {
+            count = jdbcTemplate.query(SQL_COUNT_BY_STATUS, new ParameterMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return count;
     }
 
     @Override

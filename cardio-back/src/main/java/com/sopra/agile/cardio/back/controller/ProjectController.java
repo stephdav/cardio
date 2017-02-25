@@ -3,11 +3,11 @@ package com.sopra.agile.cardio.back.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import com.sopra.agile.cardio.back.model.Parameter;
 import com.sopra.agile.cardio.back.service.ConfigService;
 import com.sopra.agile.cardio.back.service.ProjectService;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Kanban;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 
 import spark.Request;

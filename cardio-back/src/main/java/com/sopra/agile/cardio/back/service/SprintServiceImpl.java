@@ -17,6 +17,7 @@ import com.sopra.agile.cardio.back.utils.Fields;
 import com.sopra.agile.cardio.back.utils.LocalDateUtils;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 import com.sopra.agile.cardio.common.model.SprintDataDetails;
@@ -35,6 +36,15 @@ public class SprintServiceImpl implements SprintService {
 
     public SprintServiceImpl() {
         // Empty constructor
+    }
+
+    @Override
+    public List<Parameter> count() throws CardioTechnicalException {
+        LOGGER.debug("[SVC] count ...");
+        List<Parameter> params = new ArrayList<Parameter>();
+        params.add(sprintDao.count());
+        params.add(sprintDao.countCompleted());
+        return params;
     }
 
     @Override

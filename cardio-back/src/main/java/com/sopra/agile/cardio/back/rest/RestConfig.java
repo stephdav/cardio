@@ -79,6 +79,9 @@ public class RestConfig {
 
         // USERS
 
+        get("/api/users/count", (req, res) -> userController.getCount(req, res), new JsonTransformer());
+        get("/api/users/:id", (req, res) -> userController.getUser(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
         get("/api/users", (req, res) -> {
             List<User> list = userController.getAllUsers(req, res);
             if (req.queryParams("bootstrap") == null) {
@@ -88,13 +91,12 @@ public class RestConfig {
             }
         } , new JsonTransformer());
 
-        get("/api/users/:id", (req, res) -> userController.getUser(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
         post("/api/users", (req, res) -> userController.createUser(req, res));
         delete("/api/users/:id", (req, res) -> userController.deleteUser(req, res, req.params(PARAM_ID)));
 
         // SPRINTS
 
+        get("/api/sprints/count", (req, res) -> sprintController.getCount(req, res), new JsonTransformer());
         get("/api/sprints/:id/data", (req, res) -> sprintController.getSprintData(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());
         get("/api/sprints/:id", (req, res) -> sprintController.getSprint(req, res, req.params(PARAM_ID)),
@@ -117,6 +119,9 @@ public class RestConfig {
 
         // STORIES
 
+        get("/api/stories/count", (req, res) -> storyController.getCount(req, res), new JsonTransformer());
+        get("/api/stories/:id", (req, res) -> storyController.getStory(req, res, req.params(PARAM_ID)),
+                new JsonTransformer());
         get("/api/stories", (req, res) -> {
             List<Story> list = storyController.getAllStorys(req, res);
             if (req.queryParams("bootstrap") == null) {

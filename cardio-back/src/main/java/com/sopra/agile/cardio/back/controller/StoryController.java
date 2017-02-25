@@ -15,6 +15,7 @@ import com.sopra.agile.cardio.back.service.StoryService;
 import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Story;
 import com.sopra.agile.cardio.common.model.StoryStatus;
 
@@ -36,6 +37,20 @@ public class StoryController {
     }
 
     // === USERS =============================================================
+
+    public List<Parameter> getCount(Request req, Response res) {
+        res.type("application/json");
+        List<Parameter> response = null;
+
+        try {
+            response = svcStory.countByStatus();
+            res.status(200);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+        }
+
+        return response;
+    }
 
     public List<Story> getAllStorys(Request req, Response res) {
         res.type("application/json");

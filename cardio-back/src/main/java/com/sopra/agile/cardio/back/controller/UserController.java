@@ -14,6 +14,7 @@ import com.sopra.agile.cardio.back.service.UserService;
 import com.sopra.agile.cardio.back.utils.Paginate;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.User;
 
 import spark.Request;
@@ -35,11 +36,24 @@ public class UserController {
 
     // === USERS =============================================================
 
-    public List<User> getAllUsers(Request req, Response res) {
-
+    public Parameter getCount(Request req, Response res) {
         res.type("application/json");
+        Parameter response = null;
 
+        try {
+            response = svcUser.count();
+            res.status(200);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+        }
+
+        return response;
+    }
+
+    public List<User> getAllUsers(Request req, Response res) {
+        res.type("application/json");
         List<User> response = null;
+
         try {
             List<User> list = svcUser.all();
             if (list != null) {
@@ -71,11 +85,13 @@ public class UserController {
         } catch (CardioTechnicalException e) {
             res.status(500);
         }
+
         return user;
     }
 
     public String createUser(Request req, Response res) {
         String response = "OK";
+
         try {
             User usr = svcUser.add(new ObjectMapper<User>(User.class).parse(req.body()));
             res.status(201);
@@ -87,6 +103,7 @@ public class UserController {
             res.status(500);
             response = e.getMessage();
         }
+
         return response;
     }
 

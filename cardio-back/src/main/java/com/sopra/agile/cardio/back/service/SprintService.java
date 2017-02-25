@@ -4,10 +4,13 @@ import java.util.List;
 
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.SprintData;
 
 public interface SprintService extends BaseService<Sprint> {
+
+    List<Parameter> count() throws CardioTechnicalException;
 
     Sprint findByName(String name);
 

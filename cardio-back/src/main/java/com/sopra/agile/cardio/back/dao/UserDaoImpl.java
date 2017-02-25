@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.User;
 
 @Service
@@ -17,6 +18,7 @@ public class UserDaoImpl implements UserDao {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserDaoImpl.class);
 
+    private static final String SQL_COUNT = "select 'USERS', count(0) from USERS";
     private static final String SQL_ALL = "select * from USERS";
     private static final String SQL_FIND_BY_ID = "select * from USERS where id=?";
     private static final String SQL_FIND_BY_LOGIN = "select * from USERS where login=?";
@@ -32,6 +34,18 @@ public class UserDaoImpl implements UserDao {
 
     public UserDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Override
+    public Parameter count() throws CardioTechnicalException {
+        LOGGER.debug("[DAO] count users ...");
+        Parameter count = null;
+        try {
+            count = jdbcTemplate.queryForObject(SQL_COUNT, new ParameterMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return count;
     }
 
     @Override

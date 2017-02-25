@@ -5,6 +5,34 @@ $(document).ready(function() {
 function initHome() {
 	fnSprintFindByDay('now', updateHomeView)
 	fnProjectGetDetails(updateBurnup);
+	fnUserCount(function(data,hv){
+		$('#team-members').text(data.value);
+	});
+	fnStoryCount(updateStoriesCount);
+	fnSprintCount(updateSprintsCount);
+}
+
+function updateSprintsCount(data, hv) {
+	var done = 0;
+	$.each(data, function(index, parameter) {
+		if (parameter.key == 'SPRINTS_COMPLETED') {
+			done = parseInt(parameter.value);
+			return;
+		}
+	});
+	$('#sprints-done').text(done);
+}
+
+function updateStoriesCount(data, hv) {
+	var left = 0;
+	$.each(data, function(index, parameter) {
+		if (parameter.key == 'DONE') {
+			$('#stories-done').text(parameter.value);
+		} else {
+			left += parseInt(parameter.value);
+		}
+	});
+	$('#stories-left').text(left);
 }
 
 function updateHomeView(sprints, hv) {

@@ -11,6 +11,7 @@ import com.sopra.agile.cardio.back.dao.UserDao;
 import com.sopra.agile.cardio.back.utils.Fields;
 import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
+import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.User;
 
 @Service
@@ -23,6 +24,15 @@ public class UserServiceImpl implements UserService {
 
     public UserServiceImpl() {
         // Empty constructor
+    }
+
+    @Override
+    public Parameter count() throws CardioTechnicalException {
+        Parameter param = userDao.count();
+        if (param == null) {
+            param = new Parameter("USERS", "0");
+        }
+        return param;
     }
 
     @Override
@@ -108,4 +118,5 @@ public class UserServiceImpl implements UserService {
             throw new CardioFunctionalException("user with same login already exists");
         }
     }
+
 }
