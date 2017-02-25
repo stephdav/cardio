@@ -9,13 +9,11 @@
   <div class="row">
 
     <div class="col-lg-3">
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-repeat fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-repeat fa-3x"></i></div>
+        <div class="free-widget-right">
             <div class="large"><span id="sprints-count">-</span></div>
             <div class="text-muted">sprints</div>
-          </div>
         </div>
       </div>
 
