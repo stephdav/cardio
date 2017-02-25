@@ -3,9 +3,9 @@
 {% block content %}
 
 <div class="free-widget-container">
-  <div class="flex free-widget">
+  <div class="free-widget free-widget-lg">
     <div class="free-widget-left"><img alt="cardio" src="/images/cardio.png"></div>
-    <div class="flex free-widget-right">
+    <div class="free-widget-right">
       <div>cardio</div>
       <div>version <span id="app-version"></span></div>
       <div><a href="mailto:stephane.david@soprasteria.com">stephane.david@soprasteria.com</a></div>

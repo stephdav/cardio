@@ -24,15 +24,9 @@ function updateSprintsCount(data, hv) {
 }
 
 function updateStoriesCount(data, hv) {
-	var left = 0;
 	$.each(data, function(index, parameter) {
-		if (parameter.key == 'DONE') {
-			$('#stories-done').text(parameter.value);
-		} else {
-			left += parseInt(parameter.value);
-		}
+		$('#stories-'+parameter.key.toLowerCase()).text(parameter.value);
 	});
-	$('#stories-left').text(left);
 }
 
 function updateHomeView(sprints, hv) {
