@@ -3,47 +3,39 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-lg-3">    
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-thermometer-full fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="over-commit">-</span></div>
-            <div class="text-muted">over-commitment</div>
-          </div>
+    <div class="col-lg-3">
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-thermometer-full fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="over-commit">-</span></div>
+          <div class="text-muted">over-commitment</div>
         </div>
       </div>
     </div>
     <div class="col-lg-3">
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-thumbs-o-down fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="worst-sprints">-</span></div>
-            <div class="text-muted">bad trend</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-thumbs-o-down fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="worst-sprints">-</span></div>
+          <div class="text-muted">bad trend</div>
         </div>
       </div>
     </div>
     <div class="col-lg-3">    
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-hand-peace-o fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="average-sprints">-</span></div>
-            <div class="text-muted">average</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-hand-peace-o fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="average-sprints">-</span></div>
+          <div class="text-muted">average</div>
         </div>
       </div>
     </div>
     <div class="col-lg-3">    
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-thumbs-o-up fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="best-sprints">-</span></div>
-            <div class="text-muted">good trend</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-thumbs-o-up fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="best-sprints">-</span></div>
+          <div class="text-muted">good trend</div>
         </div>
       </div>
     </div>
@@ -51,7 +43,7 @@
   
   <div class="row">
     <div class="col-lg-12">
-      <div class="panel panel-green">
+      <div class="panel panel-default">
         <div class="panel-heading">velocity</div>
         <div class="panel-body"><div id="burnup" style="width:100%; height:500px;"></div></div>
       </div>

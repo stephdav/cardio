@@ -8,39 +8,33 @@
 
   <div class="row">
     <div class="col-lg-4">
-      <div class="panel panel-green panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-empty fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="story-to-do">-</span></div>
-            <div class="text-muted">ready</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-battery-empty fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="story-to-do">-</span></div>
+          <div class="text-muted">ready</div>
         </div>
       </div>
       <div id="stories-ready" class="list-group"></div>
     </div>
 
     <div class="col-lg-4">
-      <div class="panel panel-green panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-half fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="story-pending">-</span></div>
-            <div class="text-muted">pending</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-battery-half fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="story-pending">-</span></div>
+          <div class="text-muted">pending</div>
         </div>
       </div>
       <div id="stories-pending" class="list-group"></div>
     </div>
 
     <div class="col-lg-4">
-      <div class="panel panel-green panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-battery-full fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="story-done">-</span></div>
-            <div class="text-muted">done</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-battery-full fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="story-done">-</span></div>
+          <div class="text-muted">done</div>
         </div>
       </div>
       <div id="stories-done" class="list-group"></div>

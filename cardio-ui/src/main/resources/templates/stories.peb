@@ -9,17 +9,15 @@
   <div class="row">
 
     <div class="col-lg-3">
-      <div class="panel panel-blue panel-widget ">
-        <div class="row no-padding">
-          <div class="col-sm-3 col-lg-3 widget-left"><i class="fa fa-server fa-3x"></i></div>
-          <div class="col-sm-9 col-lg-9 widget-right">
-            <div class="large"><span id="stories-count">-</span></div>
-            <div class="text-muted">stories</div>
-          </div>
+      <div class="free-widget free-widget-badge">
+        <div class="free-widget-left"><i class="fa fa-server fa-3x"></i></div>
+        <div class="free-widget-right">
+          <div class="large"><span id="stories-count">-</span></div>
+          <div class="text-muted">stories</div>
         </div>
       </div>
 
-      <div class="panel panel-green">
+      <div class="panel panel-default">
         <div class="panel-heading">new story</div>
         <div class="panel-body">
           <div class="form-horizontal">
@@ -54,7 +52,7 @@
 
     <div class="col-lg-9">
 
-      <div class="panel panel-green">
+      <div class="panel panel-default">
         <div class="panel-heading">
         stories
           <div class="table-filters pull-right">
