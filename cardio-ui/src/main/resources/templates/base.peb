@@ -16,7 +16,8 @@
   ------------------------------------------------------ -->
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="stylesheet/less" type="text/css" href="/css/style.less" />
   
   {% block stylesheets %}{% endblock %}
 
@@ -67,6 +68,7 @@
 
   <script src="/js/ext/jquery-3.1.0.min.js"></script>
   <script src="/js/ext/bootstrap.min.js"></script>
+  <script src="/js/ext/less.min.js"></script>
   <script src="/js/site.js"></script>
   {% block scripts %}{% endblock %}
 
