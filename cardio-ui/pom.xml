@@ -22,20 +22,10 @@
 			<artifactId>spark-core</artifactId>
 			<version>${spark.version}</version>
 		</dependency>
-<!-- 
+		<!-- <dependency> <groupId>com.sparkjava</groupId> <artifactId>spark-template-pebble</artifactId> 
+			<version>${spark.peeble.version}</version> <exclusions> <exclusion> <groupId>com.sparkjava</groupId> 
+			<artifactId>spark-core</artifactId> </exclusion> </exclusions> </dependency> -->
 		<dependency>
-			<groupId>com.sparkjava</groupId>
-			<artifactId>spark-template-pebble</artifactId>
-			<version>${spark.peeble.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>com.sparkjava</groupId>
-					<artifactId>spark-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
- -->
- 		<dependency>
 			<groupId>com.mitchellbosecke</groupId>
 			<artifactId>pebble</artifactId>
 			<version>2.3.0</version>
@@ -92,6 +82,16 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.lesscss</groupId>
+				<artifactId>lesscss-maven-plugin</artifactId>
+				<configuration>
+					<outputDirectory>${project.build.directory}/classes/public/css</outputDirectory>
+					<force>true</force>
+					<!-- <compress>true</compress> -->
+					<!-- <watch>true</watch> -->
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

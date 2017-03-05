@@ -1,11 +1,16 @@
-@bg-color:   #102010;
-@base:       #4BACC6;
-@base-light: #CCECFF;
+@bg-color:     #102010;
+@base:         #4BACC6;
+@base-light:   #CCECFF;
+
+@color:      #fff;
+@color-dark: #111;
+@color-dark-sel: #333;
 
 /* Global Styles */
 body {
 	margin-top: 100px;
 	background-color: @bg-color;
+	color: @color;
 }
 
 @media ( min-width :768px) {
@@ -22,7 +27,7 @@ body {
 	width: 100%;
 	padding: 0;
 	background-color: @bg-color;
-	color: #eee;
+	color: @color;
 }
 
 @media ( min-width :768px) {
@@ -48,13 +53,13 @@ body {
 	padding-top: 15px;
 	padding-bottom: 15px;
 	line-height: 20px;
-	color: #eee;
+	color: @color;
 }
 
 .top-nav>li>a:hover, .top-nav>li>a:focus, .top-nav>.open>a, .top-nav>.open>a:hover,
 	.top-nav>.open>a:focus {
-	color: #fff;
-	background-color: @bg-color;
+	color: @color;
+	background-color: @base;
 }
 
 .top-nav>.open>.dropdown-menu {
@@ -64,7 +69,7 @@ body {
 	border: 1px solid rgba(0, 0, 0, .15);
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
-	background-color: #fff;
+	background-color: @base-light;
 	-webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
 }
@@ -104,7 +109,7 @@ ul.admin-dropdown {
 
 /* CODE */
 pre {
-	color: #fff;
+	color: @base-light;
 	background-color: @bg-color;
 	border: none;
 }
@@ -116,22 +121,22 @@ pre {
 }
 
 .navbar-inverse .navbar-nav>li>a {
-	color: @base-light;
+	color: @base;
 }
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
-	border-color: #000;
+	border-color: @bg-color;
 }
 
 .navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus,
 	.navbar-inverse .navbar-nav>.active>a:hover {
-	color: #eee;
-	background-color: @bg-color;
+	color: @base-light;
+	background-color: transparent;
 }
 
 .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover
 	{
-	color: #eee;
+	color: @base-light;
 	background-color: transparent;
 }
 
@@ -150,7 +155,7 @@ pre {
 	font-weight: bold;
 	text-align: center;
 	margin: 15px 70px;
-	color: #eee;
+	color: @color;
 }
 
 /** =======  ======= */
@@ -172,13 +177,6 @@ body>.container, body>.container-fluid {
 }
 
 /** =======  ======= */
-.rounded-block {
-	margin: 5px;
-	padding: 5px;
-	border: 1px solid #eee;
-	border-radius: 10px;
-	background-color: #fff;
-}
 
 .font-XL {
 	font-size: x-large;
@@ -194,7 +192,7 @@ body>.container, body>.container-fluid {
 }
 
 .text-muted {
-	color: #9fadbb;
+	color: @color-dark-sel;
 }
 
 .no-padding {
@@ -221,17 +219,8 @@ body>.container, body>.container-fluid {
 
 .panel-default .panel-heading {
 	background: @base;
-	color: #fff;
+	color: @color;
 	border-bottom: 0;
-}
-
-.panel-default .panel-body p {
-	color: #fff;
-	color: rgba(255, 255, 255, .8);
-}
-
-.panel-default .text-muted {
-	color: rgba(255, 255, 255, .5);
 }
 
 /* Widget */
@@ -245,13 +234,13 @@ body>.container, body>.container-fluid {
 	flex-direction: row;
 	justify-content: center;
 	background: @base-light;
+	color: @color-dark;
 	border-radius: 4px;
 	margin: 0;
 	margin-bottom: 15px;
 	padding: 0;
 	line-height: 1.6em;
 	justify-content: center;
-	background: @base-light;
 }
 
 .free-widget-badge {
@@ -261,7 +250,7 @@ body>.container, body>.container-fluid {
 
 .free-widget .free-widget-left {
 	background: @base;
-	color: #fff;
+	color: @color;
 	padding: 15px;
 	border-top-left-radius: 4px;
 	border-bottom-left-radius: 4px;
@@ -277,7 +266,6 @@ body>.container, body>.container-fluid {
 
 .free-widget .free-widget-right {
 	flex-grow: 1;
-	color: #999;
 	text-align: left;
 	border-top-right-radius: 4px;
 	border-bottom-right-radius: 4px;
@@ -285,7 +273,6 @@ body>.container, body>.container-fluid {
 	justify-content: space-around;
 	display: inline-flex;
 	flex-direction: column;
-	color: #999;
 }
 
 .free-widget-lg {
@@ -306,16 +293,12 @@ body>.container, body>.container-fluid {
 }
 
 .free-widget a {
-	color: #999;
+	color: @color-dark-sel;
 }
 
 .free-widget a:hover {
 	text-decoration: none;
-	color: #999;
-}
-
-.free-widget-right .text-muted, .free-widget-right .large {
-	color: #323e1a;
+	color: @color-dark-sel;
 }
 
 /*Forms*/
@@ -328,32 +311,36 @@ body>.container, body>.container-fluid {
 }
 
 .form-group label {
-	color: #5f6468;
+	color: @color-dark;
 }
 
 /*Tables*/
 .table {
-	background: #fff;
+	background: @base-light;
+}
+
+.bootstrap-table .table {
+    border-bottom: 1px solid @base !important;
 }
 
 .fixed-table-container {
-	border: 1px solid #eee;
+	border: 1px solid @base !important;
 }
 
 .fixed-table-container thead th {
-	background: #f7f7f8;
-	border-color: #ddd;
-	color: #5f6468;
+	background: @base;
+	border-color: @base;
+	color: @color;
 	font-weight: 300;
 	font-size: 16px;
 }
 
 .fixed-table-container tbody {
-	color: #333;
+	color: @color-dark;
 }
 
 .fixed-table-container tbody td {
-	border: 1px solid #eee;
+	border: 1px solid @base;
 }
 
 .fixed-table-container tbody td:last-child {
@@ -361,13 +348,13 @@ body>.container, body>.container-fluid {
 }
 
 .table>thead>tr>th {
-	border-bottom: 1px solid #e6e7e8;
+	border-bottom: 1px solid @base !important;
 	vertical-align: middle;
 	height: 50px;
 }
 
 .fixed-table-pagination {
-	color: #333;
+	color: @color-dark;
 }
 
 .fixed-table-pagination .pagination {
@@ -382,7 +369,7 @@ body>.container, body>.container-fluid {
 /* */
 .day-of-week, .week-of-year {
 	text-align: center;
-	color: #333;
+	color: @color-dark-sel;
 }
 
 .week-of-year {
@@ -435,9 +422,9 @@ body>.container, body>.container-fluid {
 .table-filters {
 	display: inline-block;
 	font-size: 14px;
-	color: #333;
+	color: @color-dark;
 	vertical-align: middle;
-	color: #333;
+	color: @color-dark;
 }
 
 .list-group-item {
@@ -467,7 +454,7 @@ a.list-group-item:focus, a.list-group-item:hover {
 }
 
 a.list-group-item {
-	color: #eee;
+	color: @color;
 }
 
 a.list-group-item .list-group-item-heading {
@@ -476,10 +463,10 @@ a.list-group-item .list-group-item-heading {
 
 a.list-group-item:focus .list-group-item-heading, a.list-group-item:hover .list-group-item-heading
 	{
-	color: #333;
+	color: @color-dark;
 }
 
 a.list-group-item .list-group-item-heading:focus, a.list-group-item .list-group-item-heading:hover
 	{
-	color: #333;
+	color: @color-dark;
 }
