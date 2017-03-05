@@ -26,11 +26,14 @@ public class BaseController {
 
         attributes.put("title", "cardio");
 
-        attributes.put("menuDashboard", "");
+        attributes.put("menuAbout", "");
+        attributes.put("menuKanban", "");
         attributes.put("menuSprintPlanning", "");
         attributes.put("menuSprint", "");
         attributes.put("menuSprints", "");
+        attributes.put("menuStories", "");
         attributes.put("menuUsers", "");
+        attributes.put("menuVision", "");
 
         return attributes;
     }
