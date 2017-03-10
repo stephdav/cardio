@@ -366,6 +366,29 @@ body>.container, body>.container-fluid {
 	margin-top: 20px;
 }
 
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    color: @color;
+    background-color: @base;
+    border-color: @base;
+}
+
+.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover {
+    color: @color;
+    background-color: @base;
+    border-color: @base;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: @color-dark;
+    background-color: @base-light;
+    border: 1px solid @base;
+}
+
+.dropdown-menu>.active>a, .dropdown-menu>.active>a:focus, .dropdown-menu>.active>a:hover {
+    color: @color;
+    background-color: @base;
+}
+
 /* */
 .day-of-week, .week-of-year {
 	text-align: center;
