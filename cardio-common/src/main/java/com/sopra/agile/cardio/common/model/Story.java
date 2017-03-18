@@ -23,6 +23,64 @@ public class Story extends BaseLong {
         this.estimate = estimate;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((assignedUser == null) ? 0 : assignedUser.hashCode());
+        result = prime * result + contribution;
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
+        result = prime * result + estimate;
+        result = prime * result + ((lastUpdate == null) ? 0 : lastUpdate.hashCode());
+        result = prime * result + ((status == null) ? 0 : status.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Story other = (Story) obj;
+        if (assignedUser == null) {
+            if (other.assignedUser != null) {
+                return false;
+            }
+        } else if (!assignedUser.equals(other.assignedUser)) {
+            return false;
+        }
+        if (contribution != other.contribution) {
+            return false;
+        }
+        if (description == null) {
+            if (other.description != null) {
+                return false;
+            }
+        } else if (!description.equals(other.description)) {
+            return false;
+        }
+        if (estimate != other.estimate) {
+            return false;
+        }
+        if (lastUpdate == null) {
+            if (other.lastUpdate != null) {
+                return false;
+            }
+        } else if (!lastUpdate.equals(other.lastUpdate)) {
+            return false;
+        }
+        if (status != other.status) {
+            return false;
+        }
+        return true;
+    }
+
     public String getDescription() {
         return description;
     }

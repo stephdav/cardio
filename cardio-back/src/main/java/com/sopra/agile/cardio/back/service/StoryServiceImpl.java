@@ -120,7 +120,7 @@ public class StoryServiceImpl implements StoryService {
         boolean updateTimestamp = false;
 
         if (status != null) {
-            if (!story.getStatus().equals(status)) {
+            if (!story.getStatus().toString().equals(status)) {
                 updateTimestamp = true;
             }
             story.setStatus(StoryStatus.valueOf(status));

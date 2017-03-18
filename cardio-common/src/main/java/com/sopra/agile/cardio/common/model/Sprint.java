@@ -20,6 +20,68 @@ public class Sprint extends Base {
         this.endDate = endDate;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + commitment;
+        result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
+        result = prime * result + ((goal == null) ? 0 : goal.hashCode());
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+        result = prime * result + velocity;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (!super.equals(obj)) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Sprint other = (Sprint) obj;
+        if (commitment != other.commitment) {
+            return false;
+        }
+        if (endDate == null) {
+            if (other.endDate != null) {
+                return false;
+            }
+        } else if (!endDate.equals(other.endDate)) {
+            return false;
+        }
+        if (goal == null) {
+            if (other.goal != null) {
+                return false;
+            }
+        } else if (!goal.equals(other.goal)) {
+            return false;
+        }
+        if (name == null) {
+            if (other.name != null) {
+                return false;
+            }
+        } else if (!name.equals(other.name)) {
+            return false;
+        }
+        if (startDate == null) {
+            if (other.startDate != null) {
+                return false;
+            }
+        } else if (!startDate.equals(other.startDate)) {
+            return false;
+        }
+        if (velocity != other.velocity) {
+            return false;
+        }
+        return true;
+    }
+
     public String getName() {
         return name;
     }
