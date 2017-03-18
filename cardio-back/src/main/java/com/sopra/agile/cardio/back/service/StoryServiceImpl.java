@@ -13,6 +13,7 @@ import com.sopra.agile.cardio.common.exception.CardioFunctionalException;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Story;
+import com.sopra.agile.cardio.common.model.StoryStatus;
 
 @Service
 public class StoryServiceImpl implements StoryService {
@@ -90,7 +91,7 @@ public class StoryServiceImpl implements StoryService {
         if (story.getStatus() == null) {
             story.setStatus(original.getStatus());
         } else {
-            if (story.getStatus().equals(original.getStatus())) {
+            if (!story.getStatus().equals(original.getStatus())) {
                 updateTimestamp = true;
             }
         }
@@ -108,6 +109,32 @@ public class StoryServiceImpl implements StoryService {
             throws CardioTechnicalException, CardioFunctionalException {
         checkStoryProperties(story);
         return storyDao.update(story, updateTimestamp);
+    }
+
+    @Override
+    public Story patch(String id, String status, String contribution, String estimate, String assignedUser)
+            throws CardioTechnicalException, CardioFunctionalException {
+        LOGGER.debug("[SVC] patch story ...");
+
+        Story story = find(id);
+        boolean updateTimestamp = false;
+
+        if (status != null) {
+            if (!story.getStatus().equals(status)) {
+                updateTimestamp = true;
+            }
+            story.setStatus(StoryStatus.valueOf(status));
+        }
+        if (contribution != null) {
+            story.setContribution(Integer.parseInt(contribution));
+        }
+        if (estimate != null) {
+            story.setEstimate(Integer.parseInt(estimate));
+        }
+        if (assignedUser != null) {
+            story.setAssignedUser(Long.parseLong(assignedUser));
+        }
+        return update(story, updateTimestamp);
     }
 
     private void checkStoryProperties(Story story) throws CardioFunctionalException {

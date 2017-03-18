@@ -83,5 +83,6 @@
 
 {% block scripts %}
   <script src="/js/ext/bootstrap-table.min.js"></script>
+  <script src="/js/fnUser.js"></script>
   <script src="/js/stories.js"></script>
 {% endblock %}

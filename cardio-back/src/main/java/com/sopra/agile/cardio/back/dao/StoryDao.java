@@ -13,4 +13,5 @@ public interface StoryDao extends BaseLongDao<Story> {
     Story update(Story story, boolean updateTimestamp) throws CardioTechnicalException;
 
     List<Story> findByStatus(String status) throws CardioTechnicalException;
+
 }

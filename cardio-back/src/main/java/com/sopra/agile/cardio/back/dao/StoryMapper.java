@@ -17,6 +17,7 @@ public class StoryMapper implements RowMapper<Story> {
     public static final String COL_LASTUPD = "LAST_UPDATE";
     public static final String COL_CONTRIB = "CONTRIBUTION";
     public static final String COL_ESTIMATE = "ESTIMATE";
+    public static final String COL_ASSIGNED = "ASSIGNED";
 
     public Story mapRow(ResultSet rs, int rowNum) throws SQLException {
         Story story = new Story();
@@ -30,6 +31,9 @@ public class StoryMapper implements RowMapper<Story> {
         story.setLastUpdate(LocalDateUtils.convertToLocalDateTime(rs.getDate(COL_LASTUPD)));
         story.setContribution(rs.getInt(COL_CONTRIB));
         story.setEstimate(rs.getInt(COL_ESTIMATE));
+        if (rs.getLong(COL_ASSIGNED) != 0) {
+            story.setAssignedUser(rs.getLong(COL_ASSIGNED));
+        }
         return story;
     }
 

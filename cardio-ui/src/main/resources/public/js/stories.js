@@ -8,7 +8,13 @@ function initActivities() {
 		createStory($('#storyDesc').val(), $('#storyStatus').val());
 	});
 
-	initActivitiesTable();
+	fnGetUsers(loadUsers);
+}
+
+var stories_users = [];
+function loadUsers(data, hv) {
+	stories_users = data;
+	initActivitiesTable();	
 }
 
 function initActivitiesTable() {
@@ -22,7 +28,10 @@ function initActivitiesTable() {
 	    columns: [
 	      { field: 'id', title: '#', align: 'center' },
 	      { field: 'description', title: 'description' },
-	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' }
+	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' },
+	      { field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter' },
+	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter' },
+	      { field: 'assignedUser', title: 'assigned', align: 'center', formatter: 'userFormatter' }
 	    ]
 	});
 	
@@ -30,8 +39,16 @@ function initActivitiesTable() {
 		$('#stories-count').text(data.total);
 	});
 	
-	$('#stories-table').on('change', 'select',function (e) {
-		patchActivityStatus($(this).data("id"), this.value);
+	$('#stories-table').on('change', 'select.change-status',function (e) {
+		patchStory($(this).data("id"), "status", this.value);
+	});
+
+	$('#stories-table').on('change', 'select.change-complexity',function (e) {
+		patchStory($(this).data("id"), "estimate", this.value);
+	});
+	
+	$('#stories-table').on('change', 'select.change-assigned',function (e) {
+		patchStory($(this).data("id"), "assignedUser", this.value);
 	});
 
 	$('#typeFilter').on('change', function(e) {
@@ -46,8 +63,8 @@ function initActivitiesTable() {
 }
 
 function selectFormatter(value, row) {
-  content = '<div class="form-group-sm">'
-  content += '<select data-id="' + row.id + '" class="form-control">';
+  content = '<div class="form-group-sm">';
+  content += '<select data-id="' + row.id + '" class="form-control change-status">';
   if (value=='DRAFT'){
 	  content += '<option selected>DRAFT</option>';	  
   } else {
@@ -70,6 +87,54 @@ function selectFormatter(value, row) {
   }
   content += '</select></div>';
   return content;
+}
+
+function valueFormatter(value, row) {
+	content = '';
+	if (value!=-1){
+		content = value;
+	}
+	return content;
+}
+
+function complexityFormatter(value, row) {
+	content = '<div class="form-group-sm">';
+	content += '<select data-id="' + row.id + '" class="form-control change-complexity">';
+	var values = [0, 1, 2, 3, 5, 8, 13, 21];
+	if (value==-1){
+		content += '<option value="-1" selected></option>';
+	} else {
+		content += '<option value="-1"></option>';
+	}
+	$.each(values, function(key, val) {
+		content += '<option value="' + val + '"';
+		if (value==val) {
+			content += ' selected';
+		}
+		content += '>' + val + '</option>';
+	});
+	content += '</select></div>';
+	return content;
+}
+
+function userFormatter(value, row) {
+	content = '<div class="form-group-sm">';
+	content += '<select data-id="' + row.id + '" class="form-control change-assigned">';
+	if (value==-1){
+		content += '<option value="-1" selected></option>';	  
+	} else {
+		content += '<option value="-1"></option>';	  
+	}
+	
+	$.each(stories_users, function(index, usr) {
+		content += '<option value="' + usr.id + '"';	  
+		if (usr.id==value) {
+			content += '" selected';	  
+		}
+		content += '>' + usr.login + '</option>';	  
+	});
+	content += '</select></div>';
+	return content;
 }
 
 function refresh() {
@@ -96,12 +161,12 @@ function createStory(description, status) {
 	});
 }
 
-function patchActivityStatus(id, status) {
-	var payload = {id: id, status: status};
-	ajaxPatch("/api/stories/" + id, payload, function(data, hv, errorThrown) {
+function patchStory(id, field, value) {
+	var payload = {};
+	ajaxPatch("/api/stories/" + id + "?" + field + "=" + value, payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("Story " + hv.location + " updated");
-			refresh();	
+			refresh();
 		} else {
 			log("Error updating story : " + errorThrown);
 		}

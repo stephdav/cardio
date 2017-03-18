@@ -9,6 +9,7 @@ public class Story extends BaseLong {
     private LocalDateTime lastUpdate;
     private int contribution;
     private int estimate;
+    private Long assignedUser;
 
     public Story() {
         super();
@@ -60,6 +61,14 @@ public class Story extends BaseLong {
 
     public void setEstimate(int estimate) {
         this.estimate = estimate;
+    }
+
+    public Long getAssignedUser() {
+        return assignedUser;
+    }
+
+    public void setAssignedUser(Long assignedUser) {
+        this.assignedUser = assignedUser;
     }
 
 }

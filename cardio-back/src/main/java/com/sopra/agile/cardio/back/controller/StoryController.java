@@ -25,9 +25,9 @@ import spark.Response;
 @Controller
 public class StoryController {
 
-    private static final String LOCATION = "Location";
-
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryController.class);
+
+    private static final String LOCATION = "Location";
 
     @Autowired
     private StoryService svcStory;
@@ -127,6 +127,24 @@ public class StoryController {
         String response = "OK";
         try {
             Story story = svcStory.patch(new ObjectMapper<Story>(Story.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/stories/" + story.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
+    }
+
+    public String patchStoryField(Request req, Response res, String id)
+            throws CardioTechnicalException, CardioFunctionalException {
+        String response = "OK";
+        try {
+            Story story = svcStory.patch(id, req.queryParams("status"), req.queryParams("contribution"),
+                    req.queryParams("estimate"), req.queryParams("assignedUser"));
             res.status(201);
             res.header(LOCATION, "/api/stories/" + story.getId());
         } catch (CardioFunctionalException e) {
