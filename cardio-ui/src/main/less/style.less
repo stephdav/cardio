@@ -484,12 +484,20 @@ a.list-group-item .list-group-item-heading {
 	color: #fff;
 }
 
-a.list-group-item:focus .list-group-item-heading, a.list-group-item:hover .list-group-item-heading
-	{
+a.list-group-item:focus .list-group-item-heading, a.list-group-item:hover .list-group-item-heading {
 	color: @color-dark;
 }
 
-a.list-group-item .list-group-item-heading:focus, a.list-group-item .list-group-item-heading:hover
-	{
+a.list-group-item .list-group-item-heading:focus, a.list-group-item .list-group-item-heading:hover {
 	color: @color-dark;
+}
+
+.goal-with-ellipsis>.large {
+    display: block;
+    display: -webkit-box;
+    max-height: 42px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

@@ -67,8 +67,10 @@
           <div class="free-widget free-widget-badge">
             <div class="free-widget-left"><i class="fa fa-hand-o-right fa-3x"></i></div>
             <div class="free-widget-right">
+              <div class="goal-with-ellipsis">
               <div class="large"><span id="sprint-name" class="font-XL">no pending sprint</span> <span id="sprint-goal" class="font-XXL"></span></div>
               <div class="text-muted">sprint goal</div>
+              </div>
             </div>
           </div>
         </div>
