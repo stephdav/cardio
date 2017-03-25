@@ -46,12 +46,20 @@
           </div>
         </div>
       </div>
-
     </div>
 
     <div class="col-lg-9">
       <div class="panel panel-default">
-        <div class="panel-heading">users</div>
+        <div class="panel-heading">
+          users
+          <div class="table-filters pull-right">
+            <div class="form-inline">
+              <div class="form-group form-group-sm">
+                <button id="exportUsers" type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="panel-body">
           <table id="users-table"></table>
         </div>

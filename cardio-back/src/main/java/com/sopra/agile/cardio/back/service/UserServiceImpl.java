@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
+    private static final String SQL_EXPORT = "INSERT INTO USERS(LOGIN,FIRSTNAME,LASTNAME) VALUES ('%s', '%s', '%s');\n";
+
     @Autowired
     private UserDao userDao;
 
@@ -36,18 +38,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> all() {
+    public List<User> all() throws CardioTechnicalException {
         LOGGER.info("all ...");
-
-        List<User> response = null;
-        try {
-            response = userDao.all();
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return response;
+        return userDao.all();
     }
 
     @Override
@@ -117,6 +110,16 @@ public class UserServiceImpl implements UserService {
             LOGGER.error("A user '{}' already exists", user.getLogin());
             throw new CardioFunctionalException("user with same login already exists");
         }
+    }
+
+    @Override
+    public String export() throws CardioTechnicalException {
+        List<User> users = all();
+        StringBuffer sb = new StringBuffer();
+        for (User usr : users) {
+            sb.append(String.format(SQL_EXPORT, usr.getLogin(), usr.getFirstname(), usr.getLastname()));
+        }
+        return sb.toString();
     }
 
 }

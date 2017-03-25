@@ -28,6 +28,8 @@ public class SprintServiceImpl implements SprintService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
 
+    private static final String SQL_EXPORT = "INSERT INTO SPRINTS VALUES ('%s', '%s', DATE '%s', DATE '%s', '%s', %d, %d);\n";
+
     @Autowired
     private SprintDao sprintDao;
 
@@ -304,5 +306,17 @@ public class SprintServiceImpl implements SprintService {
             LOGGER.error("enddate is mandatory");
             throw new CardioFunctionalException("end date is mandatory");
         }
+    }
+
+    @Override
+    public String export() throws CardioTechnicalException {
+        List<Sprint> sprints = all();
+        StringBuffer sb = new StringBuffer();
+
+        for (Sprint sprint : sprints) {
+            sb.append(String.format(SQL_EXPORT, sprint.getId(), sprint.getName(), sprint.getStartDate(),
+                    sprint.getEndDate(), sprint.getGoal(), sprint.getCommitment(), sprint.getVelocity()));
+        }
+        return sb.toString();
     }
 }

@@ -13,6 +13,11 @@ function initUsers() {
 		deleteUser($(this).closest('li').attr('id'));
 	});
 
+	$('#exportUsers').on('click', function(e) {
+		e.stopPropagation();
+		downloadExport('/api/users/export');
+	});
+
 	initUsersTable();
 }
 

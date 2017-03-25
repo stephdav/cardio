@@ -43,7 +43,8 @@ If "<sql file>" is present, <sqll file> is executed at startup.
 ## changelog
 
 ### 0.3
-* Application bundle
+* user stories
+* application bundle
 
 ### 0.2
 * sprint controls during creation and update

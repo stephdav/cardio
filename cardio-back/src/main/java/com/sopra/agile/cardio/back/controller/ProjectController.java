@@ -14,7 +14,7 @@ import spark.Request;
 import spark.Response;
 
 @Controller
-public class ProjectController {
+public class ProjectController extends BaseController {
 
     @Autowired
     private ConfigService svcConfig;

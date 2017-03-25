@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,7 @@ import spark.Request;
 import spark.Response;
 
 @Controller
-public class UserController {
-
-    private static final String LOCATION = "Location";
+public class UserController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
@@ -135,5 +135,15 @@ public class UserController {
             LOGGER.debug("reverse order");
             Collections.reverse(response);
         }
+    }
+
+    public HttpServletResponse exportUsers(Request req, Response res) {
+        String data = null;
+        try {
+            data = svcUser.export();
+        } catch (CardioTechnicalException e) {
+            data = e.getMessage();
+        }
+        return export(res, "users.sql", data);
     }
 }

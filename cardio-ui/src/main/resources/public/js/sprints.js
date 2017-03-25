@@ -7,6 +7,12 @@ function initSprints() {
 		e.stopPropagation();
 		createSprint($('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
 	});
+	
+	$('#exportSprints').on('click', function(e) {
+		e.stopPropagation();
+		downloadExport('/api/sprints/export');
+	});
+
 	initSprintsTable();
 	getSprints();
 }

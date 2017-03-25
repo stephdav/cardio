@@ -96,10 +96,14 @@ function ajaxGet(url, fnHandle) {
 		url : BACK_URL + url
 	}).done(function(data, textStatus, jqXHR) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle(data, hv);
+		if (fnHandle !== undefined) {
+			fnHandle(data, hv);
+		}
 	}).fail(function(jqXHR, status, errorThrown) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle(jqXHR.responseText, hv, errorThrown);
+		if (fnHandle !== undefined) {
+			fnHandle(jqXHR.responseText, hv, errorThrown);
+		}
 	});
 }
 
@@ -132,4 +136,8 @@ function ajaxPatch(url, payload, fnHandle) {
 		var hv = parseStatusAndHeader(jqXHR);
 		fnHandle(jqXHR.responseText, hv, errorThrown);
 	});
+}
+
+function downloadExport(url) {
+	window.open(BACK_URL + url,'_self','');
 }

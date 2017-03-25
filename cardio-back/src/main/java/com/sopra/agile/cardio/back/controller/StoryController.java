@@ -23,11 +23,9 @@ import spark.Request;
 import spark.Response;
 
 @Controller
-public class StoryController {
+public class StoryController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryController.class);
-
-    private static final String LOCATION = "Location";
 
     @Autowired
     private StoryService svcStory;

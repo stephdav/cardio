@@ -12,4 +12,6 @@ public interface UserService extends BaseService<User> {
 
     String remove(String userId);
 
+    String export() throws CardioTechnicalException;
+
 }

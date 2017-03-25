@@ -23,4 +23,6 @@ public interface SprintService extends BaseService<Sprint> {
     SprintData findData(String id) throws CardioTechnicalException, CardioFunctionalException;
 
     void updateData(String id, SprintData data) throws CardioTechnicalException, CardioFunctionalException;
+
+    String export() throws CardioTechnicalException;
 }
