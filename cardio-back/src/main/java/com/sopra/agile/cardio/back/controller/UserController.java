@@ -108,9 +108,15 @@ public class UserController extends BaseController {
     }
 
     public String deleteUser(Request req, Response res, String id) {
-        svcUser.remove(id);
-        res.status(200);
-        return "OK";
+        String response = "OK";
+        try {
+            svcUser.remove(id);
+            res.status(200);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
     }
 
     private void sortUsers(List<User> response, String key, String sortOrder) {

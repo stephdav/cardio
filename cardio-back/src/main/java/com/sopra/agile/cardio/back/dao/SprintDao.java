@@ -6,7 +6,7 @@ import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Sprint;
 
-public interface SprintDao extends BaseDao<Sprint> {
+public interface SprintDao extends BaseLongDao<Sprint> {
 
     Parameter count() throws CardioTechnicalException;
 

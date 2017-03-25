@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Parameter count() throws CardioTechnicalException {
+        LOGGER.debug("[SVC] count ...");
+
         Parameter param = userDao.count();
         if (param == null) {
             param = new Parameter("USERS", "0");
@@ -39,21 +41,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> all() throws CardioTechnicalException {
-        LOGGER.info("all ...");
+        LOGGER.info("[SVC] all ...");
         return userDao.all();
     }
 
     @Override
-    public User find(String id) {
-        LOGGER.info("find '{}' ...", id);
+    public User find(String id) throws CardioTechnicalException {
+        LOGGER.debug("[SVC] find user '{}' ...", id);
         User response = null;
         try {
-            response = userDao.find(Long.parseLong(id));
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            response = find(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            throw new CardioTechnicalException("Bad sprint identifier", e);
         }
         return response;
+    }
+
+    private User find(long id) throws CardioTechnicalException {
+        return userDao.find(id);
     }
 
     @Override
@@ -79,7 +84,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String remove(String id) {
+    public String remove(String id) throws CardioTechnicalException {
         LOGGER.info("remove '{}' ...", id);
         User usr = find(id);
         if (usr != null) {

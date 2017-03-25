@@ -20,7 +20,7 @@ public class DbSprintMapper implements RowMapper<DbSprint> {
 
     public DbSprint mapRow(ResultSet rs, int rowNum) throws SQLException {
         DbSprint sprint = new DbSprint();
-        sprint.setId(rs.getString(COL_ID));
+        sprint.setId(rs.getLong(COL_ID));
         sprint.setName(rs.getString(COL_NAME));
         sprint.setStartDate(LocalDateUtils.convertToLocalDate(rs.getDate(COL_STARTDATE)));
         sprint.setEndDate(LocalDateUtils.convertToLocalDate(rs.getDate(COL_ENDDATE)));

@@ -91,7 +91,7 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public Sprint find(String id) throws CardioTechnicalException {
+    public Sprint find(long id) throws CardioTechnicalException {
         LOGGER.debug("[DAO] find sprint '{}' ...", id);
         DbSprint sprint = null;
         try {
@@ -122,7 +122,6 @@ public class SprintDaoImpl implements SprintDao {
     public Sprint add(Sprint sprint) throws CardioTechnicalException {
         LOGGER.debug("[DAO] add new sprint ...");
 
-        sprint.setId(UIDGenerator.getUniqueId("SPR"));
         DbSprint dbsprint = mapper.map(sprint);
 
         try {
@@ -152,7 +151,7 @@ public class SprintDaoImpl implements SprintDao {
     }
 
     @Override
-    public void remove(String id) throws CardioTechnicalException {
+    public void remove(long id) throws CardioTechnicalException {
         LOGGER.debug("[DAO] remove sprint '{}' ...", id);
         try {
             jdbcTemplate.update(SQL_DELETE, id);

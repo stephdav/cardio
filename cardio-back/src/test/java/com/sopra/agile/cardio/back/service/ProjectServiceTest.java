@@ -33,7 +33,7 @@ public class ProjectServiceTest {
         int month;
         for (int idx = 0; idx < 3; idx++) {
             month = idx + 1;
-            aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
+            aSprints[idx] = new Sprint(idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
             aSprints[idx].setGoal("GOAL" + idx);
             aSprints[idx].setCommitment(100 * idx);
             aSprints[idx].setVelocity(100 * idx + 50);

@@ -10,7 +10,7 @@ public interface UserService extends BaseService<User> {
 
     User findByLogin(String name);
 
-    String remove(String userId);
+    String remove(String userId) throws CardioTechnicalException;
 
     String export() throws CardioTechnicalException;
 

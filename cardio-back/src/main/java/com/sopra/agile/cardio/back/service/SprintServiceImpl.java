@@ -43,41 +43,61 @@ public class SprintServiceImpl implements SprintService {
     @Override
     public List<Parameter> count() throws CardioTechnicalException {
         LOGGER.debug("[SVC] count ...");
+
         List<Parameter> params = new ArrayList<Parameter>();
-        params.add(sprintDao.count());
-        params.add(sprintDao.countCompleted());
+
+        Parameter sc = sprintDao.count();
+        if (sc == null) {
+            sc = new Parameter("SPRINTS", "0");
+        }
+        params.add(sc);
+
+        Parameter scc = sprintDao.countCompleted();
+        if (scc == null) {
+            scc = new Parameter("SPRINTS_COMPLETED", "0");
+        }
+        params.add(scc);
+
         return params;
     }
 
     @Override
-    public List<Sprint> all() {
-        LOGGER.info("all ...");
-        List<Sprint> response = null;
+    public List<Sprint> all() throws CardioTechnicalException {
+        LOGGER.info("[SVC] all ...");
+        return sprintDao.all();
+    }
+
+    @Override
+    public Sprint find(String id) throws CardioTechnicalException {
+        LOGGER.debug("[SVC] find sprint '{}' ...", id);
+        Sprint response = null;
         try {
-            response = sprintDao.all();
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            response = find(Long.parseLong(id));
+        } catch (NumberFormatException e) {
+            throw new CardioTechnicalException("Bad sprint identifier", e);
         }
         return response;
     }
 
     @Override
-    public Sprint find(String id) {
-        LOGGER.info("find '{}' ...", id);
-        Sprint response = null;
-        try {
-            response = sprintDao.find(id);
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return response;
+    public Sprint findByName(String name) throws CardioTechnicalException {
+        LOGGER.info("[SVC] find sprint by name '{}' ...", name);
+        return sprintDao.findByName(name);
+    }
+
+    @Override
+    public List<Sprint> findByDay(String day) throws CardioTechnicalException {
+        LOGGER.info("[SVC] find sprint by day '{}' ...", day);
+        return sprintDao.findByDay(day);
+    }
+
+    private Sprint find(long id) throws CardioTechnicalException {
+        return sprintDao.find(id);
     }
 
     @Override
     public Sprint add(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
-        LOGGER.info("add ...");
+        LOGGER.debug("[SVC] add sprint ...");
         checkSprintProperties(sprint);
         checkSprintDuplicate(sprint);
         checkSprintOverlapping(sprint);
@@ -85,36 +105,8 @@ public class SprintServiceImpl implements SprintService {
     }
 
     @Override
-    public Sprint findByName(String name) {
-        LOGGER.info("findByName '{}' ...", name);
-
-        Sprint response = null;
-        try {
-            response = sprintDao.findByName(name);
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @Override
-    public List<Sprint> findByDay(String day) {
-        LOGGER.info("findByDay '{}' ...", day);
-
-        List<Sprint> response = null;
-        try {
-            response = sprintDao.findByDay(day);
-        } catch (CardioTechnicalException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return response;
-    }
-
-    @Override
     public Sprint update(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
-        LOGGER.info("update ...");
+        LOGGER.debug("[SVC] update sprint ...");
         checkSprintProperties(sprint);
         checkSprintDuplicate(sprint);
         checkSprintOverlapping(sprint);
@@ -123,7 +115,7 @@ public class SprintServiceImpl implements SprintService {
 
     @Override
     public Sprint patch(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
-        LOGGER.info("patch ...");
+        LOGGER.debug("[SVC] patch sprint ...");
 
         Sprint original = find(sprint.getId());
         if (sprint.getName() == null) {
@@ -269,7 +261,7 @@ public class SprintServiceImpl implements SprintService {
         // Looking for a sprint with same name
         Sprint found = findByName(sprint.getName());
 
-        if (found != null && (sprint.getId() == null || !sprint.getId().equals(found.getId()))) {
+        if (found != null && sprint.getId() != found.getId()) {
             LOGGER.error("A sprint '{}' already exists", sprint.getName());
             throw new CardioFunctionalException("sprint with same name already exists");
         }
@@ -279,9 +271,7 @@ public class SprintServiceImpl implements SprintService {
         List<Sprint> conflicts = sprintDao.overlaping(sprint);
         if (conflicts != null) {
             // Remove current sprint from the list
-            if (sprint.getId() != null) {
-                conflicts.remove(sprint);
-            }
+            conflicts.remove(sprint);
             if (!conflicts.isEmpty()) {
                 LOGGER.error("{} sprints are overlaping sprint period", conflicts.size());
                 for (Sprint s : conflicts) {

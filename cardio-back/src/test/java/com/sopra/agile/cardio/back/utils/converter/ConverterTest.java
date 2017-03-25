@@ -24,10 +24,10 @@ public class ConverterTest {
 
     @Test
     public void testConvertFromSprintToDbSprint() throws CardioTechnicalException {
-        Sprint input = new Sprint("id", null, "2016-07-14", null);
+        Sprint input = new Sprint(1, null, "2016-07-14", null);
         DbSprint output = converter.map(input);
         assertNotNull(output);
-        assertEquals("id", output.getId());
+        assertEquals(1, output.getId());
         assertNull(output.getName());
         assertEquals(new LocalDate(2016, 07, 14), output.getStartDate());
         assertNull(output.getEndDate());
@@ -35,10 +35,10 @@ public class ConverterTest {
 
     @Test
     public void testConvertFromDbSprintToSprint() throws CardioTechnicalException {
-        DbSprint input = new DbSprint("id", null, new LocalDate(2016, 07, 14), null);
+        DbSprint input = new DbSprint(2, null, new LocalDate(2016, 07, 14), null);
         Sprint output = converter.map(input);
         assertNotNull(output);
-        assertEquals("id", output.getId());
+        assertEquals(2, output.getId());
         assertNull(output.getName());
         assertEquals("2016-07-14", output.getStartDate());
         assertNull(output.getEndDate());

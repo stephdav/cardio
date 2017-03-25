@@ -12,9 +12,9 @@ public interface SprintService extends BaseService<Sprint> {
 
     List<Parameter> count() throws CardioTechnicalException;
 
-    Sprint findByName(String name);
+    Sprint findByName(String name) throws CardioTechnicalException;
 
-    List<Sprint> findByDay(String day);
+    List<Sprint> findByDay(String day) throws CardioTechnicalException;
 
     Sprint update(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException;
 

@@ -11,7 +11,7 @@ public class DbSprintTest {
     @Test
     public void testDefaultConstructor() {
         DbSprint sprint = new DbSprint();
-        assertObject(sprint, null, null, null, null, null, 0, 0);
+        assertObject(sprint, 0, null, null, null, null, 0, 0);
     }
 
     @Test
@@ -19,8 +19,8 @@ public class DbSprintTest {
         LocalDate start = new LocalDate();
         LocalDate end = start.plusDays(14);
 
-        DbSprint sprint = new DbSprint("id", "name", start, end);
-        assertObject(sprint, "id", "name", start, end, null, 0, 0);
+        DbSprint sprint = new DbSprint(1, "name", start, end);
+        assertObject(sprint, 1, "name", start, end, null, 0, 0);
     }
 
     @Test
@@ -29,23 +29,19 @@ public class DbSprintTest {
         LocalDate end = start.plusDays(14);
 
         DbSprint sprint = new DbSprint();
-        sprint.setId("id");
+        sprint.setId(2);
         sprint.setName("name");
         sprint.setStartDate(start);
         sprint.setEndDate(end);
         sprint.setGoal("goal");
         sprint.setCommitment(999);
         sprint.setVelocity(888);
-        assertObject(sprint, "id", "name", start, end, "goal", 999, 888);
+        assertObject(sprint, 2, "name", start, end, "goal", 999, 888);
     }
 
-    private void assertObject(DbSprint sprint, final String id, final String name, final LocalDate startDate,
+    private void assertObject(DbSprint sprint, long id, final String name, final LocalDate startDate,
             final LocalDate endDate, final String goal, int commitment, int velocity) {
-        if (id == null) {
-            assertNull(sprint.getId());
-        } else {
-            assertEquals(id, sprint.getId());
-        }
+        assertEquals(id, sprint.getId());
         if (name == null) {
             assertNull(sprint.getName());
         } else {

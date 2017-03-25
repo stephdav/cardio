@@ -52,7 +52,7 @@ public class SprintDaoTest {
     @Test
     public void testFindSprint() throws CardioTechnicalException {
         // Sprint must be found
-        Sprint sprint = dao.find("SPR-1");
+        Sprint sprint = dao.find(2);
         assertNotNull(sprint);
         assertEquals("1", sprint.getName());
         assertEquals("2016-01-01", sprint.getStartDate());
@@ -62,14 +62,14 @@ public class SprintDaoTest {
         assertEquals(11, sprint.getVelocity());
 
         // Sprint not found
-        Sprint unk = dao.find("UNK");
+        Sprint unk = dao.find(0);
         assertNull(unk);
     }
 
     @Test
     public void testAddSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
-        dao.add(new Sprint(null, "2016-03", "2016-03-01", "2016-03-31"));
+        dao.add(new Sprint(999, "2016-03", "2016-03-01", "2016-03-31"));
         assertEquals(count + 1, count(jdbc, SPRINTS));
     }
 
@@ -88,7 +88,7 @@ public class SprintDaoTest {
     @Test
     public void testUpdateSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
-        Sprint sprint = new Sprint("SPR-0", "0", "2015-12-01", "2015-12-31");
+        Sprint sprint = new Sprint(1, "0", "2015-12-01", "2015-12-31");
         sprint.setGoal("mise à jour");
         sprint.setCommitment(34);
         sprint.setVelocity(20);
@@ -103,7 +103,7 @@ public class SprintDaoTest {
     @Test
     public void testRemoveSprint() throws CardioTechnicalException {
         int count = count(jdbc, SPRINTS);
-        dao.remove("TO_BE_DELETED");
+        dao.remove(666);
         assertEquals(count - 1, count(jdbc, SPRINTS));
     }
 
@@ -145,7 +145,7 @@ public class SprintDaoTest {
         // 0 : 2015-12-01 > 2015-12-31
         // 1 : 2016-01-01 > 2016-01-31
 
-        Sprint sprint = new Sprint("id", "name", "2015-01-01", "2015-02-01");
+        Sprint sprint = new Sprint(777, "name", "2015-01-01", "2015-02-01");
 
         // 2015-01-01 > 2015-02-01
         assertOverlaping(sprint, 0);

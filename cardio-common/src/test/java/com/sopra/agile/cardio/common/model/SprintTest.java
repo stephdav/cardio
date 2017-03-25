@@ -10,35 +10,31 @@ public class SprintTest {
     @Test
     public void testDefaultConstructor() {
         Sprint sprint = new Sprint();
-        assertObject(sprint, null, null, null, null, null, 0, 0);
+        assertObject(sprint, 0, null, null, null, null, 0, 0);
     }
 
     @Test
     public void testConstructor() {
-        Sprint sprint = new Sprint("id", "name", "start", "end");
-        assertObject(sprint, "id", "name", "start", "end", null, 0, 0);
+        Sprint sprint = new Sprint(1, "name", "start", "end");
+        assertObject(sprint, 1, "name", "start", "end", null, 0, 0);
     }
 
     @Test
     public void testFields() {
         Sprint sprint = new Sprint();
-        sprint.setId("id");
+        sprint.setId(2);
         sprint.setName("name");
         sprint.setStartDate("start");
         sprint.setEndDate("end");
         sprint.setGoal("goal");
         sprint.setCommitment(666);
         sprint.setVelocity(555);
-        assertObject(sprint, "id", "name", "start", "end", "goal", 666, 555);
+        assertObject(sprint, 2, "name", "start", "end", "goal", 666, 555);
     }
 
-    private void assertObject(Sprint sprint, final String id, final String name, final String startDate,
-            final String endDate, final String goal, int commitment, int velocity) {
-        if (id == null) {
-            assertNull(sprint.getId());
-        } else {
-            assertEquals(id, sprint.getId());
-        }
+    private void assertObject(Sprint sprint, long id, final String name, final String startDate, final String endDate,
+            final String goal, int commitment, int velocity) {
+        assertEquals(id, sprint.getId());
         if (name == null) {
             assertNull(sprint.getName());
         } else {

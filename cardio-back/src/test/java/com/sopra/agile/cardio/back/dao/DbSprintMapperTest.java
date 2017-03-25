@@ -18,13 +18,14 @@ import com.sopra.agile.cardio.back.model.DbSprint;
 
 public class DbSprintMapperTest {
 
-    private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_ID, DbSprintMapper.COL_NAME,
-            DbSprintMapper.COL_GOAL };
+    private static final String[] STRING_COLUMNS = { DbSprintMapper.COL_NAME, DbSprintMapper.COL_GOAL };
     private static final String[] DATE_COLUMNS = { DbSprintMapper.COL_STARTDATE, DbSprintMapper.COL_ENDDATE };
+    private static final String[] LONG_COLUMNS = { DbSprintMapper.COL_ID };
     private static final String[] INT_COLUMNS = { DbSprintMapper.COL_COMMIT, DbSprintMapper.COL_VELOCITY };
 
     private static final long NOW = System.currentTimeMillis();
     private static final int INT_VALUE = 0;
+    private static final long LONG_VALUE = 0;
 
     private static final String SHOULD_BE_EQUALS = "Should be equals";
 
@@ -45,6 +46,9 @@ public class DbSprintMapperTest {
         for (String col : Arrays.asList(INT_COLUMNS)) {
             when(rs.getInt(col)).thenReturn(INT_VALUE);
         }
+        for (String col : Arrays.asList(LONG_COLUMNS)) {
+            when(rs.getLong(col)).thenReturn(LONG_VALUE);
+        }
     }
 
     @Test
@@ -53,7 +57,7 @@ public class DbSprintMapperTest {
         LocalDate today = getLocalDateFromLong(NOW);
 
         DbSprint sprint = mapper.mapRow(rs, 0);
-        assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_ID, sprint.getId());
+        assertEquals(SHOULD_BE_EQUALS, LONG_VALUE, sprint.getId());
         assertEquals(SHOULD_BE_EQUALS, DbSprintMapper.COL_NAME, sprint.getName());
         assertEquals(SHOULD_BE_EQUALS, today, sprint.getStartDate());
         assertEquals(SHOULD_BE_EQUALS, today, sprint.getEndDate());

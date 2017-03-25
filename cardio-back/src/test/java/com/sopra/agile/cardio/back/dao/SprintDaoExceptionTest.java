@@ -36,7 +36,7 @@ public class SprintDaoExceptionTest {
 
     @Test(expected = CardioTechnicalException.class)
     public void testFindSprint() throws CardioTechnicalException {
-        dao.find("0");
+        dao.find(0);
     }
 
     @Test(expected = CardioTechnicalException.class)
@@ -46,7 +46,7 @@ public class SprintDaoExceptionTest {
 
     @Test(expected = CardioTechnicalException.class)
     public void testRemoveSprint() throws CardioTechnicalException {
-        dao.remove("0");
+        dao.remove(0);
     }
 
     @Test(expected = CardioTechnicalException.class)

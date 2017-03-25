@@ -4,7 +4,7 @@ import org.joda.time.LocalDate;
 
 public class DbSprint {
 
-    private String id;
+    private long id;
     private String name;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -16,18 +16,18 @@ public class DbSprint {
         // Empty constructor
     }
 
-    public DbSprint(final String id, final String name, final LocalDate startDate, final LocalDate endDate) {
+    public DbSprint(long id, final String name, final LocalDate startDate, final LocalDate endDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

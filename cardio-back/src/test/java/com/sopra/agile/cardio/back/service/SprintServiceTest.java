@@ -48,7 +48,7 @@ public class SprintServiceTest {
         int month;
         for (int idx = 0; idx < 3; idx++) {
             month = idx + 1;
-            aSprints[idx] = new Sprint("SPR-" + idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
+            aSprints[idx] = new Sprint(idx, "NAME" + idx, "2016-" + month + "-01", "2016-" + month + "-15");
             aSprints[idx].setGoal("GOAL" + idx);
             aSprints[idx].setCommitment(100 * idx);
             aSprints[idx].setVelocity(100 * idx + 50);
@@ -59,15 +59,15 @@ public class SprintServiceTest {
 
         List<Sprint> sprints = Arrays.asList(aSprints);
         when(sprintDao.all()).thenReturn(sprints);
-        when(sprintDao.find("SPR-0")).thenReturn(aSprints[0]);
-        when(sprintDao.find("SPR-1")).thenReturn(aSprints[1]);
-        when(sprintDao.find("UNK")).thenReturn(null);
+        when(sprintDao.find(1)).thenReturn(aSprints[0]);
+        when(sprintDao.find(2)).thenReturn(aSprints[1]);
+        when(sprintDao.find(0)).thenReturn(null);
         when(sprintDao.allCompleted()).thenReturn(Arrays.asList(aSprints[0], aSprints[1]));
 
-        Sprint newSprint = new Sprint("TST", "TST", "TST", "TST");
+        Sprint newSprint = new Sprint(999, "TST", "TST", "TST");
         when(sprintDao.add(any(Sprint.class))).thenReturn(newSprint);
 
-        Sprint updatedSprint = new Sprint("TST2", "TST2", "TST2", "TST2");
+        Sprint updatedSprint = new Sprint(777, "TST2", "TST2", "TST2");
         when(sprintDao.update(any(Sprint.class))).thenReturn(updatedSprint);
 
         sprintDayDao = mock(SprintDayDao.class);
@@ -88,7 +88,7 @@ public class SprintServiceTest {
     @Test
     public void testFindSprint() throws CardioTechnicalException, CardioFunctionalException {
         // Sprint must be found
-        Sprint sprint = svc.find("SPR-0");
+        Sprint sprint = svc.find("1");
         assertNotNull(sprint);
         assertEquals("NAME0", sprint.getName());
         assertEquals("2016-1-01", sprint.getStartDate());
@@ -96,13 +96,13 @@ public class SprintServiceTest {
         assertEquals("GOAL0", sprint.getGoal());
 
         // Sprint not found
-        Sprint unk = svc.find("UNK");
+        Sprint unk = svc.find("0");
         assertNull(unk);
     }
 
     @Test
     public void testAddSprint() throws CardioTechnicalException, CardioFunctionalException {
-        Sprint sprint = svc.add(new Sprint(null, "TST", "TST", "TST"));
+        Sprint sprint = svc.add(new Sprint(999, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST", sprint.getName());
         // TODO : verfiy add is called with a sprint with a not null ID
@@ -111,7 +111,7 @@ public class SprintServiceTest {
 
     @Test
     public void testUpdateSprint() throws CardioTechnicalException, CardioFunctionalException {
-        Sprint sprint = svc.update(new Sprint(null, "TST", "TST", "TST"));
+        Sprint sprint = svc.update(new Sprint(777, "TST", "TST", "TST"));
         assertNotNull(sprint);
         assertEquals("TST2", sprint.getName());
         verify(sprintDao).update(any(Sprint.class));
@@ -119,7 +119,7 @@ public class SprintServiceTest {
 
     @Test
     public void testFindData() throws CardioTechnicalException, CardioFunctionalException {
-        SprintData data = svc.findData("SPR-1");
+        SprintData data = svc.findData("2");
         assertNotNull(data);
 
         SprintDataDetails details = data.getDetails();
@@ -150,7 +150,7 @@ public class SprintServiceTest {
 
         ArgumentCaptor<Sprint> savedCaptor = ArgumentCaptor.forClass(Sprint.class);
 
-        svc.updateData("SPR-1", sprintData);
+        svc.updateData("2", sprintData);
         verify(sprintDayDao, Mockito.times(1)).insertOrUpdate(any(SprintDay.class));
         verify(sprintDayDao, Mockito.times(2)).remove(anyString());
         verify(sprintDao, Mockito.times(1)).update(savedCaptor.capture());
@@ -168,7 +168,7 @@ public class SprintServiceTest {
         when(sprintDayDao.findLastBetween(anyString(), Mockito.anyString())).thenReturn(sd);
         ArgumentCaptor<Sprint> savedCaptor = ArgumentCaptor.forClass(Sprint.class);
 
-        svc.updateData("SPR-1", sprintData);
+        svc.updateData("2", sprintData);
         verify(sprintDao, Mockito.times(1)).update(savedCaptor.capture());
         assertNotNull(savedCaptor.getValue());
         assertEquals(7, savedCaptor.getValue().getVelocity());
