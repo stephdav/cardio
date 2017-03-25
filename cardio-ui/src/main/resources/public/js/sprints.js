@@ -14,13 +14,16 @@ function initSprints() {
 	});
 
 	initSprintsTable();
-	getSprints();
 }
 
 function initSprintsTable() {
 	$('#sprints-table').bootstrapTable({
 		pagination: true,
+		url: '/api/sprints?bootstrap',
 		sidePagination: 'server',
+		queryParamsType: 'page',
+		queryParams: 'queryParams',
+		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
 	      { field: 'startDate', title: 'from', align: 'center', formatter: 'dateFormatter' },
 	      { field: 'endDate', title: 'to', align: 'center', formatter: 'dateFormatter' },
@@ -34,41 +37,26 @@ function initSprintsTable() {
 	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
 		window.location = "../sprint/" + row.id;
 	});
-	$('#sprints-table').on('page-change.bs.table', function (e, number, size) {
-		getSprints(number, size);
-	});
+}
+
+function refreshSprints() {
+	$('#sprints-table').bootstrapTable('refresh');
+}
+
+function queryParams() {
+	var options = $('#sprints-table').bootstrapTable('getOptions');
+	var params = {};
+	params['page'] = options.pageNumber;
+	params['limit'] = options.pageSize;
+//	params['sortName'] = options.sortName;enddate
+//	params['sortOrder'] = options.sortOrder;desc
+	params['sortName'] = "enddate";
+	params['sortOrder'] = "desc";
+	return params;
 }
 
 function dateFormatter(value, row) {
 	return convertToDDMMYYYY(value);
-}
-
-function getSprints(page, limit) {
-	if (page == undefined) {
-		page = 1;
-	}
-	if (limit == undefined) {
-		limit = 10;
-	}
-	ajaxGet("/api/sprints?page=" + page + "&limit=" + limit + "&sort=enddate&desc", function(data, hv, errorThrown) {
-		if (hv.status == 200 || hv.status == 206) {
-			updateSprints(data, hv);
-		} else {
-			log("Error getting sprints : " + errorThrown);
-		}
-	});
-}
-
-function updateSprints(data, hv) {
-	$('#sprintslist').empty();
-	if (hv.status == 200 || hv.status == 206) {
-		var nb = hv.contentRange.split(/\//)[1];
-		var bootstrapTableData = { rows: [] };
-		bootstrapTableData.total = nb;
-		bootstrapTableData.rows = data;
-		$('#sprints-table').bootstrapTable('load', bootstrapTableData);
-		$('#sprints-count').text(nb);
-	}
 }
 
 function createSprint(name, startdate, enddate, goal, commitment) {
@@ -85,7 +73,7 @@ function createSprint(name, startdate, enddate, goal, commitment) {
 			$('#errors').text('');
 			$('.form-error').hide();
 			// reload list
-			getSprints();	
+			refreshSprints();	
 		} else {
 			log("Error creating sprint : " + errorThrown);
 			$('#errors').text(data);

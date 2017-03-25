@@ -36,7 +36,7 @@ public class SprintDaoImpl implements SprintDao {
     private static final String SQL_FIND_BY_NAME = "select * from SPRINTS where name = ?";
     private static final String SQL_FIND_BY_DAY = "select * from SPRINTS where START_DATE <= DATE '%s' AND DATE '%s' <= END_DATE ORDER BY START_DATE ASC";
     private static final String SQL_FIND_BY_DAY_NOW = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
-    private static final String SQL_INSERT = "insert into SPRINTS(ID, NAME, START_DATE, END_DATE, GOAL, COMMITMENT, VELOCITY) values (?, ?, ?, ?, ?, ?, ?)";
+    private static final String SQL_INSERT = "insert into SPRINTS(NAME, START_DATE, END_DATE, GOAL, COMMITMENT, VELOCITY) values (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "update SPRINTS set NAME=?, START_DATE=?, END_DATE=?, GOAL=?, COMMITMENT=?, VELOCITY=?  where ID = ?";
     private static final String SQL_DELETE = "delete from SPRINTS where id = ?";
     private static final String SQL_OVERLAP = "select * from SPRINTS where (START_DATE <= DATE '%s' AND END_DATE >= DATE '%s') OR (START_DATE >= DATE '%s' AND START_DATE <= DATE '%s' AND END_DATE >= DATE '%s')";
@@ -125,8 +125,7 @@ public class SprintDaoImpl implements SprintDao {
         DbSprint dbsprint = mapper.map(sprint);
 
         try {
-            jdbcTemplate.update(SQL_INSERT, dbsprint.getId(), dbsprint.getName(),
-                    LocalDateUtils.convertToDate(dbsprint.getStartDate()),
+            jdbcTemplate.update(SQL_INSERT, dbsprint.getName(), LocalDateUtils.convertToDate(dbsprint.getStartDate()),
                     LocalDateUtils.convertToDate(dbsprint.getEndDate()), dbsprint.getGoal(), dbsprint.getCommitment(),
                     dbsprint.getVelocity());
         } catch (Exception ex) {

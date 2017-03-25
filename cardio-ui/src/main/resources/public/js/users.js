@@ -45,7 +45,6 @@ function refreshUsers() {
 	$('#users-table').bootstrapTable('refresh');
 }
 
-
 function queryParams() {
 	var options = $('#users-table').bootstrapTable('getOptions');
 	var params = {};
