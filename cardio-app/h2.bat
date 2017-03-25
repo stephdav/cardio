@@ -1,0 +1,1 @@
+java -cp %H2_HOME%\bin\h2-1.4.193.jar org.h2.tools.Console -url jdbc:h2:./cardioDB -user sa -password sa -web -browser
