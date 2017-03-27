@@ -38,7 +38,7 @@ public class SprintDayDaoImpl implements SprintDayDao {
 
     @Override
     public List<SprintDay> all() throws CardioTechnicalException {
-        LOGGER.debug("[DAO] all users ...");
+        LOGGER.debug("[DAO] all days ...");
         List<SprintDay> days = null;
         try {
             days = jdbcTemplate.query(SQL_ALL, new SprintDayMapper());

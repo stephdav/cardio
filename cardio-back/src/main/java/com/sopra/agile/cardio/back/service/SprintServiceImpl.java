@@ -29,6 +29,7 @@ public class SprintServiceImpl implements SprintService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SprintServiceImpl.class);
 
     private static final String SQL_EXPORT = "INSERT INTO SPRINTS VALUES ('%s', '%s', DATE '%s', DATE '%s', '%s', %d, %d);\n";
+    private static final String SQL_EXPORT_DAYS = "INSERT INTO SPRINT_DAYS VALUES (DATE '%s', %d);\n";
 
     @Autowired
     private SprintDao sprintDao;
@@ -307,6 +308,14 @@ public class SprintServiceImpl implements SprintService {
             sb.append(String.format(SQL_EXPORT, sprint.getId(), sprint.getName(), sprint.getStartDate(),
                     sprint.getEndDate(), sprint.getGoal(), sprint.getCommitment(), sprint.getVelocity()));
         }
+
+        sb.append("\n");
+
+        List<SprintDay> days = sprintDayDao.all();
+        for (SprintDay day : days) {
+            sb.append(String.format(SQL_EXPORT_DAYS, day.getDay(), day.getDone()));
+        }
+
         return sb.toString();
     }
 }
