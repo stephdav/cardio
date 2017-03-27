@@ -29,7 +29,7 @@ function initActivitiesTable() {
 	      { field: 'id', title: '#', align: 'center' },
 	      { field: 'description', title: 'description' },
 	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' },
-	      { field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter' },
+	      //{ field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter' },
 	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter' },
 	      { field: 'assignedUser', title: 'assigned', align: 'center', formatter: 'userFormatter' }
 	    ]
@@ -129,7 +129,7 @@ function userFormatter(value, row) {
 	$.each(stories_users, function(index, usr) {
 		content += '<option value="' + usr.id + '"';	  
 		if (usr.id==value) {
-			content += '" selected';	  
+			content += '" selected';
 		}
 		content += '>' + usr.login + '</option>';	  
 	});

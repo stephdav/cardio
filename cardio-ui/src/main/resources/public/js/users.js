@@ -35,7 +35,7 @@ function initUsersTable() {
 	      { field: 'lastname', title: 'last name', sortable: true }
 	    ]
 	});
-	
+
 	$('#users-table').on('load-success.bs.table', function (e, data) {
 		$('#users-count').text(data.total);
 	});
