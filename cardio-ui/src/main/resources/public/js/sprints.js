@@ -34,6 +34,10 @@ function initSprintsTable() {
 	    ]
 	});
 
+	$('#sprints-table').on('load-success.bs.table', function (e, data) {
+		$('#sprints-count').text(data.total);
+	});
+
 	$('#sprints-table').on('click-row.bs.table', function (e, row, $element, field) {
 		window.location = "../sprint/" + row.id;
 	});
