@@ -45,5 +45,6 @@
 
 {% block scripts %}
   <script src="/js/fnProject.js"></script>
+  <script src="/js/fnUser.js"></script>
   <script src="/js/kanban.js"></script>
 {% endblock %}
