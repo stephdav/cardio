@@ -20,6 +20,9 @@ public class StoryServiceImpl implements StoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryServiceImpl.class);
 
+    private static final String SQL_EXPORT = "INSERT INTO STORIES(DESCRIPTION,STATUS,LAST_UPDATE,CONTRIBUTION,ESTIMATE,ASSIGNED) VALUES ('%s', '%s', DATE '%s', %d, %d, %d);\n";
+    private static final String SQL_EXPORT_WITHOUT_USER = "INSERT INTO STORIES(DESCRIPTION,STATUS,LAST_UPDATE,CONTRIBUTION,ESTIMATE) VALUES ('%s', '%s', DATE '%s', %d, %d);\n";
+
     @Autowired
     private StoryDao storyDao;
 
@@ -150,4 +153,30 @@ public class StoryServiceImpl implements StoryService {
         Fields.checkField("description", story.getDescription(), 0, 256);
     }
 
+    @Override
+    public String export() throws CardioTechnicalException {
+        List<Story> stories = all();
+        StringBuffer sb = new StringBuffer();
+
+        for (Story us : stories) {
+            if (us.getAssignedUser() == null) {
+                sb.append(String.format(SQL_EXPORT_WITHOUT_USER, escapeSpecialCharacters(us.getDescription()),
+                        us.getStatus().toString(), us.getLastUpdate(), us.getContribution(), us.getEstimate()));
+            } else {
+                sb.append(String.format(SQL_EXPORT, escapeSpecialCharacters(us.getDescription()),
+                        us.getStatus().toString(), us.getLastUpdate(), us.getContribution(), us.getEstimate(),
+                        us.getAssignedUser()));
+            }
+        }
+
+        return sb.toString();
+    }
+
+    private String escapeSpecialCharacters(String txt) {
+        String escapedTxt = null;
+        if (txt != null) {
+            escapedTxt = txt.replaceAll("'", "''");
+        }
+        return escapedTxt;
+    }
 }

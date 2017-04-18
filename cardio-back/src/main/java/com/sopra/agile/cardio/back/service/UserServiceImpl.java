@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    private static final String SQL_EXPORT = "INSERT INTO USERS(LOGIN,FIRSTNAME,LASTNAME) VALUES ('%s', '%s', '%s');\n";
+    private static final String SQL_EXPORT = "INSERT INTO USERS(ID,LOGIN,FIRSTNAME,LASTNAME) VALUES (%d, '%s', '%s', '%s');\n";
 
     @Autowired
     private UserDao userDao;
@@ -122,9 +122,17 @@ public class UserServiceImpl implements UserService {
         List<User> users = all();
         StringBuffer sb = new StringBuffer();
         for (User usr : users) {
-            sb.append(String.format(SQL_EXPORT, usr.getLogin(), usr.getFirstname(), usr.getLastname()));
+            sb.append(String.format(SQL_EXPORT, usr.getId(), usr.getLogin(),
+                    escapeSpecialCharacters(usr.getFirstname()), escapeSpecialCharacters(usr.getLastname())));
         }
         return sb.toString();
     }
 
+    private String escapeSpecialCharacters(String txt) {
+        String escapedTxt = null;
+        if (txt != null) {
+            escapedTxt = txt.replaceAll("'", "''");
+        }
+        return escapedTxt;
+    }
 }

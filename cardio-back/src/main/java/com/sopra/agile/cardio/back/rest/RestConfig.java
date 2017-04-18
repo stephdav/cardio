@@ -119,6 +119,7 @@ public class RestConfig {
 
         // STORIES
 
+        get("/api/stories/export", (req, res) -> storyController.exportStories(req, res));
         get("/api/stories/count", (req, res) -> storyController.getCount(req, res), new JsonTransformer());
         get("/api/stories/:id", (req, res) -> storyController.getStory(req, res, req.params(PARAM_ID)),
                 new JsonTransformer());

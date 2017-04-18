@@ -8,6 +8,11 @@ function initActivities() {
 		createStory($('#storyDesc').val(), $('#storyStatus').val());
 	});
 
+	$('#exportStories').on('click', function(e) {
+		e.stopPropagation();
+		downloadExport('/api/stories/export');
+	});
+
 	fnGetUsers(loadUsers);
 }
 

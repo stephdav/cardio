@@ -306,7 +306,8 @@ public class SprintServiceImpl implements SprintService {
 
         for (Sprint sprint : sprints) {
             sb.append(String.format(SQL_EXPORT, sprint.getId(), sprint.getName(), sprint.getStartDate(),
-                    sprint.getEndDate(), sprint.getGoal(), sprint.getCommitment(), sprint.getVelocity()));
+                    sprint.getEndDate(), escapeSpecialCharacters(sprint.getGoal()), sprint.getCommitment(),
+                    sprint.getVelocity()));
         }
 
         sb.append("\n");
@@ -317,5 +318,13 @@ public class SprintServiceImpl implements SprintService {
         }
 
         return sb.toString();
+    }
+
+    private String escapeSpecialCharacters(String txt) {
+        String escapedTxt = null;
+        if (txt != null) {
+            escapedTxt = txt.replaceAll("'", "''");
+        }
+        return escapedTxt;
     }
 }

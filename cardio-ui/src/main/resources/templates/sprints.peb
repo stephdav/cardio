@@ -57,7 +57,7 @@
           <div class="table-filters pull-right">
             <div class="form-inline">
               <div class="form-group form-group-sm">
-                <button id="exportSprints" type="button" class="btn btn-default"><i class="fa fa-download"></i></button>
+                <button id="exportSprints" type="button" class="btn btn-sm"><i class="fa fa-download"></i></button>
               </div>
             </div>
           </div>

@@ -28,7 +28,7 @@ public class StoryMapper implements RowMapper<Story> {
         } else {
             story.setStatus(StoryStatus.valueOf(rs.getString(COL_STATUS)));
         }
-        story.setLastUpdate(LocalDateUtils.convertToLocalDateTime(rs.getDate(COL_LASTUPD)));
+        story.setLastUpdate(LocalDateUtils.convertToLocalDateTime(rs.getTimestamp(COL_LASTUPD)));
         story.setContribution(rs.getInt(COL_CONTRIB));
         story.setEstimate(rs.getInt(COL_ESTIMATE));
         if (rs.getLong(COL_ASSIGNED) != 0) {

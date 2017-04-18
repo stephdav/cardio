@@ -23,9 +23,9 @@ public class StoryDaoImpl implements StoryDao {
     private static final String SQL_ALL = "select * from STORIES";
     private static final String SQL_FIND_BY_ID = "select * from STORIES where ID=?";
     private static final String SQL_FIND_BY_STATUS = "select * from STORIES where STATUS='%s'";
-    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, LAST_UPDATE, CONTRIBUTION, ESTIMATE, ASSIGNED) values (?, ?, SYSDATE, ?, ?, ?)";
+    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, LAST_UPDATE, CONTRIBUTION, ESTIMATE, ASSIGNED) values (?, ?, NOW(), ?, ?, ?)";
     private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=?, ASSIGNED=? where ID=?";
-    private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=SYSDATE, CONTRIBUTION=?, ESTIMATE=?, ASSIGNED=? where ID=?";
+    private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=NOW(), CONTRIBUTION=?, ESTIMATE=?, ASSIGNED=? where ID=?";
     private static final String SQL_DELETE = "delete from STORIES where id=?";
 
     @Autowired
@@ -119,6 +119,7 @@ public class StoryDaoImpl implements StoryDao {
         LOGGER.debug("[DAO] update story ...");
         String sql = SQL_UPDATE;
         if (updateTimestamp) {
+            LOGGER.debug("update tiestamp ...");
             sql = SQL_UPDATE_TIMESTAMP;
         }
         try {

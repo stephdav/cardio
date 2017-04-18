@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -187,5 +189,15 @@ public class StoryController extends BaseController {
             LOGGER.debug("reverse order");
             Collections.reverse(response);
         }
+    }
+
+    public HttpServletResponse exportStories(Request req, Response res) {
+        String data = null;
+        try {
+            data = svcStory.export();
+        } catch (CardioTechnicalException e) {
+            data = e.getMessage();
+        }
+        return export(res, "stories.sql", data);
     }
 }

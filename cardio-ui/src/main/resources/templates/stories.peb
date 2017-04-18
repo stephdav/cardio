@@ -67,6 +67,9 @@
                   <option>DONE</option>
                 </select>
               </div>
+              <div class="form-group form-group-sm">
+                <button id="exportStories" type="button" class="btn btn-sm"><i class="fa fa-download"></i></button>
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 package com.sopra.agile.cardio.common.utils;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
@@ -43,6 +44,14 @@ public class LocalDateUtils {
         Date d = null;
         if (date != null) {
             d = new Date(date.toDate().getTime());
+        }
+        return d;
+    }
+
+    public static LocalDateTime convertToLocalDateTime(Timestamp date) {
+        LocalDateTime d = null;
+        if (date != null) {
+            d = new LocalDateTime(date);
         }
         return d;
     }
