@@ -4,6 +4,7 @@ $(document).ready(function() {
 
 function initPlanning() {
 	fnProjectGetDetails(updateVelocities);
+	initReadyStories();
 }
 
 function updateVelocities(data, hv) {
@@ -13,3 +14,40 @@ function updateVelocities(data, hv) {
 	$('#best-sprints').text(data.best);
 	$('#over-commit').text(data.overCommit+"%");
 }
+
+function initReadyStories() {
+	$('#stories-table').bootstrapTable({
+		pagination: true,
+		url: '/api/stories?bootstrap',
+		sidePagination: 'server',
+		queryParamsType: 'page',
+		queryParams: 'queryParams',
+		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
+	    columns: [
+	      { field: 'id', title: '#', align: 'center' },
+	      { field: 'description', title: 'description' },
+	      { field: 'status', title: 'status', align: 'center' },
+	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'valueFormatter' },
+	    ]
+	});
+}
+
+function queryParams() {
+	var options = $('#stories-table').bootstrapTable('getOptions');	
+	var params = {};
+	params['page'] = options.pageNumber;
+	params['limit'] = options.pageSize;
+	params['sortName'] = options.sortName;
+	params['sortOrder'] = options.sortOrder;
+	params['status'] = 'READY';
+	return params;
+}
+
+function valueFormatter(value, row) {
+	content = '';
+	if (value!=-1){
+		content = value;
+	}
+	return content;
+}
+
