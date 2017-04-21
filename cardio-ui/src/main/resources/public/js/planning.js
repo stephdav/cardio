@@ -24,10 +24,10 @@ function initReadyStories() {
 		queryParams: 'queryParams',
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
-	      { field: 'id', title: '#', align: 'center' },
+	      { field: 'id', title: '#', align: 'center', sortable: true },
 	      { field: 'description', title: 'description' },
-	      { field: 'status', title: 'status', align: 'center' },
-	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'valueFormatter' },
+	      { field: 'status', title: 'status', align: 'center', sortable: true },
+	      { field: 'estimate', title: 'complexity', align: 'center', sortable: true, formatter: 'valueFormatter' },
 	    ]
 	});
 }
@@ -39,7 +39,7 @@ function queryParams() {
 	params['limit'] = options.pageSize;
 	params['sortName'] = options.sortName;
 	params['sortOrder'] = options.sortOrder;
-	params['status'] = 'READY';
+	params['status'] = 'READY,PENDING';
 	return params;
 }
 

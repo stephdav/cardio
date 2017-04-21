@@ -1,5 +1,9 @@
 {% extends "templates/base.peb" %}
 
+{% block stylesheets %}
+  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+{% endblock %}
+
 {% block content %}
 
   <div class="row">

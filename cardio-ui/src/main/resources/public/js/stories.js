@@ -31,11 +31,11 @@ function initActivitiesTable() {
 		queryParams: 'queryParams',
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
 	    columns: [
-	      { field: 'id', title: '#', align: 'center' },
+	      { field: 'id', title: '#', align: 'center', sortable: true },
 	      { field: 'description', title: 'description' },
 	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' },
 	      //{ field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter' },
-	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter' },
+	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter', sortable: true },
 	      { field: 'assignedUser', title: 'assigned', align: 'center', formatter: 'userFormatter' }
 	    ]
 	});

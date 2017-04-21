@@ -1,5 +1,6 @@
 package com.sopra.agile.cardio.back.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -158,13 +159,20 @@ public class StoryController extends BaseController {
     }
 
     private List<Story> filterStories(List<Story> list, Request req) {
-        if (req.queryParams("status") != null) {
+        List<Story> result = new ArrayList<Story>();
+        if (req.queryParams("status") == null) {
+            result.addAll(list);
+        } else {
             String filter = req.queryParams("status");
             LOGGER.debug("filter on status '{}'", filter);
-            StoryStatus status = StoryStatus.valueOf(filter);
-            list = list.stream().filter(line -> line.getStatus() == status).collect(Collectors.toList());
+
+            String[] filters = filter.split(",");
+            for (String f : filters) {
+                StoryStatus status = StoryStatus.valueOf(f);
+                result.addAll(list.stream().filter(line -> line.getStatus() == status).collect(Collectors.toList()));
+            }
         }
-        return list;
+        return result;
     }
 
     private void sortStories(List<Story> response, String key, String sortOrder) {
