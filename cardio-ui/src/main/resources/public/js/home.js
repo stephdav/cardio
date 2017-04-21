@@ -35,14 +35,12 @@ function updateHomeView(sprints, hv) {
 		$('#from-month').text('');
 		$('#to-day').text('');
 		$('#to-month').text('');
-		$('#sprint-name').text('no pending sprint');
-		$('#sprint-goal').text('');
+		$('#sprint-name-and-goal').text('no pending sprint');
 		$('#sprint-commitment').text('-');
 	} else if (sprints != undefined && sprints[0] != undefined) {
 		var sprint = sprints[0];
 		updateSprintDate(sprint.startDate, '#from-month', '#from-day');
-		$('#sprint-name').text('[#' + sprint.name + ']');
-		$('#sprint-goal').text(sprint.goal);
+		$('#sprint-name-and-goal').text('#' + sprint.name + ' ' + sprint.goal);
 		updateSprintDate(sprint.endDate, '#to-month', '#to-day');
 		$('#sprint-commitment').text(sprint.commitment);
 		fnSprintGetData(sprint.id, updateBurndown);
