@@ -21,9 +21,14 @@ function updateCategory(stories, listSelector, countSelector) {
 	$.each(stories, function(index, story) {
 		content += '<a href="#" class="list-group-item">';
 		content += '<h4 class="list-group-item-heading">#' + story.id;
+		content += '<span class="pull-right">';
 		if (story.assignedUser !== undefined) {
-			content += '<span class="assigned pull-right">' + kanbanGetUserLogin(story.assignedUser) + '</span>';
+			content += '<span class="assigned">' + kanbanGetUserLogin(story.assignedUser) + '</span>';
 		}
+		if (story.estimate !== undefined && story.estimate != -1) {
+			content += '&nbsp;&nbsp;<span class="estimate">' + story.estimate + '</span>';
+		}
+		content += '</span>';
 		content += '</h4>';
 		content += '<p class="list-group-item-text">' + story.description + '</p>';
 		content += '</a>';
