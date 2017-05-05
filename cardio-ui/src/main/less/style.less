@@ -502,3 +502,38 @@ a.list-group-item .list-group-item-heading:focus, a.list-group-item .list-group-
 .assigned {
 	font-size: small;
 }
+
+
+/* Highchart export button */
+
+.highcharts-button path {
+	stroke: @base-light;
+}
+.highcharts-button rect {
+    fill: @color-dark-sel;
+}
+
+.highcharts-button:hover path {
+    stroke: @color;
+}
+.highcharts-button:hover rect {
+    fill: @base;
+}
+
+.highcharts-contextmenu {
+    padding: 5px !important;
+    margin: 24px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.highcharts-contextmenu div {
+    box-shadow: none!important;
+    -webkit-box-shadow: none!important;
+}
+
+.highcharts-contextmenu hr {
+    border: 0;
+    background: @color;
+    height: 1px;
+    margin: 3px 0;
+}
