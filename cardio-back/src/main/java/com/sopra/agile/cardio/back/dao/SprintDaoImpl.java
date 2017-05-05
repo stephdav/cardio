@@ -29,13 +29,13 @@ public class SprintDaoImpl implements SprintDao {
     private Converter mapper;
 
     private static final String SQL_COUNT = "select 'SPRINTS', count(0) from SPRINTS";
-    private static final String SQL_COUNT_COMPLETED = "select 'SPRINTS_COMPLETED', count(0) from SPRINTS where END_DATE <= SYSDATE";
+    private static final String SQL_COUNT_COMPLETED = "select 'SPRINTS_COMPLETED', count(0) from SPRINTS where END_DATE < CURRENT_DATE()";
     private static final String SQL_ALL = "select * from SPRINTS";
-    private static final String SQL_ALL_COMPLETED = "select * from SPRINTS where END_DATE <= SYSDATE ORDER BY START_DATE ASC";
+    private static final String SQL_ALL_COMPLETED = "select * from SPRINTS where END_DATE < CURRENT_DATE() ORDER BY START_DATE ASC";
     private static final String SQL_FIND_BY_ID = "select * from SPRINTS where id = ?";
     private static final String SQL_FIND_BY_NAME = "select * from SPRINTS where name = ?";
     private static final String SQL_FIND_BY_DAY = "select * from SPRINTS where START_DATE <= DATE '%s' AND DATE '%s' <= END_DATE ORDER BY START_DATE ASC";
-    private static final String SQL_FIND_BY_DAY_NOW = "select * from SPRINTS where START_DATE <= SYSDATE AND SYSDATE <= END_DATE ORDER BY START_DATE ASC";
+    private static final String SQL_FIND_BY_DAY_NOW = "select * from SPRINTS where START_DATE <= CURRENT_DATE() AND CURRENT_DATE() <= END_DATE ORDER BY START_DATE ASC";
     private static final String SQL_INSERT = "insert into SPRINTS(NAME, START_DATE, END_DATE, GOAL, COMMITMENT, VELOCITY) values (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "update SPRINTS set NAME=?, START_DATE=?, END_DATE=?, GOAL=?, COMMITMENT=?, VELOCITY=?  where ID = ?";
     private static final String SQL_DELETE = "delete from SPRINTS where id = ?";
