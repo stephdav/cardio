@@ -43,16 +43,25 @@ function initActivitiesTable() {
 	$('#stories-table').on('load-success.bs.table', function (e, data) {
 		$('#stories-count').text(data.total);
 	});
+
+	$('#stories-table').on('click-cell.bs.table', function (e, field, value, row, $element) {
+		if (field == 'id' || field == 'description') {
+			window.location = "../story/" + row.id;
+		}
+	});
 	
 	$('#stories-table').on('change', 'select.change-status',function (e) {
+		e.stopPropagation();
 		patchStory($(this).data("id"), "status", this.value);
 	});
 
 	$('#stories-table').on('change', 'select.change-complexity',function (e) {
+		e.stopPropagation();
 		patchStory($(this).data("id"), "estimate", this.value);
 	});
 	
 	$('#stories-table').on('change', 'select.change-assigned',function (e) {
+		e.stopPropagation();
 		patchStory($(this).data("id"), "assignedUser", this.value);
 	});
 
@@ -64,7 +73,6 @@ function initActivitiesTable() {
 		e.stopPropagation();
 		refresh();
 	});
-
 }
 
 function selectFormatter(value, row) {

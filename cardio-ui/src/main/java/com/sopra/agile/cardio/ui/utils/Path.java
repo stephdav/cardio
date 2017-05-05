@@ -12,6 +12,7 @@ public class Path {
         public static final String SPRINT = BASE + "sprint/*";
         public static final String SPRINTS = BASE + "sprints/";
         public static final String STORIES = BASE + "stories/";
+        public static final String STORY = BASE + "story/*";
         public static final String USERS = BASE + "users/";
     }
 
@@ -23,6 +24,7 @@ public class Path {
         public static final String SPRINT = "templates/sprint.peb";
         public static final String SPRINTS = "templates/sprints.peb";
         public static final String STORIES = "templates/stories.peb";
+        public static final String STORY = "templates/story.peb";
         public static final String USERS = "templates/users.peb";
 
         public static final String NOT_FOUND = "templates/404.peb";

@@ -13,6 +13,7 @@ import com.sopra.agile.cardio.ui.controller.PlanningController;
 import com.sopra.agile.cardio.ui.controller.SprintController;
 import com.sopra.agile.cardio.ui.controller.SprintsController;
 import com.sopra.agile.cardio.ui.controller.StoriesController;
+import com.sopra.agile.cardio.ui.controller.StoryController;
 import com.sopra.agile.cardio.ui.controller.UsersController;
 import com.sopra.agile.cardio.ui.utils.Filters;
 import com.sopra.agile.cardio.ui.utils.Path;
@@ -39,6 +40,7 @@ public class UIConfig {
         get(Path.Web.SPRINT, SprintController.SPRINT);
         get(Path.Web.SPRINTS, SprintsController.SPRINTS);
         get(Path.Web.STORIES, StoriesController.STORIES);
+        get(Path.Web.STORY, StoryController.STORY);
         get(Path.Web.USERS, UsersController.USERS);
         get(Path.Web.ALL, ViewUtil.NOT_FOUND);
 
