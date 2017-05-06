@@ -22,7 +22,6 @@ function getStory(id) {
 }
 
 function callbackStory(story, hv) {
-	log("story: "+JSON.stringify(story));
 	$('#storyId').text(story.id);
 	$('#storyDescription').val(story.description);
 	$('#storyStatus option').prop('selected', false);

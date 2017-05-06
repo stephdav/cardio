@@ -14,6 +14,7 @@ public class Path {
         public static final String STORIES = BASE + "stories/";
         public static final String STORY = BASE + "story/*";
         public static final String USERS = BASE + "users/";
+        public static final String USER = BASE + "user/*";
     }
 
     public static class Template {
@@ -26,6 +27,7 @@ public class Path {
         public static final String STORIES = "templates/stories.peb";
         public static final String STORY = "templates/story.peb";
         public static final String USERS = "templates/users.peb";
+        public static final String USER = "templates/user.peb";
 
         public static final String NOT_FOUND = "templates/404.peb";
     }

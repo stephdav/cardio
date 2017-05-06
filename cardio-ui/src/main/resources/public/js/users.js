@@ -39,6 +39,9 @@ function initUsersTable() {
 	$('#users-table').on('load-success.bs.table', function (e, data) {
 		$('#users-count').text(data.total);
 	});
+	$('#users-table').on('click-row.bs.table', function (e, row, $element, field) {
+		window.location = "../user/" + row.id;
+	});
 }
 
 function refreshUsers() {

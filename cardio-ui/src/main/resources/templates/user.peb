@@ -1,0 +1,50 @@
+{% extends "templates/base.peb" %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="row">
+    <div class="col-lg-6">
+
+      <div class="panel panel-default">
+        <div class="panel-heading">user #<span id="userId"></span></div>
+        <div class="panel-body">
+          <div class="form-horizontal">
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userLogin">login</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userLogin"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userFirstname">firstname</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userFirstname"></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-3 control-label" for="userLastname">lastname</label>
+              <div class="col-sm-9"><input type="text" class="form-control" id="userLastname"></div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-3 col-sm-9">
+                <button id="updateUser" type="button" class="btn btn-success">update</button>
+                <button id="deleteUser" type="button" class="btn btn-danger">delete</button>
+              </div>
+            </div>
+            <div class="form-group form-error">
+              <div class="col-sm-offset-3 col-sm-9">
+                <div class="alert alert-danger" role="alert"><i class="fa fa-warning"></i> <span id="errors"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  
+{% endblock %}
+
+{% block scripts %}
+  <script src="/js/user.js"></script>
+  <script src="/js/fnUser.js"></script>
+{% endblock %}
