@@ -114,10 +114,14 @@ function ajaxDelete(url, fnHandle) {
 	    type: "DELETE",
 	}).done(function(data, textStatus, jqXHR) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle(data, hv, "no error");
+		if (fnHandle !== undefined) {
+			fnHandle(data, hv);
+		}
 	}).fail(function(jqXHR, status, errorThrown) {
 		var hv = parseStatusAndHeader(jqXHR);
-		fnHandle(jqXHR.responseText, hv, errorThrown);
+		if (fnHandle !== undefined) {
+			fnHandle(jqXHR.responseText, hv, errorThrown);
+		}
 	});
 }
 

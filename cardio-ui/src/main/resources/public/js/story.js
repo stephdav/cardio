@@ -13,7 +13,7 @@ function initStory() {
 
 	$('#deleteStory').on('click', function(e) {
 		e.stopPropagation();
-		deleteStory($('#storyId').val());
+		deleteStory($('#storyId').text());
 	});
 }
 
@@ -45,4 +45,14 @@ function updateStory(id, description, status, estimate) {
 }
 
 function deleteStory(id) {
+	ajaxDelete("/api/stories/"+id, function(data, hv, errorThrown) {
+		if (hv.status == 201 || hv.status == 200) {
+			log("Story deleted");
+			window.location.replace("../../stories");
+		} else {
+			log("Error deleting story : " + errorThrown);
+			$('#errors').text(data);
+			$('.form-error').show();
+		}
+	});
 }

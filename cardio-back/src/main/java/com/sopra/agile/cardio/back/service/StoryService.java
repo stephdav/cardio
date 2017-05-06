@@ -20,5 +20,7 @@ public interface StoryService extends BaseService<Story> {
     Story patch(String id, String status, String contribution, String estimate, String assignedUser)
             throws CardioTechnicalException, CardioFunctionalException;
 
+    String remove(String id) throws CardioTechnicalException;
+
     String export() throws CardioTechnicalException;
 }

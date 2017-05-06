@@ -135,5 +135,7 @@ public class RestConfig {
         post("/api/stories", (req, res) -> storyController.createStory(req, res));
 
         patch("/api/stories/:id", (req, res) -> storyController.patchStoryField(req, res, req.params(PARAM_ID)));
+
+        delete("/api/stories/:id", (req, res) -> storyController.deleteStory(req, res, req.params(PARAM_ID)));
     }
 }

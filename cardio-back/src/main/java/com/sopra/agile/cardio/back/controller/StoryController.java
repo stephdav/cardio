@@ -158,6 +158,18 @@ public class StoryController extends BaseController {
         return response;
     }
 
+    public String deleteStory(Request req, Response res, String id) {
+        String response = "OK";
+        try {
+            svcStory.remove(id);
+            res.status(200);
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
+        return response;
+    }
+
     private List<Story> filterStories(List<Story> list, Request req) {
         List<Story> result = new ArrayList<Story>();
         if (req.queryParams("status") == null) {
