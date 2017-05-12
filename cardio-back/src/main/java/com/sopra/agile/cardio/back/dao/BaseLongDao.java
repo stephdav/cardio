@@ -17,6 +17,8 @@ public interface BaseLongDao<T> {
 
     T add(T entity) throws CardioTechnicalException;
 
+    T update(T entity) throws CardioTechnicalException;
+
     void remove(long id) throws CardioTechnicalException;
 
 }

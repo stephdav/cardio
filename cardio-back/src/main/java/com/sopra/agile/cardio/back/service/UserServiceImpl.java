@@ -84,6 +84,34 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User patch(User usr) throws CardioTechnicalException, CardioFunctionalException {
+        LOGGER.debug("[SVC] patch sprint ...");
+
+        User original = find(usr.getId());
+        if (usr.getLogin() == null) {
+            usr.setLogin(original.getLogin());
+        }
+        if (usr.getFirstname() == null) {
+            usr.setFirstname(original.getFirstname());
+        }
+        if (usr.getLastname() == null) {
+            usr.setLastname(original.getLastname());
+        }
+
+        return update(usr);
+    }
+
+    @Override
+    public User update(User user) throws CardioTechnicalException, CardioFunctionalException {
+        LOGGER.debug("[SVC] update user ...");
+
+        checkUserProperties(user);
+        checkUserDuplicate(user);
+
+        return userDao.update(user);
+    }
+
+    @Override
     public String remove(String id) throws CardioTechnicalException {
         LOGGER.info("remove '{}' ...", id);
         User usr = find(id);
@@ -111,7 +139,7 @@ public class UserServiceImpl implements UserService {
     private void checkUserDuplicate(User user) throws CardioFunctionalException, CardioTechnicalException {
         // Looking for an activity with same name
         User found = findByLogin(user.getLogin());
-        if (found != null && user.getId() == found.getId()) {
+        if (found != null && user.getId() != found.getId()) {
             LOGGER.error("A user '{}' already exists", user.getLogin());
             throw new CardioFunctionalException("user with same login already exists");
         }
@@ -135,4 +163,5 @@ public class UserServiceImpl implements UserService {
         }
         return escapedTxt;
     }
+
 }

@@ -23,6 +23,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_FIND_BY_ID = "select * from USERS where id=?";
     private static final String SQL_FIND_BY_LOGIN = "select * from USERS where login=?";
     private static final String SQL_INSERT = "insert into USERS(LOGIN, FIRSTNAME, LASTNAME) values (?, ?, ?)";
+    private static final String SQL_UPDATE = "update USERS set LOGIN=?, FIRSTNAME=?, LASTNAME=? where ID=?";
     private static final String SQL_DELETE = "delete from USERS where id=?";
 
     @Autowired
@@ -93,6 +94,17 @@ public class UserDaoImpl implements UserDao {
         LOGGER.debug("[DAO] add new user ...");
         try {
             jdbcTemplate.update(SQL_INSERT, user.getLogin(), user.getFirstname(), user.getLastname());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return user;
+    }
+
+    @Override
+    public User update(User user) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] update user ...");
+        try {
+            jdbcTemplate.update(SQL_UPDATE, user.getLogin(), user.getFirstname(), user.getLastname(), user.getId());
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }

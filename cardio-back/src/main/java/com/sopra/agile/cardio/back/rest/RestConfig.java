@@ -92,6 +92,7 @@ public class RestConfig {
         } , new JsonTransformer());
 
         post("/api/users", (req, res) -> userController.createUser(req, res));
+        post("/api/users/:id", (req, res) -> userController.updateUser(req, res));
         delete("/api/users/:id", (req, res) -> userController.deleteUser(req, res, req.params(PARAM_ID)));
 
         // SPRINTS

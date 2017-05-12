@@ -95,7 +95,7 @@ public class UserController extends BaseController {
         try {
             User usr = svcUser.add(new ObjectMapper<User>(User.class).parse(req.body()));
             res.status(201);
-            res.header(LOCATION, "/api/activities/" + usr.getId());
+            res.header(LOCATION, "/api/users/" + usr.getId());
         } catch (CardioFunctionalException e) {
             res.status(400);
             response = e.getMessage();
@@ -104,6 +104,22 @@ public class UserController extends BaseController {
             response = e.getMessage();
         }
 
+        return response;
+    }
+
+    public String updateUser(Request req, Response res) {
+        String response = "OK";
+        try {
+            User usr = svcUser.update(new ObjectMapper<User>(User.class).parse(req.body()));
+            res.status(201);
+            res.header(LOCATION, "/api/users/" + usr.getId());
+        } catch (CardioFunctionalException e) {
+            res.status(400);
+            response = e.getMessage();
+        } catch (CardioTechnicalException e) {
+            res.status(500);
+            response = e.getMessage();
+        }
         return response;
     }
 
