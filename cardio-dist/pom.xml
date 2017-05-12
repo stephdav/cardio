@@ -9,6 +9,7 @@
 	</parent>
 
 	<artifactId>agile.cardio-dist</artifactId>
+	<packaging>pom</packaging>
 
 	<name>cardio-dist</name>
 

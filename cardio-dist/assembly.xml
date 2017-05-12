@@ -13,22 +13,22 @@
 			<useTransitiveDependencies>true</useTransitiveDependencies>
 			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
-<!--
- 			<excludes>
-				<exclude>${project.groupId}:*:*</exclude>
-			</excludes>
- -->
- 		</dependencySet>
+		</dependencySet>
 	</dependencySets>
-<!--
- 	<moduleSets>
-		<moduleSet>
-			<useAllReactorProjects>true</useAllReactorProjects>
-			<binaries>
-				<outputDirectory>modules</outputDirectory>
-				<unpack>false</unpack>
-			</binaries>
-		</moduleSet>
-	</moduleSets>
- -->
- </assembly>
+	<fileSets>
+		<fileSet>
+			<directory>${project.build.scriptSourceDirectory}</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.bat</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.jar</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+</assembly>

@@ -38,7 +38,7 @@ java -classpath ".;lib/*" com.sopra.agile.cardio.app.App
 ### command line parameters
 
 If "reset" is present as argument, database is cleared at startup.
-If "<sql file>" is present, <sqll file> is executed at startup.
+If "<sql file>" is present, <sql file> is executed at startup.
 
 ## changelog
 
