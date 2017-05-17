@@ -99,7 +99,7 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public Sprint add(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
 		LOGGER.debug("[SVC] add sprint ...");
-		checkSprintProperties(sprint);
+		checkSprintProperties(sprint, true);
 		checkSprintDuplicate(sprint);
 		checkSprintOverlapping(sprint);
 		return sprintDao.add(sprint);
@@ -108,7 +108,7 @@ public class SprintServiceImpl implements SprintService {
 	@Override
 	public Sprint update(Sprint sprint) throws CardioTechnicalException, CardioFunctionalException {
 		LOGGER.debug("[SVC] update sprint ...");
-		checkSprintProperties(sprint);
+		checkSprintProperties(sprint, false);
 		checkSprintDuplicate(sprint);
 		checkSprintOverlapping(sprint);
 		return sprintDao.update(sprint);
@@ -283,7 +283,7 @@ public class SprintServiceImpl implements SprintService {
 		}
 	}
 
-	private void checkSprintProperties(Sprint sprint) throws CardioFunctionalException {
+	private void checkSprintProperties(Sprint sprint, boolean creation) throws CardioFunctionalException {
 		if (sprint == null) {
 			LOGGER.error("sprint can't be null");
 			throw new CardioFunctionalException("sprint can't be null");
@@ -291,7 +291,9 @@ public class SprintServiceImpl implements SprintService {
 		Fields.isMandatory("name", sprint.getName());
 		Fields.isMandatory("start date", sprint.getStartDate());
 		Fields.isMandatory("end date", sprint.getEndDate());
-		Fields.checkField("goal", sprint.getGoal(), 0, 256);
+		if (!creation) {
+			Fields.checkField("goal", sprint.getGoal(), 0, 256);
+		}
 	}
 
 	@Override
