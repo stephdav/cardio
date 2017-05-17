@@ -25,59 +25,61 @@ import cucumber.api.java.en.When;
 @FluentConfiguration(driverLifecycle = ConfigurationProperties.DriverLifecycle.JVM, screenshotMode = TriggerMode.AUTOMATIC_ON_FAIL, screenshotPath = "target/cucumber")
 public class NavigationSteps extends FluentCucumberTest {
 
-    @Page
-    private HomePage homePage;
+	@Page
+	private HomePage homePage;
 
-    @Page
-    private SprintsPage sprintsPage;
+	@Page
+	private SprintsPage sprintsPage;
 
-    @Page
-    private SprintPage sprintPage;
+	@Page
+	private SprintPage sprintPage;
 
-    @Page
-    private SprintPlanningPage sprintPlanningPage;
+	@Page
+	private SprintPlanningPage sprintPlanningPage;
 
-    @Override
-    public WebDriver newWebDriver() {
-        System.setProperty("webdriver.chrome.driver", "/dev/appli/chromedriver/chromedriver.exe");
-        return new CustomWebDriver();
-    }
+	@Override
+	public WebDriver newWebDriver() {
+		System.setProperty("webdriver.chrome.driver", "/dev/appli/chromedriver/chromedriver.exe");
+		return new CustomWebDriver();
+	}
 
-    @Before
-    public void before(Scenario scenario) {
-        super.before(scenario);
-    }
+	@Before
+	public void before(Scenario scenario) {
+		super.before(scenario);
+	}
 
-    @After
-    public void after(Scenario scenario) {
-        super.after(scenario);
-    }
+	@After
+	public void after(Scenario scenario) {
+		super.after(scenario);
+	}
 
-    @Given("^I am on the (.+) page$")
-    public void i_am_on_page(String pageName) throws Throwable {
-        // window().maximize();
-        FluentPage page = null;
-        if ("home".equals(pageName)) {
-            page = homePage;
-        } else if ("sprints".equals(pageName)) {
-            page = sprintsPage;
-        } else if ("sprint".equals(pageName)) {
-            page = sprintPage;
-        }
-        page.go();
-        await().atMost(3, TimeUnit.SECONDS).untilPage(page).isAt();
-    }
+	@Given("^I am on the (.+) page$")
+	public void i_am_on_page(String pageName) throws Throwable {
+		// window().maximize();
+		FluentPage page = null;
+		if ("home".equals(pageName)) {
+			page = homePage;
+		} else if ("sprints".equals(pageName)) {
+			page = sprintsPage;
+		} else if ("sprint".equals(pageName)) {
+			page = sprintPage;
+		} else {
+			page = homePage;
+		}
+		page.go();
+		await().atMost(3, TimeUnit.SECONDS).untilPage(page).isAt();
+	}
 
-    @When("^I go on sprints page$")
-    public void i_go_on_sprints_page() throws Throwable {
-        homePage.goToSprints();
-        await().atMost(3, TimeUnit.SECONDS).untilPage(sprintsPage).isAt();
-    }
+	@When("^I go on sprints page$")
+	public void i_go_on_sprints_page() throws Throwable {
+		homePage.goToSprints();
+		await().atMost(3, TimeUnit.SECONDS).untilPage(sprintsPage).isAt();
+	}
 
-    @When("^I go on sprint planning page$")
-    public void i_go_on_sprint_planning_page() throws Throwable {
-        homePage.goToSprintPlanning();
-        await().atMost(3, TimeUnit.SECONDS).untilPage(sprintPlanningPage).isAt();
-    }
+	@When("^I go on sprint planning page$")
+	public void i_go_on_sprint_planning_page() throws Throwable {
+		homePage.goToSprintPlanning();
+		await().atMost(3, TimeUnit.SECONDS).untilPage(sprintPlanningPage).isAt();
+	}
 
 }
