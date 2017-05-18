@@ -35,8 +35,8 @@
 
 		<cardio.version>0.4</cardio.version>
 
-		<spark.version>2.5.4</spark.version>
-		<spark.peeble.version>2.3</spark.peeble.version>
+		<spark.version>2.6.0</spark.version>
+		<spark.peeble.version>2.5.5</spark.peeble.version>
 
 		<spring.version>4.2.3.RELEASE</spring.version>
 

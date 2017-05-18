@@ -43,6 +43,7 @@ If "<sql file>" is present, <sql file> is executed at startup.
 ## changelog
 
 ### 0.4
+* spark-core 2.6.0 and spark-template-pebble-2.5.5
 
 ### 0.3
 * user stories

@@ -5,6 +5,7 @@ import static spark.Spark.delete;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.patch;
+import static spark.Spark.path;
 import static spark.Spark.post;
 
 import java.util.List;
@@ -73,70 +74,78 @@ public class RestConfig {
         get("/api/config/parameters/:key",
                 (req, res) -> projectController.getParameter(req, res, req.params(PARAM_KEY)), new JsonTransformer());
 
-        get("/api/project/data", (req, res) -> projectController.getProjectData(req, res), new JsonTransformer());
+        path("/api/project", () -> {
+            get("/data", (req, res) -> projectController.getProjectData(req, res), new JsonTransformer());
+            get("/kanban", (req, res) -> projectController.getKanban(req, res), new JsonTransformer());
+        });
 
-        get("/api/project/kanban", (req, res) -> projectController.getKanban(req, res), new JsonTransformer());
+        // === USERS ===
 
-        // USERS
+        path("/api/users", () -> {
+            get("/export", (req, res) -> userController.exportUsers(req, res));
+            get("/count", (req, res) -> userController.getCount(req, res), new JsonTransformer());
+            get("/:id", (req, res) -> userController.getUser(req, res, req.params(PARAM_ID)), new JsonTransformer());
+            get("", (req, res) -> {
+                List<User> list = userController.getAllUsers(req, res);
+                if (req.queryParams("bootstrap") == null) {
+                    return list;
+                }
+                return new BootstrapTable<User>().convert(list, res);
+            } , new JsonTransformer());
 
-        get("/api/users/export", (req, res) -> userController.exportUsers(req, res));
-        get("/api/users/count", (req, res) -> userController.getCount(req, res), new JsonTransformer());
-        get("/api/users/:id", (req, res) -> userController.getUser(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
-        get("/api/users", (req, res) -> {
-            List<User> list = userController.getAllUsers(req, res);
-            if (req.queryParams("bootstrap") == null) {
-                return list;
-            }
-            return new BootstrapTable<User>().convert(list, res);
-        } , new JsonTransformer());
+            post("/:id", (req, res) -> userController.updateUser(req, res));
+            post("", (req, res) -> userController.createUser(req, res));
 
-        post("/api/users", (req, res) -> userController.createUser(req, res));
-        post("/api/users/:id", (req, res) -> userController.updateUser(req, res));
-        delete("/api/users/:id", (req, res) -> userController.deleteUser(req, res, req.params(PARAM_ID)));
+            delete("/:id", (req, res) -> userController.deleteUser(req, res, req.params(PARAM_ID)));
+        });
 
-        // SPRINTS
+        // === SPRINTS ===
 
-        get("/api/sprints/export", (req, res) -> sprintController.exportSprints(req, res));
-        get("/api/sprints/count", (req, res) -> sprintController.getCount(req, res), new JsonTransformer());
-        get("/api/sprints/:id/data", (req, res) -> sprintController.getSprintData(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
-        get("/api/sprints/:id", (req, res) -> sprintController.getSprint(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
+        path("/api/sprints", () -> {
+            get("/export", (req, res) -> sprintController.exportSprints(req, res));
+            get("/count", (req, res) -> sprintController.getCount(req, res), new JsonTransformer());
+            get("/:id/data", (req, res) -> sprintController.getSprintData(req, res, req.params(PARAM_ID)),
+                    new JsonTransformer());
+            get("/:id", (req, res) -> sprintController.getSprint(req, res, req.params(PARAM_ID)),
+                    new JsonTransformer());
 
-        get("/api/sprints", (req, res) -> {
-            List<Sprint> list = sprintController.getAllSprints(req, res);
-            if (req.queryParams("bootstrap") == null) {
-                return list;
-            }
-            return new BootstrapTable<Sprint>().convert(list, res);
-        } , new JsonTransformer());
+            get("", (req, res) -> {
+                List<Sprint> list = sprintController.getAllSprints(req, res);
+                if (req.queryParams("bootstrap") == null) {
+                    return list;
+                }
+                return new BootstrapTable<Sprint>().convert(list, res);
+            } , new JsonTransformer());
 
-        post("/api/sprints/:id/data", (req, res) -> sprintController.updateSprintData(req, res, req.params(PARAM_ID)));
-        post("/api/sprints/:id", (req, res) -> sprintController.updateSprintProperties(req, res, req.params(PARAM_ID)));
-        post("/api/sprints", (req, res) -> sprintController.createSprint(req, res));
+            post("/:id/data", (req, res) -> sprintController.updateSprintData(req, res, req.params(PARAM_ID)));
+            post("/:id", (req, res) -> sprintController.updateSprintProperties(req, res, req.params(PARAM_ID)));
+            post("", (req, res) -> sprintController.createSprint(req, res));
 
-        patch("/api/sprints/:id", (req, res) -> sprintController.patchSprintProperties(req, res, req.params(PARAM_ID)));
+            patch("/:id", (req, res) -> sprintController.patchSprintProperties(req, res, req.params(PARAM_ID)));
+        });
 
-        // STORIES
+        // === STORIES ===
 
-        get("/api/stories/export", (req, res) -> storyController.exportStories(req, res));
-        get("/api/stories/count", (req, res) -> storyController.getCount(req, res), new JsonTransformer());
-        get("/api/stories/:id", (req, res) -> storyController.getStory(req, res, req.params(PARAM_ID)),
-                new JsonTransformer());
-        get("/api/stories", (req, res) -> {
-            List<Story> list = storyController.getAllStorys(req, res);
-            if (req.queryParams("bootstrap") == null) {
-                return list;
-            }
-            return new BootstrapTable<Story>().convert(list, res);
-        } , new JsonTransformer());
+        path("/api/stories", () -> {
 
-        post("/api/stories/:id", (req, res) -> storyController.updateStory(req, res, req.params(PARAM_ID)));
-        post("/api/stories", (req, res) -> storyController.createStory(req, res));
+            get("/export", (req, res) -> storyController.exportStories(req, res));
+            get("/count", (req, res) -> storyController.getCount(req, res), new JsonTransformer());
+            get("/:id", (req, res) -> storyController.getStory(req, res, req.params(PARAM_ID)), new JsonTransformer());
+            get("", (req, res) -> {
+                List<Story> list = storyController.getAllStorys(req, res);
+                if (req.queryParams("bootstrap") == null) {
+                    return list;
+                }
+                return new BootstrapTable<Story>().convert(list, res);
+            } , new JsonTransformer());
 
-        patch("/api/stories/:id", (req, res) -> storyController.patchStoryField(req, res, req.params(PARAM_ID)));
+            post("/:id", (req, res) -> storyController.updateStory(req, res, req.params(PARAM_ID)));
+            post("", (req, res) -> storyController.createStory(req, res));
 
-        delete("/api/stories/:id", (req, res) -> storyController.deleteStory(req, res, req.params(PARAM_ID)));
+            patch("/:id", (req, res) -> storyController.patchStoryField(req, res, req.params(PARAM_ID)));
+
+            delete("/:id", (req, res) -> storyController.deleteStory(req, res, req.params(PARAM_ID)));
+        });
+
     }
 }
