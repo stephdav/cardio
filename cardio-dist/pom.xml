@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.sopra</groupId>
 		<artifactId>agile.cardio</artifactId>
-		<version>0.3</version>
+		<version>0.4</version>
 	</parent>
 
 	<artifactId>agile.cardio-dist</artifactId>

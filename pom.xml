@@ -6,6 +6,7 @@
 	<groupId>com.sopra</groupId>
 	<artifactId>agile.cardio</artifactId>
 	<packaging>pom</packaging>
+	<version>0.4</version>
 
 	<name>Cardio</name>
 	<description>Cardio application</description>
@@ -32,7 +33,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<cardio.version>0.3</cardio.version>
+		<cardio.version>0.4</cardio.version>
 
 		<spark.version>2.5.4</spark.version>
 		<spark.peeble.version>2.3</spark.peeble.version>
@@ -179,5 +180,4 @@
 			</build>
 		</profile>
 	</profiles>
-	<version>0.3</version>
 </project>

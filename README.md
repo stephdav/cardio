@@ -42,6 +42,8 @@ If "<sql file>" is present, <sql file> is executed at startup.
 
 ## changelog
 
+### 0.4
+
 ### 0.3
 * user stories
 * application bundle
