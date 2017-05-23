@@ -8,4 +8,6 @@ public interface ConfigService {
 
     int getIntProperty(String key);
 
+    boolean getBooleanProperty(String key);
+
 }

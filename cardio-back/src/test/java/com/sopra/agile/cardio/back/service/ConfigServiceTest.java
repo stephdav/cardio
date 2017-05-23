@@ -1,6 +1,8 @@
 package com.sopra.agile.cardio.back.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +23,8 @@ public class ConfigServiceTest {
     private static final String INT = "7";
     private static final String DOUBLE = "3.14";
     private static final String UNKNOWN = "UNK.KEY";
+    private static final String TRUE = "True";
+    private static final String FALSE = "False";
 
     private static final String STRING_VALUE = "VALUE";
     private static final String EMPTY_VALUE = "";
@@ -38,6 +42,8 @@ public class ConfigServiceTest {
         when(env.getRequiredProperty(INT)).thenReturn(String.valueOf(INT_VALUE));
         when(env.getRequiredProperty(DOUBLE)).thenReturn(String.valueOf(DOUBLE_VALUE));
         when(env.getRequiredProperty(UNKNOWN)).thenThrow(new IllegalStateException());
+        when(env.getRequiredProperty(TRUE)).thenReturn(String.valueOf(true));
+        when(env.getRequiredProperty(FALSE)).thenReturn(String.valueOf(false));
     }
 
     @Test
@@ -58,4 +64,15 @@ public class ConfigServiceTest {
         assertEquals(0, svc.getIntProperty(UNKNOWN));
     }
 
+    @Test
+    public void testGetBooleanProperty() {
+        assertFalse(svc.getBooleanProperty(null));
+        assertFalse(svc.getBooleanProperty(EMPTY));
+        assertFalse(svc.getBooleanProperty(STRING));
+        assertFalse(svc.getBooleanProperty(INT));
+        assertFalse(svc.getBooleanProperty(DOUBLE));
+        assertFalse(svc.getBooleanProperty(UNKNOWN));
+        assertFalse(svc.getBooleanProperty(FALSE));
+        assertTrue(svc.getBooleanProperty(TRUE));
+    }
 }

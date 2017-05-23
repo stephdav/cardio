@@ -48,4 +48,8 @@ public class ConfigServiceImpl implements ConfigService {
         return val;
     }
 
+    @Override
+    public boolean getBooleanProperty(String key) {
+        return Boolean.parseBoolean(getProperty(key));
+    }
 }
