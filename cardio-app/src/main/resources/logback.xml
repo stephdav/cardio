@@ -6,15 +6,30 @@
 		</encoder>
 	</appender>
 
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>cardio.log</file>
+		<append>true</append>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover -->
+			<fileNamePattern>cardio-%d{yyyyMMdd}.log</fileNamePattern>
+			<maxHistory>10</maxHistory>
+			<totalSizeCap>100MB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
 	<logger name="com.sopra.agile.cardio" level="DEBUG" />
 
 	<logger name="org.eclipse.jetty" level="INFO" />
 	<logger name="spark" level="DEBUG" />
 	<logger name="spark.Request" level="INFO" />
 	<logger name="ma.glasnost.orika" level="INFO" />
-	
+
 	<root level="debug">
 		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE" />
 	</root>
 
 </configuration>
