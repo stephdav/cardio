@@ -10,99 +10,106 @@ import spark.Response;
 
 public class Paginate<T> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Paginate.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(Paginate.class);
 
-    private static final String ACCEPT_RANGE = "Accept-Range";
-    public static final String CONTENT_RANGE = "Content-Range";
+	private static final String ACCEPT_RANGE = "Accept-Range";
+	public static final String CONTENT_RANGE = "Content-Range";
 
-    private static final String PAGE = "page";
-    private static final String LIMIT = "limit";
+	private static final String PAGE = "page";
+	private static final String LIMIT = "limit";
 
-    private static final int DEFAULT_PAGE = 1;
-    private static final int DEFAULT_LIMIT = 10;
-    private static final int MAX_LIMIT = 50;
+	private static final int DEFAULT_PAGE = 1;
+	private static final int DEFAULT_LIMIT = 10;
+	private static final int MAX_LIMIT = 50;
 
-    private final Class<T> clazz;
+	private final Class<T> clazz;
 
-    public Paginate(Class<T> clazz) {
-        this.clazz = clazz;
-    }
+	public Paginate(Class<T> clazz) {
+		this.clazz = clazz;
+	}
 
-    public List<T> paginate(Request req, Response res, List<T> response) {
+	public List<T> paginate(Request req, Response res, List<T> response) {
 
-        // === Input parameters ===
+		// === Input parameters ===
 
-        int page = DEFAULT_PAGE;
-        if (req.queryParams(PAGE) != null) {
-            page = Integer.parseInt(req.queryParams(PAGE));
-        }
+		int page = DEFAULT_PAGE;
+		if (req.queryParams(PAGE) != null) {
+			page = Integer.parseInt(req.queryParams(PAGE));
+		}
 
-        int limit = DEFAULT_LIMIT;
-        if (req.queryParams(LIMIT) != null) {
-            limit = Integer.parseInt(req.queryParams(LIMIT));
-        }
+		int limit = DEFAULT_LIMIT;
+		if (req.queryParams(LIMIT) != null) {
+			limit = Integer.parseInt(req.queryParams(LIMIT));
+		}
 
-        int total = response.size();
+		int total = response.size();
 
-        // === Status code ===
+		// === Status code ===
 
-        int httpCode = 206;
-        if (limit > MAX_LIMIT) {
-            httpCode = 406;
-        } else if (total < limit) {
-            httpCode = 200;
-        }
-        LOGGER.debug("HTTP-Code: {}", httpCode);
-        res.status(httpCode);
+		int httpCode = 206;
+		if (limit == -1) {
+			httpCode = 200;
+		} else if (limit > MAX_LIMIT) {
+			httpCode = 406;
+		} else if (total < limit) {
+			httpCode = 200;
+		}
+		LOGGER.debug("HTTP-Code: {}", httpCode);
+		res.status(httpCode);
 
-        // === Compute indexes ===
+		// === Compute indexes ===
 
-        int fromIndex = (page - 1) * limit;
-        int toIndex = page * limit;
+		int fromIndex = 0;
+		int toIndex = total;
 
-        if (toIndex > total) {
-            toIndex = total;
-        }
+		if (limit != -1) {
+			fromIndex = (page - 1) * limit;
+			toIndex = page * limit;
 
-        // === Response header ===
+			if (toIndex > total) {
+				toIndex = total;
+			}
+		}
 
-        String acceptRange = String.format("%s %d", clazz.getSimpleName().toLowerCase(), MAX_LIMIT);
-        LOGGER.debug("{}: {}", ACCEPT_RANGE, acceptRange);
-        res.header(ACCEPT_RANGE, acceptRange);
+		// === Response header ===
 
-        String contentRange = String.format("%d-%d/%d", fromIndex, toIndex, total);
-        LOGGER.debug("{}: {}", CONTENT_RANGE, contentRange);
-        res.header(CONTENT_RANGE, contentRange);
+		String acceptRange = String.format("%s %d", clazz.getSimpleName().toLowerCase(), MAX_LIMIT);
+		LOGGER.debug("{}: {}", ACCEPT_RANGE, acceptRange);
+		res.header(ACCEPT_RANGE, acceptRange);
 
-        return response.subList(fromIndex, toIndex);
-    }
+		String contentRange = String.format("%d-%d/%d", fromIndex, toIndex, total);
+		LOGGER.debug("{}: {}", CONTENT_RANGE, contentRange);
+		res.header(CONTENT_RANGE, contentRange);
 
-    public List<T> paginateFromTo(Request req, List<T> response) {
-        int fromIdx = 0;
-        int toIdx = 25;
-        if (req.queryParams("range") != null) {
-            String range = req.queryParams("range");
-            LOGGER.debug("range=" + range);
-            String[] bounds = range.split("-");
-            fromIdx = Integer.parseInt(bounds[0]);
-            toIdx = Integer.parseInt(bounds[1]);
+		return response.subList(fromIndex, toIndex);
+	}
 
-            if (fromIdx > toIdx) {
-                int tmp = toIdx;
-                toIdx = fromIdx;
-                fromIdx = tmp;
-            }
-            if (fromIdx < 0) {
-                fromIdx = 0;
-            }
-        }
+	public List<T> paginateFromTo(Request req, List<T> response) {
+		int fromIdx = 0;
+		int toIdx = 25;
+		if (req.queryParams("range") != null) {
+			String range = req.queryParams("range");
+			LOGGER.debug("range=" + range);
+			String[] bounds = range.split("-");
+			fromIdx = Integer.parseInt(bounds[0]);
+			toIdx = Integer.parseInt(bounds[1]);
 
-        if (fromIdx >= response.size() - 1) {
-            fromIdx = response.size() - 1;
-        }
-        if (toIdx > response.size()) {
-            toIdx = response.size();
-        }
-        return response.subList(fromIdx, toIdx);
-    }
+			if (fromIdx > toIdx) {
+				int tmp = toIdx;
+				toIdx = fromIdx;
+				fromIdx = tmp;
+			}
+			if (fromIdx < 0) {
+				fromIdx = 0;
+			}
+		}
+
+		if (fromIdx >= response.size() - 1) {
+			fromIdx = response.size() - 1;
+		}
+		if (toIdx > response.size()) {
+			toIdx = response.size();
+		}
+		return response.subList(fromIdx, toIdx);
+	}
 }

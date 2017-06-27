@@ -12,6 +12,18 @@ function fnUserCount(callback) {
 
 function fnGetUsers(callback) {
 	ajaxGet("/api/users", function(data, hv, errorThrown) {
+		if (hv.status == 200 || hv.status == 204 || hv.status == 206) {
+			if (callback != undefined) {
+				callback(data, hv);
+			}
+		} else {
+			log("Error: " + errorThrown);
+		}
+	});
+}
+
+function fnGetUsersUnlimited(callback) {
+	ajaxGet("/api/users?limit=-1", function(data, hv, errorThrown) {
 		if (hv.status == 200 || hv.status == 204) {
 			if (callback != undefined) {
 				callback(data, hv);

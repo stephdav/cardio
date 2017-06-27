@@ -13,7 +13,7 @@ function initActivities() {
 		downloadExport('/api/stories/export');
 	});
 
-	fnGetUsers(loadUsers);
+	fnGetUsersUnlimited(loadUsers);
 }
 
 var stories_users = [];
