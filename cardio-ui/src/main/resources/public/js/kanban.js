@@ -4,7 +4,7 @@ $(document).ready(function() {
 
 function initKanban() {
 	fnProjectKanban(updateBurnup);
-	fnGetUsers(loadKanbanUsers);
+	fnGetUsersUnlimited(loadKanbanUsers);
 }
 
 function updateBurnup(data, hv) {
