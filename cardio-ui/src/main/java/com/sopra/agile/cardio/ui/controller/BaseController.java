@@ -12,13 +12,23 @@ public class BaseController {
 
     protected static String renderPathWithMenu(Request req, Response res, String path, String menu) {
         Map<String, Object> attributes = initAttributes(req);
-        attributes.put(menu, "active");
+        if (menu != null) {
+            attributes.put(menu, "active");
+        }
         return ViewUtil.render(req, attributes, path);
     }
 
     protected static Map<String, Object> initAttributes(final Request req) {
         Map<String, Object> attributes = initMap();
+
+        String url = req.url();
+        int idx = url.indexOf("/ui/");
+        if (idx != -1) {
+            attributes.put("href", url.substring(0, idx));
+        }
+
         return attributes;
+
     }
 
     protected static Map<String, Object> initMap() {
@@ -33,7 +43,6 @@ public class BaseController {
         attributes.put("menuSprints", "");
         attributes.put("menuStories", "");
         attributes.put("menuUsers", "");
-        attributes.put("menuVision", "");
 
         return attributes;
     }

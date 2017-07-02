@@ -45,6 +45,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/user.js"></script>
-  <script src="/js/fnUser.js"></script>
+  <script src="{{href}}/js/user.js"></script>
+  <script src="{{href}}/js/fnUser.js"></script>
 {% endblock %}

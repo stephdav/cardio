@@ -14,15 +14,15 @@
 
   <!-- CSS
   ------------------------------------------------------ -->
-  <link rel="stylesheet" href="/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="{{href}}/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{href}}/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{{href}}/css/style.css">
   
   {% block stylesheets %}{% endblock %}
 
   <!-- Favicon
   ------------------------------------------------------ -->
-  <link rel="icon" type="image/x-icon" href="/favicon-cardio.ico">
+  <link rel="icon" type="image/x-icon" href="{{href}}/favicon-cardio.ico">
 
 </head>
 
@@ -39,20 +39,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/ui/"><img alt="cardio" src="/images/cardio.png"></a>
+        <a class="navbar-brand" href="{{href}}/ui/"><img alt="cardio" src="{{href}}/images/cardio.png"></a>
       </div>
       <!-- Top Menu Items -->
       <p id="project-name" />
       <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <ul class="nav navbar-nav side-nav">
-          <!-- <li class="{{ menuVision }}"><a id="menuVision" href="/ui/vision"><i class="fa fa-fw fa-binoculars fa-2x"></i></a></li> -->
-          <li class="{{ menuSprints }}"><a id="menuSprints" href="/ui/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
-          <li class="{{ menuStories }}"><a id="menuStories" href="/ui/stories"><i class="fa fa-fw fa-server fa-2x"></i></a></li>
-          <li class="{{ menuSprintPlanning }}"><a id="menuSprintPlanning" href="/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
-          <li class="{{ menuKanban }}"><a id="menuKanban" href="/ui/kanban"><i class="fa fa-fw fa-table fa-2x"></i></a></li>
-          <li class="{{ menuUsers }}"><a id="menuUsers" href="/ui/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
-          <li class="{{ menuAbout }}"><a id="menuAbout" href="/ui/about"><span class="fa-stack fa-lg"><i class="fa fa-fw fa-circle-thin fa-stack-2x"></i><i class="fa fa-fw fa-info fa-stack-1x"></i></span></i></a></li>
+          <li class="{{ menuSprints }}"><a id="menuSprints" href="{{href}}/ui/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
+          <li class="{{ menuStories }}"><a id="menuStories" href="{{href}}/ui/stories"><i class="fa fa-fw fa-server fa-2x"></i></a></li>
+          <li class="{{ menuSprintPlanning }}"><a id="menuSprintPlanning" href="{{href}}/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
+          <li class="{{ menuKanban }}"><a id="menuKanban" href="{{href}}/ui/kanban"><i class="fa fa-fw fa-table fa-2x"></i></a></li>
+          <li class="{{ menuUsers }}"><a id="menuUsers" href="{{href}}/ui/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
+          <li class="{{ menuAbout }}"><a id="menuAbout" href="{{href}}/ui/about"><span class="fa-stack fa-lg"><i class="fa fa-fw fa-circle-thin fa-stack-2x"></i><i class="fa fa-fw fa-info fa-stack-1x"></i></span></i></a></li>
         </ul>
       </div>
     </nav>
@@ -65,9 +64,9 @@
 
   </div> <!-- /#wrapper -->
 
-  <script src="/js/ext/jquery-3.1.0.min.js"></script>
-  <script src="/js/ext/bootstrap.min.js"></script>
-  <script src="/js/site.js"></script>
+  <script src="{{href}}/js/ext/jquery-3.1.0.min.js"></script>
+  <script src="{{href}}/js/ext/bootstrap.min.js"></script>
+  <script src="{{href}}/js/site.js"></script>
   {% block scripts %}{% endblock %}
 
 </body>

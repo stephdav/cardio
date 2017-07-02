@@ -4,7 +4,7 @@
 
 <div class="free-widget-container">
   <div class="free-widget free-widget-lg">
-    <div class="free-widget-left"><img alt="cardio" src="/images/cardio.png"></div>
+    <div class="free-widget-left"><img alt="cardio" src="{{href}}/images/cardio.png"></div>
     <div class="free-widget-right">
       <div>cardio</div>
       <div>version <span id="app-version"></span></div>
@@ -17,5 +17,5 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/about.js"></script>
+  <script src="{{href}}/js/about.js"></script>
 {% endblock %}

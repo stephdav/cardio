@@ -1,7 +1,7 @@
 {% extends "templates/base.peb" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+  <link rel="stylesheet" href="{{href}}/css/bootstrap-table.min.css">
 {% endblock %}
 
 {% block content %}
@@ -74,7 +74,7 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/ext/bootstrap-table.min.js"></script>
-  <script src="/js/fnDate.js"></script>
-  <script src="/js/sprints.js"></script>
+  <script src="{{href}}/js/ext/bootstrap-table.min.js"></script>
+  <script src="{{href}}/js/fnDate.js"></script>
+  <script src="{{href}}/js/sprints.js"></script>
 {% endblock %}

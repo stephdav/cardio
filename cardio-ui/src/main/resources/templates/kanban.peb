@@ -1,7 +1,7 @@
 {% extends "templates/base.peb" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+  <link rel="stylesheet" href="{{href}}/css/bootstrap-table.min.css">
 {% endblock %}
 
 {% block content %}
@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/fnProject.js"></script>
-  <script src="/js/fnUser.js"></script>
-  <script src="/js/kanban.js"></script>
+  <script src="{{href}}/js/fnProject.js"></script>
+  <script src="{{href}}/js/fnUser.js"></script>
+  <script src="{{href}}/js/kanban.js"></script>
 {% endblock %}

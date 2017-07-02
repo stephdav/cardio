@@ -108,15 +108,15 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/fnDate.js"></script>
-  <script src="/js/fnUser.js"></script>
-  <script src="/js/fnProject.js"></script>
-  <script src="/js/fnSprint.js"></script>
-  <script src="/js/fnStory.js"></script>
-  <script src="/js/chart.js"></script>
-  <script src="/js/ext/highcharts.js"></script>
-  <script src="/js/ext/dark-unica.js"></script>
-  <script src="/js/ext/exporting.js"></script>
-  <script src="/js/ext/offline-exporting.js"></script>
-  <script src="/js/home.js"></script>
+  <script src="{{href}}/js/fnDate.js"></script>
+  <script src="{{href}}/js/fnUser.js"></script>
+  <script src="{{href}}/js/fnProject.js"></script>
+  <script src="{{href}}/js/fnSprint.js"></script>
+  <script src="{{href}}/js/fnStory.js"></script>
+  <script src="{{href}}/js/chart.js"></script>
+  <script src="{{href}}/js/ext/highcharts.js"></script>
+  <script src="{{href}}/js/ext/dark-unica.js"></script>
+  <script src="{{href}}/js/ext/exporting.js"></script>
+  <script src="{{href}}/js/ext/offline-exporting.js"></script>
+  <script src="{{href}}/js/home.js"></script>
 {% endblock %}

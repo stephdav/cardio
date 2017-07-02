@@ -1,7 +1,7 @@
 {% extends "templates/base.peb" %}
 
 {% block stylesheets %}
-  <link rel="stylesheet" href="/css/bootstrap-table.min.css">
+  <link rel="stylesheet" href="{{href}}/css/bootstrap-table.min.css">
 {% endblock %}
 
 {% block content %}
@@ -58,12 +58,12 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/chart.js"></script>
-  <script src="/js/fnProject.js"></script>
-  <script src="/js/ext/highcharts.js"></script>
-  <script src="/js/ext/dark-unica.js"></script>
-  <script src="/js/ext/exporting.js"></script>
-  <script src="/js/ext/offline-exporting.js"></script>
-  <script src="/js/ext/bootstrap-table.min.js"></script>
-  <script src="/js/planning.js"></script>
+  <script src="{{href}}/js/chart.js"></script>
+  <script src="{{href}}/js/fnProject.js"></script>
+  <script src="{{href}}/js/ext/highcharts.js"></script>
+  <script src="{{href}}/js/ext/dark-unica.js"></script>
+  <script src="{{href}}/js/ext/exporting.js"></script>
+  <script src="{{href}}/js/ext/offline-exporting.js"></script>
+  <script src="{{href}}/js/ext/bootstrap-table.min.js"></script>
+  <script src="{{href}}/js/planning.js"></script>
 {% endblock %}

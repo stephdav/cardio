@@ -65,6 +65,6 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="/js/story.js"></script>
-  <script src="/js/fnStory.js"></script>
+  <script src="{{href}}/js/story.js"></script>
+  <script src="{{href}}/js/fnStory.js"></script>
 {% endblock %}
