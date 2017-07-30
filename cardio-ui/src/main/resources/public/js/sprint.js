@@ -9,7 +9,7 @@ function initSprint() {
 
 	$('#updateSprintProperties').on('click', function(e) {
 		e.stopPropagation();
-		updateSprint($('#sprintId').val(), $('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val());
+		updateSprint($('#sprintId').val(), $('#sprintName').val(), $('#sprintStartDate').val(), $('#sprintEndDate').val(), $('#sprintGoal').val(), $('#sprintCommitment').val(), $('#sprintCapacity').val());
 	});
 	$('#measures').on('click', 'button', function(e) {
 		e.stopPropagation();
@@ -17,10 +17,9 @@ function initSprint() {
 	});
 }
 
-function updateSprint(id, name, startdate, enddate, goal, commitment) {
-	//fnSprintUpdate(id, name, startdate, enddate, goal, commitment, getSprintData);
-	
-	var payload = {id: id, name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment};
+function updateSprint(id, name, startdate, enddate, goal, commitment, capacity) {
+	log("capacity " + capacity);
+	var payload = {id: id, name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment, capacity: capacity};
 	ajaxPatch("/api/sprints/"+id, payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
 			log("Sprint " + hv.location + " updated");
@@ -58,6 +57,7 @@ function callbackSprint(sprint, hv) {
 	$('#sprintEndDate').val(sprint.endDate);
 	$('#sprintGoal').val(sprint.goal);
 	$('#sprintCommitment').val(sprint.commitment);
+	$('#sprintCapacity').val(sprint.capacity);
 }
 
 function getSprintData() {

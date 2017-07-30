@@ -11,6 +11,7 @@ public class DbSprint {
     private String goal;
     private int commitment;
     private int velocity;
+    private int capacity;
 
     public DbSprint() {
         // Empty constructor
@@ -77,5 +78,13 @@ public class DbSprint {
 
     public void setVelocity(int velocity) {
         this.velocity = velocity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

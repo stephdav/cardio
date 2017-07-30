@@ -8,6 +8,7 @@ public class Sprint extends BaseLong {
     private String goal;
     private int commitment;
     private int velocity;
+    private int capacity;
 
     public Sprint() {
         super();
@@ -85,5 +86,13 @@ public class Sprint extends BaseLong {
 
     public void setVelocity(int velocity) {
         this.velocity = velocity;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }

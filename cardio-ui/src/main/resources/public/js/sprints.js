@@ -30,7 +30,8 @@ function initSprintsTable() {
 	      { field: 'name', title: '#', align: 'center' },
 	      { field: 'goal', title: 'sprint goal' },
 	      { field: 'commitment', title: 'commitment', align: 'center' },
-	      { field: 'velocity', title: 'velocity', align: 'center' }
+	      { field: 'velocity', title: 'velocity', align: 'center' },
+	      { field: 'capacity', title: 'capacity', align: 'center' }
 	    ]
 	});
 

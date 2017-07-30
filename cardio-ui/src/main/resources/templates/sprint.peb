@@ -16,12 +16,16 @@
             <input type="text" class="hidden" id="sprintId">
             <div class="form-group">
               <label for="sprintName" class="control-label col-sm-2">#</label>
-              <div class="col-sm-4">
+              <div class="col-sm-2">
                 <input type="text" class="form-control" id="sprintName">
               </div>
               <label for="sprintCommitment" class="control-label col-sm-2">commitment</label>
-              <div class="col-sm-4">
+              <div class="col-sm-2">
                 <input type="number" class="form-control" id="sprintCommitment" placeholder="0">
+              </div>
+              <label for="sprintCapacity" class="control-label col-sm-2">capacity</label>
+              <div class="col-sm-2">
+                <input type="number" class="form-control" id="sprintCapacity">
               </div>
             </div>
             <div class="form-group">
