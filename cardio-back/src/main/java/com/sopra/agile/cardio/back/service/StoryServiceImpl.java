@@ -174,7 +174,7 @@ public class StoryServiceImpl implements StoryService {
         StringBuffer sb = new StringBuffer();
 
         for (Story us : stories) {
-            if (us.getAssignedUser() == null) {
+            if (us.getAssignedUser() == 0) {
                 sb.append(String.format(SQL_EXPORT_WITHOUT_USER, escapeSpecialCharacters(us.getDescription()),
                         us.getStatus().toString(), convertLocalDateTime(us.getLastUpdate()), us.getContribution(),
                         us.getEstimate()));

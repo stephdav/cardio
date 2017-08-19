@@ -23,9 +23,9 @@ public class StoryDaoImpl implements StoryDao {
     private static final String SQL_ALL = "select * from STORIES";
     private static final String SQL_FIND_BY_ID = "select * from STORIES where ID=?";
     private static final String SQL_FIND_BY_STATUS = "select * from STORIES where STATUS='%s'";
-    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, CONTRIBUTION, ESTIMATE, ASSIGNED) values (?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=?, ASSIGNED=? where ID=?";
-    private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=NOW(), CONTRIBUTION=?, ESTIMATE=?, ASSIGNED=? where ID=?";
+    private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, CONTRIBUTION, ESTIMATE, SPRINT, ASSIGNED) values (?, ?, ?, ?, ?, ?)";
+    private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=?, SPRINT=?, ASSIGNED=? where ID=?";
+    private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=NOW(), CONTRIBUTION=?, ESTIMATE=?, SPRINT=?, ASSIGNED=? where ID=?";
     private static final String SQL_DELETE = "delete from STORIES where id=?";
 
     @Autowired
@@ -107,7 +107,8 @@ public class StoryDaoImpl implements StoryDao {
         LOGGER.debug("[DAO] add new story ...");
         try {
             jdbcTemplate.update(SQL_INSERT, story.getDescription(), story.getStatus().toString(),
-                    story.getContribution(), story.getEstimate(), story.getAssignedUser());
+                    story.getContribution(), story.getEstimate(), story.getSprint() == 0 ? null : story.getSprint(),
+                    story.getAssignedUser() == 0 ? null : story.getAssignedUser());
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
@@ -129,7 +130,8 @@ public class StoryDaoImpl implements StoryDao {
         }
         try {
             jdbcTemplate.update(sql, story.getDescription(), story.getStatus().toString(), story.getContribution(),
-                    story.getEstimate(), story.getAssignedUser(), story.getId());
+                    story.getEstimate(), story.getSprint() == 0 ? null : story.getSprint(),
+                    story.getAssignedUser() == 0 ? null : story.getAssignedUser(), story.getId());
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }

@@ -9,7 +9,8 @@ public class Story extends BaseLong {
     private LocalDateTime lastUpdate;
     private int contribution;
     private int estimate;
-    private Long assignedUser;
+    private long sprint;
+    private long assignedUser;
 
     public Story() {
         super();
@@ -27,11 +28,12 @@ public class Story extends BaseLong {
     public int hashCode() {
         final int prime = 31;
         int result = super.hashCode();
-        result = prime * result + ((assignedUser == null) ? 0 : assignedUser.hashCode());
+        result = prime * result + (int) (assignedUser ^ (assignedUser >>> 32));
         result = prime * result + contribution;
         result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + estimate;
         result = prime * result + ((lastUpdate == null) ? 0 : lastUpdate.hashCode());
+        result = prime * result + (int) (sprint ^ (sprint >>> 32));
         result = prime * result + ((status == null) ? 0 : status.hashCode());
         return result;
     }
@@ -48,11 +50,7 @@ public class Story extends BaseLong {
             return false;
         }
         Story other = (Story) obj;
-        if (assignedUser == null) {
-            if (other.assignedUser != null) {
-                return false;
-            }
-        } else if (!assignedUser.equals(other.assignedUser)) {
+        if (assignedUser != other.assignedUser) {
             return false;
         }
         if (contribution != other.contribution) {
@@ -73,6 +71,9 @@ public class Story extends BaseLong {
                 return false;
             }
         } else if (!lastUpdate.equals(other.lastUpdate)) {
+            return false;
+        }
+        if (sprint != other.sprint) {
             return false;
         }
         if (status != other.status) {
@@ -121,12 +122,19 @@ public class Story extends BaseLong {
         this.estimate = estimate;
     }
 
-    public Long getAssignedUser() {
+    public long getSprint() {
+        return sprint;
+    }
+
+    public void setSprint(long sprint) {
+        this.sprint = sprint;
+    }
+
+    public long getAssignedUser() {
         return assignedUser;
     }
 
-    public void setAssignedUser(Long assignedUser) {
+    public void setAssignedUser(long assignedUser) {
         this.assignedUser = assignedUser;
     }
-
 }

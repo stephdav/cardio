@@ -13,11 +13,11 @@ function initActivities() {
 		downloadExport('/api/stories/export');
 	});
 
-	fnGetUsersUnlimited(loadUsers);
+	fnGetUsersUnlimited(storiesLoadUsers);
 }
 
 var stories_users = [];
-function loadUsers(data, hv) {
+function storiesLoadUsers(data, hv) {
 	stories_users = data;
 	initActivitiesTable();	
 }
@@ -34,7 +34,7 @@ function initActivitiesTable() {
 	      { field: 'id', title: '#', align: 'center', sortable: true },
 	      { field: 'description', title: 'description' },
 	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' },
-	      //{ field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter' },
+	      { field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter', sortable: true },
 	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter', sortable: true },
 	      { field: 'assignedUser', title: 'assigned', align: 'center', formatter: 'userFormatter' }
 	    ]
@@ -133,10 +133,10 @@ function complexityFormatter(value, row) {
 function userFormatter(value, row) {
 	content = '<div class="form-group-sm">';
 	content += '<select data-id="' + row.id + '" class="form-control change-assigned">';
-	if (value==-1){
-		content += '<option value="-1" selected></option>';	  
+	if (value==0){
+		content += '<option value="0" selected></option>';	  
 	} else {
-		content += '<option value="-1"></option>';	  
+		content += '<option value="0"></option>';	  
 	}
 	
 	$.each(stories_users, function(index, usr) {

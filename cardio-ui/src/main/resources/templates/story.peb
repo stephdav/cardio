@@ -6,21 +6,21 @@
 {% block content %}
 
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
 
       <div class="panel panel-default">
         <div class="panel-heading">story #<span id="storyId"></span></div>
         <div class="panel-body">
           <div class="form-horizontal">
             <div class="form-group">
-              <label for="storyDescription" class="control-label col-sm-2">description</label>
-              <div class="col-sm-10">
+              <label for="storyDescription" class="control-label col-sm-1">description</label>
+              <div class="col-sm-11">
                 <textarea class="form-control" id="storyDescription" rows="3"></textarea>
               </div>
             </div>
             <div class="form-group">
-              <label for="storyStatus" class="control-label col-sm-2">status</label>
-              <div class="col-sm-4">
+              <label for="storyStatus" class="control-label col-sm-1">status</label>
+              <div class="col-sm-3">
                 <select id="storyStatus" class="form-control">
                   <option value="DRAFT">DRAFT</option>
                   <option value="READY">READY</option>
@@ -28,8 +28,12 @@
                   <option value="DONE">DONE</option>
                 </select>
               </div>
-              <label for="storyEstimate" class="control-label col-sm-2">complexity</label>
-              <div class="col-sm-4">
+              <label for="storyValue" class="control-label col-sm-1">value</label>
+              <div class="col-sm-3">
+                <input id="storyValue" type="number" class="form-control">
+              </div>
+              <label for="storyEstimate" class="control-label col-sm-1">complexity</label>
+              <div class="col-sm-3">
                 <select id="storyEstimate" class="form-control">
                   <option value="-1"></option>
                   <option value="0">0</option>
@@ -41,6 +45,17 @@
                   <option value="13">13</option>
                   <option value="21">21</option>
                 </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="storySprint" class="control-label col-sm-1">sprint</label>
+              <div class="col-sm-3">
+                <input id="storySprint" class="form-control">
+              </div>
+              <label for="storyUser" class="control-label col-sm-1">user</label>
+              <div class="col-sm-3">
+                 <select id="storyUser" class="form-control">
+                 </select>
               </div>
             </div>
             <div class="form-group">
@@ -65,6 +80,7 @@
 {% endblock %}
 
 {% block scripts %}
-  <script src="{{href}}/js/story.js"></script>
   <script src="{{href}}/js/fnStory.js"></script>
+  <script src="{{href}}/js/fnUser.js"></script>
+  <script src="{{href}}/js/story.js"></script>
 {% endblock %}

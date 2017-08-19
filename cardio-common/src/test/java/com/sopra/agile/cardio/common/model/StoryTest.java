@@ -10,13 +10,13 @@ public class StoryTest {
     @Test
     public void testDefaultConstructor() {
         Story story = new Story();
-        assertObject(story, 0, null, null, 0, 0);
+        assertObject(story, 0, null, null, 0, 0, 0, 0);
     }
 
     @Test
     public void testConstructor() {
         Story story = new Story(1, "description", StoryStatus.DONE, 2, 3);
-        assertObject(story, 1, "description", StoryStatus.DONE, 2, 3);
+        assertObject(story, 1, "description", StoryStatus.DONE, 2, 3, 0, 0);
     }
 
     @Test
@@ -27,11 +27,13 @@ public class StoryTest {
         story.setStatus(StoryStatus.PENDING);
         story.setContribution(20);
         story.setEstimate(30);
-        assertObject(story, 10, "description", StoryStatus.PENDING, 20, 30);
+        story.setSprint(1);
+        story.setAssignedUser(2);
+        assertObject(story, 10, "description", StoryStatus.PENDING, 20, 30, 1, 2);
     }
 
     private void assertObject(Story story, long id, final String description, StoryStatus status, int contribution,
-            int estimate) {
+            int estimate, long sprint, long user) {
         assertEquals(id, story.getId());
         if (description == null) {
             assertNull(story.getDescription());
@@ -45,6 +47,8 @@ public class StoryTest {
         }
         assertEquals(contribution, story.getContribution());
         assertEquals(estimate, story.getEstimate());
+        assertEquals(sprint, story.getSprint());
+        assertEquals(user, story.getAssignedUser());
     }
 
 }

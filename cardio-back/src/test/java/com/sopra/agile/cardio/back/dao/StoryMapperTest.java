@@ -17,7 +17,8 @@ import com.sopra.agile.cardio.common.model.StoryStatus;
 public class StoryMapperTest {
 
     private static final String SHOULD_BE_EQUALS = "Should be equals";
-    private static final String[] LONG_COLUMNS = { StoryMapper.COL_ID };
+    private static final String[] LONG_COLUMNS = { StoryMapper.COL_ID, StoryMapper.COL_SPRINT,
+            StoryMapper.COL_ASSIGNED };
     private static final String[] STRING_COLUMNS = { StoryMapper.COL_DESC };
     private static final String[] INT_COLUMNS = { StoryMapper.COL_CONTRIB, StoryMapper.COL_ESTIMATE };
 
@@ -53,6 +54,8 @@ public class StoryMapperTest {
         assertEquals(SHOULD_BE_EQUALS, StoryStatus.PENDING.toString(), usr.getStatus().toString());
         assertEquals(SHOULD_BE_EQUALS, INT_VALUE, usr.getContribution());
         assertEquals(SHOULD_BE_EQUALS, INT_VALUE, usr.getEstimate());
+        assertEquals(SHOULD_BE_EQUALS, LONG_VALUE, usr.getSprint());
+        assertEquals(SHOULD_BE_EQUALS, LONG_VALUE, usr.getAssignedUser());
     }
 
     @Test
