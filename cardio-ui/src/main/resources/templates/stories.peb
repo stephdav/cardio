@@ -60,6 +60,12 @@
           <div class="table-filters pull-right">
             <div class="form-inline">
               <div class="form-group form-group-sm">
+                <label class="control-label" for="sprintFilter">sprint</label>
+                <select class="form-control" id="sprintFilter">
+                  <option></option>
+                </select>
+              </div>
+              <div class="form-group form-group-sm">
                 <label class="control-label" for="statusFilter">status</label>
                 <select class="form-control" id="statusFilter">
                   <option></option>
@@ -88,6 +94,7 @@
 
 {% block scripts %}
   <script src="{{href}}/js/ext/bootstrap-table.min.js"></script>
+  <script src="{{href}}/js/fnSprint.js"></script>
   <script src="{{href}}/js/fnUser.js"></script>
   <script src="{{href}}/js/stories.js"></script>
 {% endblock %}

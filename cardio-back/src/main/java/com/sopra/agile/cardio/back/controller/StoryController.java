@@ -145,7 +145,7 @@ public class StoryController extends BaseController {
         String response = "OK";
         try {
             Story story = svcStory.patch(id, req.queryParams("status"), req.queryParams("contribution"),
-                    req.queryParams("estimate"), req.queryParams("assignedUser"));
+                    req.queryParams("estimate"), req.queryParams("sprint"), req.queryParams("assignedUser"));
             res.status(201);
             res.header(LOCATION, "/api/stories/" + story.getId());
         } catch (CardioFunctionalException e) {
@@ -171,6 +171,12 @@ public class StoryController extends BaseController {
     }
 
     private List<Story> filterStories(List<Story> list, Request req) {
+        List<Story> result0 = filterByStatus(list, req);
+        List<Story> result1 = filterBySprint(result0, req);
+        return result1;
+    }
+
+    private List<Story> filterByStatus(List<Story> list, Request req) {
         List<Story> result = new ArrayList<Story>();
         if (req.queryParams("status") == null) {
             result.addAll(list);
@@ -183,6 +189,18 @@ public class StoryController extends BaseController {
                 StoryStatus status = StoryStatus.valueOf(f);
                 result.addAll(list.stream().filter(line -> line.getStatus() == status).collect(Collectors.toList()));
             }
+        }
+        return result;
+    }
+
+    private List<Story> filterBySprint(List<Story> list, Request req) {
+        List<Story> result = new ArrayList<Story>();
+        if (req.queryParams("sprint") == null) {
+            result.addAll(list);
+        } else {
+            long filter = Long.valueOf(req.queryParams("sprint"));
+            LOGGER.debug("filter on sprint '{}'", filter);
+            result.addAll(list.stream().filter(line -> line.getSprint() == filter).collect(Collectors.toList()));
         }
         return result;
     }

@@ -13,6 +13,18 @@ function initActivities() {
 		downloadExport('/api/stories/export');
 	});
 
+	fnGetSprintsUnlimited(storiesLoadSprints);
+}
+
+var stories_sprints = [];
+function storiesLoadSprints(data, hv) {
+	stories_sprints = data;
+	$('#sprintFilter').empty();
+	var content = '<option value="0"></option>';
+	$.each(data, function(index, sp) {
+		content += '<option value="' + sp.id + '">' + sp.name + '</option>';
+	});
+	$('#sprintFilter').append(content);
 	fnGetUsersUnlimited(storiesLoadUsers);
 }
 
@@ -34,6 +46,7 @@ function initActivitiesTable() {
 	      { field: 'id', title: '#', align: 'center', sortable: true },
 	      { field: 'description', title: 'description' },
 	      { field: 'status', title: 'status', align: 'center', sortable: true, searchable: true, formatter: 'selectFormatter' },
+	      { field: 'sprint', title: 'sprint', align: 'center', formatter: 'sprintFormatter' },
 	      { field: 'contribution', title: 'value', align: 'center', formatter: 'valueFormatter', sortable: true },
 	      { field: 'estimate', title: 'complexity', align: 'center', formatter: 'complexityFormatter', sortable: true },
 	      { field: 'assignedUser', title: 'assigned', align: 'center', formatter: 'userFormatter' }
@@ -59,13 +72,18 @@ function initActivitiesTable() {
 		e.stopPropagation();
 		patchStory($(this).data("id"), "estimate", this.value);
 	});
-	
+
+	$('#stories-table').on('change', 'select.change-sprint',function (e) {
+		e.stopPropagation();
+		patchStory($(this).data("id"), "sprint", this.value);
+	});
+
 	$('#stories-table').on('change', 'select.change-assigned',function (e) {
 		e.stopPropagation();
 		patchStory($(this).data("id"), "assignedUser", this.value);
 	});
 
-	$('#typeFilter').on('change', function(e) {
+	$('#sprintFilter').on('change', function(e) {
 		e.stopPropagation();
 		refresh();
 	});
@@ -125,6 +143,26 @@ function complexityFormatter(value, row) {
 			content += ' selected';
 		}
 		content += '>' + val + '</option>';
+	});
+	content += '</select></div>';
+	return content;
+}
+
+function sprintFormatter(value, row) {
+	content = '<div class="form-group-sm">';
+	content += '<select data-id="' + row.id + '" class="form-control change-sprint">';
+	if (value==0){
+		content += '<option value="0" selected></option>';	  
+	} else {
+		content += '<option value="0"></option>';	  
+	}
+	
+	$.each(stories_sprints, function(index, sp) {
+		content += '<option value="' + sp.id + '"';	  
+		if (sp.id==value) {
+			content += '" selected';
+		}
+		content += '>' + sp.name + '</option>';	  
 	});
 	content += '</select></div>';
 	return content;
@@ -194,7 +232,11 @@ function queryParams() {
 	params['limit'] = options.pageSize;
 	params['sortName'] = options.sortName;
 	params['sortOrder'] = options.sortOrder;
-	
+
+	var sp = $('#sprintFilter').val();
+	if ( sp != undefined && sp != '0') {
+		params['sprint'] = sp;
+	}
 	var status = $('#statusFilter').val();
 	if ( status != undefined && status != '') {
 		params['status'] = status;

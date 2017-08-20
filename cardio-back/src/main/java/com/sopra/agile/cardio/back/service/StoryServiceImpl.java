@@ -23,10 +23,11 @@ public class StoryServiceImpl implements StoryService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StoryServiceImpl.class);
 
+    private static final String NULL = "NULL";
+
     private static DateTimeFormatter DATE_EXPORT_FORMAT = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
-    private static final String SQL_EXPORT = "INSERT INTO STORIES(DESCRIPTION,STATUS,LAST_UPDATE,CONTRIBUTION,ESTIMATE,ASSIGNED) VALUES ('%s', '%s', TIMESTAMP '%s', %d, %d, %d);\n";
-    private static final String SQL_EXPORT_WITHOUT_USER = "INSERT INTO STORIES(DESCRIPTION,STATUS,LAST_UPDATE,CONTRIBUTION,ESTIMATE) VALUES ('%s', '%s', TIMESTAMP '%s', %d, %d);\n";
+    private static final String SQL_EXPORT = "INSERT INTO STORIES(DESCRIPTION,STATUS,LAST_UPDATE,CONTRIBUTION,ESTIMATE,SPRINT,ASSIGNED) VALUES ('%s', '%s', TIMESTAMP '%s', %d, %d, %s, %s);\n";
 
     @Autowired
     private StoryDao storyDao;
@@ -120,8 +121,8 @@ public class StoryServiceImpl implements StoryService {
     }
 
     @Override
-    public Story patch(String id, String status, String contribution, String estimate, String assignedUser)
-            throws CardioTechnicalException, CardioFunctionalException {
+    public Story patch(String id, String status, String contribution, String estimate, String sprint,
+            String assignedUser) throws CardioTechnicalException, CardioFunctionalException {
         LOGGER.debug("[SVC] patch story ...");
 
         Story story = find(id);
@@ -138,6 +139,9 @@ public class StoryServiceImpl implements StoryService {
         }
         if (estimate != null) {
             story.setEstimate(Integer.parseInt(estimate));
+        }
+        if (sprint != null) {
+            story.setSprint(Long.parseLong(sprint));
         }
         if (assignedUser != null) {
             story.setAssignedUser(Long.parseLong(assignedUser));
@@ -173,16 +177,21 @@ public class StoryServiceImpl implements StoryService {
         List<Story> stories = all();
         StringBuffer sb = new StringBuffer();
 
+        String usr = null;
+        String sp = null;
         for (Story us : stories) {
-            if (us.getAssignedUser() == 0) {
-                sb.append(String.format(SQL_EXPORT_WITHOUT_USER, escapeSpecialCharacters(us.getDescription()),
-                        us.getStatus().toString(), convertLocalDateTime(us.getLastUpdate()), us.getContribution(),
-                        us.getEstimate()));
+            if (us.getSprint() == 0) {
+                sp = NULL;
             } else {
-                sb.append(String.format(SQL_EXPORT, escapeSpecialCharacters(us.getDescription()),
-                        us.getStatus().toString(), convertLocalDateTime(us.getLastUpdate()), us.getContribution(),
-                        us.getEstimate(), us.getAssignedUser()));
+                sp = String.valueOf(us.getSprint());
             }
+            if (us.getAssignedUser() == 0) {
+                usr = NULL;
+            } else {
+                usr = String.valueOf(us.getAssignedUser());
+            }
+            sb.append(String.format(SQL_EXPORT, escapeSpecialCharacters(us.getDescription()), us.getStatus().toString(),
+                    convertLocalDateTime(us.getLastUpdate()), us.getContribution(), us.getEstimate(), sp, usr));
         }
 
         return sb.toString();
