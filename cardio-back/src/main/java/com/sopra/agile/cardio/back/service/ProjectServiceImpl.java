@@ -13,11 +13,13 @@ import org.springframework.stereotype.Service;
 
 import com.sopra.agile.cardio.back.dao.SprintDao;
 import com.sopra.agile.cardio.back.dao.StoryDao;
+import com.sopra.agile.cardio.back.dao.TasksDao;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Kanban;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
 import com.sopra.agile.cardio.common.model.Sprint;
 import com.sopra.agile.cardio.common.model.Story;
+import com.sopra.agile.cardio.common.model.StoryMonitor;
 import com.sopra.agile.cardio.common.model.StoryStatus;
 
 @Service
@@ -34,7 +36,11 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private StoryDao storyDao;
 
+    @Autowired
+    private TasksDao tasksDao;
+
     private int sample = 6;
+    private boolean capacityEnabled = false;
 
     public ProjectServiceImpl() {
         // Empty constructor
@@ -47,6 +53,11 @@ public class ProjectServiceImpl implements ProjectService {
             LOGGER.info("Set default value '{}' for statistic.sprints.sample", sample);
         } else {
             sample = val;
+        }
+
+        capacityEnabled = configSvc.getBooleanProperty("velocity.enable.capacity");
+        if (capacityEnabled) {
+            LOGGER.debug("Enable computing velocity against capacity");
         }
     }
 
@@ -108,7 +119,11 @@ public class ProjectServiceImpl implements ProjectService {
                 if (capacity == 0) {
                     capacity = 1;
                 }
-                v = velocity / capacity;
+                if (capacityEnabled) {
+                    v = velocity / capacity;
+                } else {
+                    v = velocity;
+                }
 
                 days.add(s.getName());
                 done.add(v);
@@ -168,5 +183,19 @@ public class ProjectServiceImpl implements ProjectService {
         k.setDone(done);
 
         return k;
+    }
+
+    @Override
+    public List<StoryMonitor> getBurndown() throws CardioTechnicalException {
+        List<StoryMonitor> stories = new ArrayList<StoryMonitor>();
+        List<Sprint> sprints = sprintDao.findByDay("now");
+        if (!sprints.isEmpty()) {
+            Sprint currentSprint = sprints.get(0);
+            stories.addAll(storyDao.findMonitoredStories(currentSprint.getId()));
+            for (StoryMonitor sm : stories) {
+                sm.setTasks(tasksDao.findByStory(sm.getId()));
+            }
+        }
+        return stories;
     }
 }

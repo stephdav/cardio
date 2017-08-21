@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.Story;
+import com.sopra.agile.cardio.common.model.StoryMonitor;
 
 @Service
 public class StoryDaoImpl implements StoryDao {
@@ -23,10 +24,12 @@ public class StoryDaoImpl implements StoryDao {
     private static final String SQL_ALL = "select * from STORIES";
     private static final String SQL_FIND_BY_ID = "select * from STORIES where ID=?";
     private static final String SQL_FIND_BY_STATUS = "select * from STORIES where STATUS='%s'";
+    private static final String SQL_FIND_BY_SPRINT = "select * from STORIES where SPRINT='%d'";
     private static final String SQL_INSERT = "insert into STORIES(DESCRIPTION, STATUS, CONTRIBUTION, ESTIMATE, SPRINT, ASSIGNED) values (?, ?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "update STORIES set DESCRIPTION=?, STATUS=?, CONTRIBUTION=?, ESTIMATE=?, SPRINT=?, ASSIGNED=? where ID=?";
     private static final String SQL_UPDATE_TIMESTAMP = "update STORIES set DESCRIPTION=?, STATUS=?, LAST_UPDATE=NOW(), CONTRIBUTION=?, ESTIMATE=?, SPRINT=?, ASSIGNED=? where ID=?";
     private static final String SQL_DELETE = "delete from STORIES where id=?";
+    private static final String SQL_MONITOR = "select S.ID, S.DESCRIPTION, S.STATUS, S.CONTRIBUTION, S.ESTIMATE, U.LOGIN from STORIES S, USERS U where SPRINT='%d' AND U.ID = S.ASSIGNED";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -103,6 +106,19 @@ public class StoryDaoImpl implements StoryDao {
     }
 
     @Override
+    public List<Story> findBySprint(long sprintId) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] find with sprint '{}' ...", sprintId);
+        String sql = String.format(SQL_FIND_BY_SPRINT, sprintId);
+        List<Story> stories = null;
+        try {
+            stories = jdbcTemplate.query(sql, new StoryMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return stories;
+    }
+
+    @Override
     public Story add(Story story) throws CardioTechnicalException {
         LOGGER.debug("[DAO] add new story ...");
         try {
@@ -146,6 +162,19 @@ public class StoryDaoImpl implements StoryDao {
         } catch (Exception ex) {
             throw new CardioTechnicalException(DATABASE_FAILURE, ex);
         }
+    }
+
+    @Override
+    public List<StoryMonitor> findMonitoredStories(long sprintId) throws CardioTechnicalException {
+        LOGGER.debug("[DAO] find with sprint '{}' ...", sprintId);
+        String sql = String.format(SQL_MONITOR, sprintId);
+        List<StoryMonitor> stories = null;
+        try {
+            stories = jdbcTemplate.query(sql, new StoryMonitorMapper());
+        } catch (Exception ex) {
+            throw new CardioTechnicalException(DATABASE_FAILURE, ex);
+        }
+        return stories;
     }
 
 }

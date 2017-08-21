@@ -1,5 +1,7 @@
 package com.sopra.agile.cardio.back.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -9,6 +11,7 @@ import com.sopra.agile.cardio.common.exception.CardioTechnicalException;
 import com.sopra.agile.cardio.common.model.Kanban;
 import com.sopra.agile.cardio.common.model.Parameter;
 import com.sopra.agile.cardio.common.model.ProjectDataDetails;
+import com.sopra.agile.cardio.common.model.StoryMonitor;
 
 import spark.Request;
 import spark.Response;
@@ -72,6 +75,21 @@ public class ProjectController extends BaseController {
             kanban = svcProject.getScrumBoard();
             // } catch (CardioFunctionalException e) {
             // res.status(400);
+        } catch (CardioTechnicalException e) {
+            e.printStackTrace();
+            res.status(500);
+        }
+
+        return kanban;
+    }
+
+    // === BURNDOWN ==========================================================
+
+    public List<StoryMonitor> getBurndown(Request req, Response res) {
+        res.type("application/json");
+        List<StoryMonitor> kanban = null;
+        try {
+            kanban = svcProject.getBurndown();
         } catch (CardioTechnicalException e) {
             e.printStackTrace();
             res.status(500);

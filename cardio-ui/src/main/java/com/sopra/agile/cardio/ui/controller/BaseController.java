@@ -37,6 +37,7 @@ public class BaseController {
         attributes.put("title", "cardio");
 
         attributes.put("menuAbout", "");
+        attributes.put("menuBurndown", "");
         attributes.put("menuKanban", "");
         attributes.put("menuSprintPlanning", "");
         attributes.put("menuSprint", "");

@@ -77,6 +77,7 @@ public class RestConfig {
         path("/api/project", () -> {
             get("/data", (req, res) -> projectController.getProjectData(req, res), new JsonTransformer());
             get("/kanban", (req, res) -> projectController.getKanban(req, res), new JsonTransformer());
+            get("/burndown", (req, res) -> projectController.getBurndown(req, res), new JsonTransformer());
         });
 
         // === USERS ===

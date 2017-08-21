@@ -42,12 +42,3 @@ function queryParams() {
 	params['status'] = 'READY,PENDING';
 	return params;
 }
-
-function valueFormatter(value, row) {
-	content = '';
-	if (value!=-1){
-		content = value;
-	}
-	return content;
-}
-

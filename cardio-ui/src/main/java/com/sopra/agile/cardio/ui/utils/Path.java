@@ -7,6 +7,7 @@ public class Path {
         public static final String ALL = BASE + "*";
         public static final String INDEX = BASE;
         public static final String ABOUT = BASE + "about/";
+        public static final String BURNDOWN = BASE + "burndown/";
         public static final String KANBAN = BASE + "kanban/";
         public static final String PLANNING = BASE + "sprintPlanning/";
         public static final String SPRINT = BASE + "sprint/*";
@@ -20,6 +21,7 @@ public class Path {
     public static class Template {
         public static final String INDEX = "templates/home.peb";
         public static final String ABOUT = "templates/about.peb";
+        public static final String BURNDOWN = "templates/burndown.peb";
         public static final String KANBAN = "templates/kanban.peb";
         public static final String PLANNING = "templates/planning.peb";
         public static final String SPRINT = "templates/sprint.peb";

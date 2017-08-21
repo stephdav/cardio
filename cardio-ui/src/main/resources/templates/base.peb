@@ -49,7 +49,7 @@
           <li class="{{ menuSprints }}"><a id="menuSprints" href="{{href}}/ui/sprints"><i class="fa fa-fw fa-repeat fa-2x"></i></a></li>
           <li class="{{ menuStories }}"><a id="menuStories" href="{{href}}/ui/stories"><i class="fa fa-fw fa-server fa-2x"></i></a></li>
           <li class="{{ menuSprintPlanning }}"><a id="menuSprintPlanning" href="{{href}}/ui/sprintPlanning"><i class="fa fa-fw fa-handshake-o fa-2x"></i></a></li>
-          <li class="{{ menuKanban }}"><a id="menuKanban" href="{{href}}/ui/kanban"><i class="fa fa-fw fa-table fa-2x"></i></a></li>
+          <li class="{{ menuBurndown }}"><a id="menuBurndown" href="{{href}}/ui/burndown"><i class="fa fa-fw fa-table fa-2x"></i></a></li>
           <li class="{{ menuUsers }}"><a id="menuUsers" href="{{href}}/ui/users"><i class="fa fa-fw fa-users fa-2x"></i></a></li>
           <li class="{{ menuAbout }}"><a id="menuAbout" href="{{href}}/ui/about"><span class="fa-stack fa-lg"><i class="fa fa-fw fa-circle-thin fa-stack-2x"></i><i class="fa fa-fw fa-info fa-stack-1x"></i></span></i></a></li>
         </ul>

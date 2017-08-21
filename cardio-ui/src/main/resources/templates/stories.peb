@@ -96,5 +96,6 @@
   <script src="{{href}}/js/ext/bootstrap-table.min.js"></script>
   <script src="{{href}}/js/fnSprint.js"></script>
   <script src="{{href}}/js/fnUser.js"></script>
+  <script src="{{href}}/js/fnTableFormater.js"></script>
   <script src="{{href}}/js/stories.js"></script>
 {% endblock %}

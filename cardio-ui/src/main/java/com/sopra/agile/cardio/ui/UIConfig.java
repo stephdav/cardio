@@ -7,6 +7,7 @@ import static spark.Spark.redirect;
 import static spark.Spark.staticFiles;
 
 import com.sopra.agile.cardio.ui.controller.AboutController;
+import com.sopra.agile.cardio.ui.controller.BurndownController;
 import com.sopra.agile.cardio.ui.controller.IndexController;
 import com.sopra.agile.cardio.ui.controller.KanbanController;
 import com.sopra.agile.cardio.ui.controller.PlanningController;
@@ -36,6 +37,7 @@ public class UIConfig {
         //
         get(Path.Web.INDEX, IndexController.HOME);
         get(Path.Web.ABOUT, AboutController.ABOUT);
+        get(Path.Web.BURNDOWN, BurndownController.BURNDOWN);
         get(Path.Web.KANBAN, KanbanController.KANBAN);
         get(Path.Web.PLANNING, PlanningController.PLANNING);
         get(Path.Web.SPRINT, SprintController.SPRINT);
