@@ -13,10 +13,27 @@ function initSprints() {
 		downloadExport('/api/sprints/export');
 	});
 
-	initSprintsTable();
+	fnGetCapacity(checkCapacity);
 }
 
-function initSprintsTable() {
+function checkCapacity(data, hv) {
+	var enabled = data.value;
+	initSprintsTable(enabled);
+}
+
+function initSprintsTable(enabled) {
+	var col = [
+	           { field: 'startDate', title: 'from', align: 'center', formatter: 'dateFormatter' },
+	           { field: 'endDate', title: 'to', align: 'center', formatter: 'dateFormatter' },
+	           { field: 'name', title: '#', align: 'center' },
+	           { field: 'goal', title: 'sprint goal' },
+	           { field: 'commitment', title: 'commitment', align: 'center' },
+	           { field: 'velocity', title: 'velocity', align: 'center' },
+	          ];
+	if (enabled == 'true') {
+		col.push({ field: 'capacity', title: 'capacity', align: 'center' });
+	}
+
 	$('#sprints-table').bootstrapTable({
 		pagination: true,
 		url: '/api/sprints?bootstrap',
@@ -24,15 +41,7 @@ function initSprintsTable() {
 		queryParamsType: 'page',
 		queryParams: 'queryParams',
 		pageNumber: 1, pageSize: 10, pageList: [10, 25, 50],
-	    columns: [
-	      { field: 'startDate', title: 'from', align: 'center', formatter: 'dateFormatter' },
-	      { field: 'endDate', title: 'to', align: 'center', formatter: 'dateFormatter' },
-	      { field: 'name', title: '#', align: 'center' },
-	      { field: 'goal', title: 'sprint goal' },
-	      { field: 'commitment', title: 'commitment', align: 'center' },
-	      { field: 'velocity', title: 'velocity', align: 'center' },
-	      { field: 'capacity', title: 'capacity', align: 'center' }
-	    ]
+	    columns: col
 	});
 
 	$('#sprints-table').on('load-success.bs.table', function (e, data) {

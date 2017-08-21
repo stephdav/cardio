@@ -145,3 +145,15 @@ function ajaxPatch(url, payload, fnHandle) {
 function downloadExport(url) {
 	window.open(BACK_URL + url,'_self','');
 }
+
+function fnGetCapacity(callback) {
+	ajaxGet("/api/config/parameters/velocity.enable.capacity", function(data, hv, errorThrown) {
+		if (hv.status == 200) {
+			if (callback != undefined) {
+				callback(data, hv);
+			}
+		} else {
+			log("Error getting parameter 'velocity.enable.capacity': " + errorThrown);
+		}
+	});
+}

@@ -3,6 +3,8 @@ $(document).ready(function() {
 });
 
 function initSprint() {
+	fnGetCapacity(checkCapacity);
+	
 	var sprintId = getLastPathLocation();
 	getSprint(sprintId);
 	getSprintData();
@@ -17,8 +19,14 @@ function initSprint() {
 	});
 }
 
+function checkCapacity(data, hv) {
+	if (data.value != 'true') {
+		log("disable...");
+		$('#sprintCapacity').prop('disabled', true);
+	}
+}
+
 function updateSprint(id, name, startdate, enddate, goal, commitment, capacity) {
-	log("capacity " + capacity);
 	var payload = {id: id, name: name, startDate: startdate, endDate: enddate, goal: goal, commitment: commitment, capacity: capacity};
 	ajaxPatch("/api/sprints/"+id, payload, function(data, hv, errorThrown) {
 		if (hv.status == 201 || hv.status == 200) {
