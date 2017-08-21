@@ -21,3 +21,15 @@ function fnStoryGet(id, callback) {
 		}
 	});
 }
+
+function fnPatchStory(id, field, value) {
+	var payload = {};
+	ajaxPatch("/api/stories/" + id + "?" + field + "=" + value, payload, function(data, hv, errorThrown) {
+		if (hv.status == 201 || hv.status == 200) {
+			log("Story " + hv.location + " updated");
+			refresh();
+		} else {
+			log("Error updating story : " + errorThrown);
+		}
+	});
+}

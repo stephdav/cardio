@@ -65,22 +65,22 @@ function initActivitiesTable() {
 	
 	$('#stories-table').on('change', 'select.change-status',function (e) {
 		e.stopPropagation();
-		patchStory($(this).data("id"), "status", this.value);
+		fnPatchStory($(this).data("id"), "status", this.value);
 	});
 
 	$('#stories-table').on('change', 'select.change-complexity',function (e) {
 		e.stopPropagation();
-		patchStory($(this).data("id"), "estimate", this.value);
+		fnPatchStory($(this).data("id"), "estimate", this.value);
 	});
 
 	$('#stories-table').on('change', 'select.change-sprint',function (e) {
 		e.stopPropagation();
-		patchStory($(this).data("id"), "sprint", this.value);
+		fnPatchStory($(this).data("id"), "sprint", this.value);
 	});
 
 	$('#stories-table').on('change', 'select.change-assigned',function (e) {
 		e.stopPropagation();
-		patchStory($(this).data("id"), "assignedUser", this.value);
+		fnPatchStory($(this).data("id"), "assignedUser", this.value);
 	});
 
 	$('#sprintFilter').on('change', function(e) {
@@ -153,18 +153,6 @@ function createStory(description, status) {
 			log("Error creating story : " + errorThrown);
 			$('#errors').text(data);
 			$('.form-error').show();
-		}
-	});
-}
-
-function patchStory(id, field, value) {
-	var payload = {};
-	ajaxPatch("/api/stories/" + id + "?" + field + "=" + value, payload, function(data, hv, errorThrown) {
-		if (hv.status == 201 || hv.status == 200) {
-			log("Story " + hv.location + " updated");
-			refresh();
-		} else {
-			log("Error updating story : " + errorThrown);
 		}
 	});
 }
